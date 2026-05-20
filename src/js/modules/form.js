@@ -1,33 +1,27 @@
 /**
- * form.js — Validación en tiempo real y envío async del formulario
+ * form.js — Validación, envío async y preselección de servicio
  * RECOVEN ECA SAS ESP · v2
  *
- * Sin alert() ni confirm(). Los estados de éxito y error se muestran
- * como banners inline ya definidos en el HTML.
- *
- * Para activar el envío real:
- *   Formspree  → cambia el action del <form> a https://formspree.io/f/TU_ID
- *   Web3Forms  → cambia el action y añade <input type="hidden" name="access_key" value="TU_KEY">
+ * Preselección: cualquier <a> con data-service="..." que apunte a
+ * #contacto pasará el valor al select automáticamente al hacer clic.
  */
 
 // ── Reglas de validación ─────────────────────────────────────────
 const RULES = {
-  nombre:       { test: v => v.trim().length >= 2,                       errorId: 'errorNombre'   },
-  empresa:      { test: v => v.trim().length >= 2,                       errorId: 'errorEmpresa'  },
-  email:        { test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()), errorId: 'errorEmail'   },
-  telefono:     { test: v => /^[\d\s\-\+]{7,}$/.test(v.trim()),         errorId: 'errorTelefono' },
-  servicioTipo: { test: v => v !== '',                                   errorId: 'errorServicio' },
+  nombre:       { test: v => v.trim().length >= 2,                         errorId: 'errorNombre'   },
+  email:        { test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()), errorId: 'errorEmail'    },
+  telefono:     { test: v => /^[\d\s\-\+]{7,}$/.test(v.trim()),           errorId: 'errorTelefono' },
+  servicioTipo: { test: v => v !== '',                                     errorId: 'errorServicio' },
 };
 
 // ── Helpers ──────────────────────────────────────────────────────
-function getField(id)  { return document.getElementById(id); }
-function getError(id)  { return document.getElementById(id); }
+const getField = id => document.getElementById(id);
+const getError = id => document.getElementById(id);
 
 function setFieldState(fieldId, isValid) {
   const field = getField(fieldId);
   const rule  = RULES[fieldId];
   if (!field || !rule) return;
-
   const errEl = getError(rule.errorId);
   if (isValid) {
     field.classList.remove('border-red-400');
@@ -48,7 +42,35 @@ function validateField(fieldId) {
   return valid;
 }
 
-// ── Init ─────────────────────────────────────────────────────────
+// ── Preselección del tipo de servicio ────────────────────────────
+/**
+ * Busca todos los enlaces que tengan data-service y que apunten a #contacto.
+ * Al hacer clic, guarda el valor en sessionStorage para que main.js lo
+ * aplique después del scroll (el select puede no estar visible aún).
+ */
+function initServicePreselect() {
+  const select = getField('servicioTipo');
+  if (!select) return;
+
+  document.querySelectorAll('[data-service]').forEach(link => {
+    link.addEventListener('click', () => {
+      const serviceValue = link.dataset.service;
+      // Aplicar directamente si el select ya existe
+      select.value = serviceValue;
+      // También guardar por si el scroll tarda
+      sessionStorage.setItem('recoven_preselect', serviceValue);
+    });
+  });
+
+  // Aplicar valor guardado si venimos de un reload o navegación
+  const stored = sessionStorage.getItem('recoven_preselect');
+  if (stored) {
+    select.value = stored;
+    sessionStorage.removeItem('recoven_preselect');
+  }
+}
+
+// ── Init principal ────────────────────────────────────────────────
 export function initForm() {
   const form       = document.getElementById('leadForm');
   const successBox = document.getElementById('form-success');
@@ -58,12 +80,13 @@ export function initForm() {
 
   if (!form) return;
 
-  // Validación en blur (salida de campo)
+  initServicePreselect();
+
+  // Validación al salir de cada campo
   Object.keys(RULES).forEach(id => {
     const field = getField(id);
     if (!field) return;
     field.addEventListener('blur',  () => validateField(id));
-    // Re-validar en input sólo si ya estaba marcado como inválido
     field.addEventListener('input', () => {
       if (field.classList.contains('border-red-400')) validateField(id);
     });
@@ -73,12 +96,9 @@ export function initForm() {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Validar todos los campos
     const results = Object.keys(RULES).map(id => validateField(id));
     if (results.includes(false)) {
-      // Hacer scroll hasta el primer campo inválido
-      const firstInvalid = form.querySelector('.border-red-400');
-      firstInvalid?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      form.querySelector('.border-red-400')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
 
@@ -98,11 +118,9 @@ export function initForm() {
 
       if (res.ok) {
         form.reset();
-        // Limpiar estados de error visuales
         Object.keys(RULES).forEach(id => {
-          const field = getField(id);
-          field?.classList.remove('border-red-400');
-          field?.classList.add('border-gray-300');
+          getField(id)?.classList.remove('border-red-400');
+          getField(id)?.classList.add('border-gray-300');
         });
         successBox.classList.add('show');
         successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
