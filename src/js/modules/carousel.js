@@ -14,7 +14,7 @@ const CLIENTS = [
   { icon: 'fas fa-hospital',          label: 'Clínica General del Norte' },
   { icon: 'fas fa-bolt',              label: 'Air-E' },
   { icon: 'fas fa-balance-scale',     label: 'Consejo Sup. Judicatura' },
-  { icon: 'fas fa-shield-alt',        label: 'Esc. A. Nariño — Policía Nal.' },
+  { icon: 'fas fa-shield-alt',        label: 'Esc. Antonio Nariño — Policía Nal.' },
   { icon: 'fas fa-briefcase',         label: 'INSERMAS S.A.S' },
   { icon: 'fas fa-hard-hat',          label: 'FSCR Ingeniería SAS' },
   { icon: 'fas fa-globe',             label: 'Comercio Exterior Nuvias Miles' },
