@@ -8,6 +8,7 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <style>
     body { font-family: 'Inter', system-ui, sans-serif; }
     .bg-primary-green   { background-color: #1E5A3C; }
@@ -32,6 +33,429 @@
     .bin-card h4 { font-weight:700; font-size:1rem; margin-bottom:.5rem; }
     .bin-card ul { list-style:none; padding:0; margin:0; font-size:.85rem; opacity:.9; }
     .bin-card ul li { margin-bottom:.2rem; }
+    /* ==================== VARIABLES ==================== */
+    :root {
+      --primary-green: #1E5A3C;
+      --gold-accent: #E4B363;
+      --white: #ffffff;
+      --text-dark: #1F2937;
+      --gray-light: #F9FAFB;
+      --overlay-dark: rgba(0, 0, 0, 0.6);
+      --transition-smooth: all 0.3s ease;
+    }
+
+    /* ==================== HERO + CAROUSEL UNIFIED ==================== */
+    .hero-carousel-unified {
+      display: flex;
+      min-height: 80vh;
+      background: var(--gray-light);
+    }
+
+    /* COLUMNA IZQUIERDA - HERO FIJO (30%) */
+    .hero-column {
+      width: 35%;
+      background: linear-gradient(135deg, var(--primary-green), #2D7A50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-column::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 300px;
+      height: 300px;
+      background: rgba(228, 179, 99, 0.1);
+      border-radius: 50%;
+      filter: blur(60px);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: left;
+      max-width: 90%;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(228, 179, 99, 0.5);
+      color: var(--white);
+      padding: 0.5rem 1.2rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+      letter-spacing: -1px;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .hero-description {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      max-width: 85%;
+    }
+
+    .hero-cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--gold-accent);
+      color: var(--primary-green);
+      padding: 1rem 1.8rem;
+      border-radius: 9999px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: var(--transition-smooth);
+      box-shadow: 0 8px 20px rgba(228, 179, 99, 0.35);
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .hero-cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(228, 179, 99, 0.45);
+      background: #f0c470;
+    }
+
+    .hero-cta-button:active {
+      transform: translateY(-1px);
+    }
+
+    /* COLUMNA DERECHA - CARRUSEL (70%) */
+    .carousel-column {
+      width: 65%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-carousel-swiper {
+      width: 100%;
+      height: 100%;
+    }
+
+    .carousel-slide {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      padding: 3rem;
+    }
+
+    .carousel-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--overlay-dark);
+      z-index: 1;
+      transition: background 0.3s ease;
+    }
+
+    .carousel-slide:hover .carousel-overlay {
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .carousel-content {
+      position: relative;
+      z-index: 2;
+      color: var(--white);
+      animation: slideUp 0.6s ease forwards;
+      max-width: 100%;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .carousel-icon {
+      font-size: 3rem;
+      color: var(--gold-accent);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .carousel-title {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 800;
+      margin-bottom: 0.8rem;
+      line-height: 1.2;
+    }
+
+    .carousel-description {
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      line-height: 1.6;
+      opacity: 0.95;
+      max-width: 95%;
+    }
+
+    /* ==================== NAVEGACIÓN DEL CARRUSEL ==================== */
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      color: var(--white);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: var(--transition-smooth);
+      font-size: 1.2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .carousel-nav:hover {
+      background: rgba(255, 255, 255, 0.35);
+      border-color: rgba(255, 255, 255, 0.6);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .carousel-nav:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+
+    .carousel-nav-prev {
+      left: 1.5rem;
+    }
+
+    .carousel-nav-next {
+      right: 1.5rem;
+    }
+
+    /* ==================== PAGINACIÓN ==================== */
+    .carousel-pagination {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.8rem;
+      z-index: 10;
+    }
+
+    .swiper-pagination-bullet {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      border: 2px solid transparent;
+    }
+
+    .swiper-pagination-bullet:hover {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    .swiper-pagination-bullet-active {
+      background: var(--gold-accent);
+      width: 32px;
+      border-radius: 9999px;
+    }
+
+    /* ==================== RESPONSIVE - TABLET ==================== */
+    @media (max-width: 1024px) {
+      .hero-carousel-unified {
+        min-height: 80vh;
+      }
+
+      .hero-column {
+        width: 42%;
+        padding: 2rem 1.5rem;
+      }
+
+      .carousel-column {
+        width: 58%;
+      }
+
+      .hero-title {
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+      }
+
+      .carousel-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+      }
+
+      .carousel-nav-prev {
+        left: 1rem;
+      }
+
+      .carousel-nav-next {
+        right: 1rem;
+      }
+    }
+
+    /* ==================== RESPONSIVE - MÓVIL ==================== */
+    @media (max-width: 768px) {
+      .hero-carousel-unified {
+        flex-direction: column;
+        min-height: auto;
+      }
+
+      .hero-column {
+        width: 100%;
+        min-height: 45vh;
+        padding: 2rem 1.5rem;
+        text-align: center;
+      }
+
+      .hero-content {
+        text-align: center;
+        max-width: 100%;
+      }
+
+      .hero-description {
+        max-width: 100%;
+      }
+
+      .carousel-column {
+        width: 100%;
+        min-height: 55vh;
+      }
+
+      .carousel-slide {
+        padding: 2rem 1.5rem;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .carousel-content {
+        text-align: center;
+      }
+
+      .carousel-icon {
+        margin-bottom: 0.8rem;
+      }
+
+      .carousel-nav {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+      }
+
+      .carousel-nav-prev {
+        left: 0.8rem;
+      }
+
+      .carousel-nav-next {
+        right: 0.8rem;
+      }
+
+      .carousel-pagination {
+        bottom: 1rem;
+      }
+
+      .carousel-title {
+        font-size: 1.3rem;
+      }
+
+      .carousel-description {
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-column {
+        min-height: 50vh;
+        padding: 1.5rem 1rem;
+      }
+
+      .hero-title {
+        font-size: 1.8rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+
+      .hero-description {
+        font-size: 0.85rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .carousel-column {
+        min-height: 50vh;
+      }
+
+      .carousel-slide {
+        padding: 1.5rem 1rem;
+      }
+
+      .carousel-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+      }
+
+      .carousel-title {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .carousel-description {
+        font-size: 0.8rem;
+        line-height: 1.4;
+      }
+
+      .carousel-icon {
+        font-size: 2rem;
+      }
+
+      .swiper-pagination-bullet {
+        width: 10px;
+        height: 10px;
+      }
+
+      .swiper-pagination-bullet-active {
+        width: 28px;
+      }
+    }
   </style>
 </head>
 <body class="bg-white text-gray-800">
@@ -79,97 +503,113 @@
 
 <main>
 
-  <!-- HERO BANNER -->
-  <section class="relative bg-cover bg-center py-20 md:py-32"
-    style="background-image:linear-gradient(135deg,rgba(228,179,99,.88),rgba(180,130,50,.92)),
-           url('https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=1600&auto=format&fit=crop&q=80');
-           background-size:cover;">
-    <div class="container mx-auto px-6 text-center text-white reveal">
-      <span class="inline-block bg-white/20 border border-white/30 text-white text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-5">Catálogo 2026</span>
-      <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">Nuestros Servicios</h1>
-      <p class="text-xl mt-4 opacity-90 max-w-xl mx-auto">Soluciones ambientales integrales para tu negocio y comunidad</p>
-    </div>
-  </section>
-
-  <!-- SERVICIOS PRINCIPALES — 4 CARDS -->
-  <section id="servicios-principales" class="py-20 bg-white">
-    <div class="container mx-auto px-6">
-      <div class="text-center max-w-2xl mx-auto reveal">
-        <span class="text-primary-green font-semibold uppercase tracking-wider text-sm">Oferta integral</span>
-        <h2 class="text-3xl md:text-4xl font-bold mt-2">Soluciones que generan valor ambiental y empresarial</h2>
-        <p class="text-gray-500 mt-3">Gestión de residuos, consultoría y economía circular bajo estándares legales.</p>
-      </div>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-14">
-        <div class="service-card bg-gray-50 rounded-2xl p-6 shadow-sm reveal">
-          <i class="fas fa-industry text-4xl text-primary-green"></i>
-          <h4 class="font-bold text-xl mt-4">Gestión Corporativa de Residuos</h4>
-          <p class="text-gray-600 text-sm mt-2">Recolección de residuos aprovechables en sector industrial, comercial y oficinas. <strong class="text-primary-green">Emitimos Certificado de Disposición Final</strong> con trazabilidad garantizada.</p>
-          <!--<ul class="mt-3 text-gray-500 text-xs space-y-1">
-            <li class="flex items-center gap-2"><i class="fas fa-circle text-primary-green" style="font-size:.4rem;"></i>Cartón</li>
-            <li class="flex items-center gap-2"><i class="fas fa-circle text-primary-green" style="font-size:.4rem;"></i>Bolsa plástica</li>
-            <li class="flex items-center gap-2"><i class="fas fa-circle text-primary-green" style="font-size:.4rem;"></i>Papel</li>
-            <li class="flex items-center gap-2"><i class="fas fa-circle text-primary-green" style="font-size:.4rem;"></i>Materiales ferrosos</li>
-            <li class="flex items-center gap-2"><i class="fas fa-circle text-primary-green" style="font-size:.4rem;"></i>Materiales no ferrosos</li>
-            <li class="flex items-center gap-2"><i class="fas fa-circle text-primary-green" style="font-size:.4rem;"></i>Componentes de la industria</li>
-          </ul> -->
-        </div>
-        <div class="service-card bg-gray-50 rounded-2xl p-6 shadow-sm reveal">
-          <i class="fas fa-tint text-4xl text-primary-green"></i>
-          <h4 class="font-bold text-xl mt-4">Ingeniería & Servicios Especializados</h4>
-          <p class="text-gray-600 text-sm mt-2">Evacuación, transporte y disposición de lodos, aguas residuales domésticas, industriales y peligrosas. Limpieza de bermas, drenaje pluvial y siembra de árboles.</p>
-        </div>
-        <div class="service-card bg-gray-50 rounded-2xl p-6 shadow-sm reveal">
-          <i class="fas fa-file-alt text-4xl text-primary-green"></i>
-          <h4 class="font-bold text-xl mt-4">Consultoría Ambiental</h4>
-          <p class="text-gray-600 text-sm mt-2">Implementación y actualización de PGIRS, formulación de proyectos ambientales municipales, departamentales y planes parciales de desarrollo territorial.</p>
-        </div>
-        <div class="service-card bg-gray-50 rounded-2xl p-6 shadow-sm reveal">
-          <i class="fas fa-seedling text-4xl text-primary-green"></i>
-          <h4 class="font-bold text-xl mt-4">Abonos & Sostenibilidad</h4>
-          <p class="text-gray-600 text-sm mt-2">Recolección y disposición final de poda para convertirla en abono orgánico. Proyectos agropecuarios sostenibles y educación ambiental comunitaria.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PARA RECICLAR — SECCIÓN EDUCATIVA -->
-  <section class="py-20 bg-gradient-to-br from-[#EFF7EF] to-white">
-    <div class="container mx-auto px-6 max-w-5xl">
-      <div class="text-center reveal">
-        <span class="text-primary-green font-semibold uppercase tracking-wider text-sm"><i class="fas fa-recycle mr-1"></i> Separa para reciclar</span>
-        <h2 class="text-3xl md:text-4xl font-bold mt-2 text-gray-800">Para Reciclar</h2>
-        <p class="text-gray-600 mt-4 max-w-2xl mx-auto leading-relaxed">
-          En RECOVEN SAS promovemos la correcta separación en la fuente como base fundamental del aprovechamiento de residuos. Una adecuada clasificación permite:
+  <!-- HERO + SERVICIOS UNIFIED (Pantalla Dividida) -->
+  <section id="hero-carousel-container" class="hero-carousel-unified">
+    
+    <!-- COLUMNA IZQUIERDA: HERO FIJO (30%) -->
+    <div class="hero-column">
+      <div class="hero-content">
+        <span class="hero-badge">Gestión Ambiental Integral</span>
+        <h1 class="hero-title">Nuestros Servicios</h1>
+        <p class="hero-subtitle">Soluciones ambientales integrales para tu negocio y comunidad</p>
+        <p class="hero-description">
+          Especialistas en gestión de residuos sólidos aprovechables para sector industrial, comercial y residencial.
         </p>
+        <a href="index.html#contacto" class="hero-cta-button">
+          <i class="fas fa-paper-plane"></i> Solicitar Cotización
+        </a>
       </div>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-        <div class="bg-white rounded-2xl p-6 text-center shadow-sm border border-gray-100 reveal">
-          <div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-4" style="background:#DCFCE7;">
-            <i class="fas fa-chart-line text-primary-green text-2xl"></i>
+    </div>
+
+    <!-- COLUMNA DERECHA: CARRUSEL (70%) -->
+    <div class="carousel-column">
+      
+      <!-- Swiper Container -->
+      <div class="swiper hero-carousel-swiper">
+        <div class="swiper-wrapper">
+          
+          <!-- Slide 1-->
+          <div class="swiper-slide carousel-slide" style="background-image: url('https://plus.unsplash.com/premium_photo-1775212073864-5112ebb4a059?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
+            <div class="carousel-overlay"></div>
+            <div class="carousel-content">
+              <i class="fas fa-industry carousel-icon"></i>
+              <h3 class="carousel-title">Gestión de Residuos Aprovechables</h3>
+              <p class="carousel-description">Recolección, clasificación y aprovechamiento de residuos reciclables del sector industrial, comercial y residencial, garantizando manejo responsable y trazabilidad ambiental.</p>
+            </div>
           </div>
-          <h4 class="font-bold text-gray-800">Más material reciclable</h4>
-          <p class="text-gray-500 text-sm mt-2">Aumenta el porcentaje de residuos que pueden volver al ciclo productivo.</p>
+
+          <!-- Slide 2-->
+          <div class="swiper-slide carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=1200&auto=format&fit=crop&q=80')">
+            <div class="carousel-overlay"></div>
+            <div class="carousel-content">
+              <i class="fas fa-tint carousel-icon"></i>
+              <h3 class="carousel-title">Abonos & Sostenibilidad</h3>
+              <p class="carousel-description">Conversión de poda en abono orgánico, siembra de árboles y desarrollo de iniciativas ambientales orientadas a la sostenibilidad y economía circular.</p>
+            </div>
+          </div>
+
+          <!-- Slide 3-->
+          <div class="swiper-slide carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1727703435736-d3b5f2cc113c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
+            <div class="carousel-overlay"></div>
+            <div class="carousel-content">
+              <i class="fas fa-file-alt carousel-icon"></i>
+              <h3 class="carousel-title">Saneamiento & Manejo Ambiental</h3>
+              <p class="carousel-description">Drenaje de aguas pluviales y arroyos, además de evacuación, transporte y disposición de lodos y aguas residuales domésticas e industriales.</p>
+            </div>
+          </div>
+
+          <!-- Slide 4-->
+          <div class="swiper-slide carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1620046315397-ac3195dec719?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
+            <div class="carousel-overlay"></div>
+            <div class="carousel-content">
+              <i class="fas fa-seedling carousel-icon"></i>
+              <h3 class="carousel-title">Gestión Ambiental Integral</h3>
+              <p class="carousel-description">Soluciones ambientales para empresas y comunidades mediante programas de limpieza, aprovechamiento de residuos y fortalecimiento de prácticas sostenibles.</p>
+            </div>
+          </div>
+
         </div>
-        <div class="bg-white rounded-2xl p-6 text-center shadow-sm border border-gray-100 reveal">
-          <div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-4" style="background:#DCFCE7;">
-            <i class="fas fa-leaf text-primary-green text-2xl"></i>
-          </div>
-          <h4 class="font-bold text-gray-800">Menos contaminación</h4>
-          <p class="text-gray-500 text-sm mt-2">Reduce el impacto ambiental negativo en suelos, agua y aire.</p>
+
+        <!-- Navigation Arrows (Flotantes dentro del carrusel) -->
+        <button class="carousel-nav carousel-nav-prev">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="carousel-nav carousel-nav-next">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <!-- Pagination Dots -->
+        <div class="carousel-pagination"></div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- LIMPIEZA DE BERMAS -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-6 max-w-6xl">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="reveal">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&auto=format&fit=crop&q=80"
+               alt="Limpieza de bermas RECOVEN" class="w-full h-72 object-cover rounded-2xl shadow-lg">
         </div>
-        <div class="bg-white rounded-2xl p-6 text-center shadow-sm border border-gray-100 reveal">
-          <div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-4" style="background:#DCFCE7;">
-            <i class="fas fa-star text-primary-green text-2xl"></i>
-          </div>
-          <h4 class="font-bold text-gray-800">Mejor calidad</h4>
-          <p class="text-gray-500 text-sm mt-2">Mejora la calidad del material aprovechado para su reutilización.</p>
-        </div>
-        <div class="bg-white rounded-2xl p-6 text-center shadow-sm border border-gray-100 reveal">
-          <div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-4" style="background:#DCFCE7;">
-            <i class="fas fa-cogs text-primary-green text-2xl"></i>
-          </div>
-          <h4 class="font-bold text-gray-800">Optimiza la ECA</h4>
-          <p class="text-gray-500 text-sm mt-2">Optimiza los procesos de la Estación de Clasificación y Aprovechamiento.</p>
+        <div class="reveal">
+          <span class="text-primary-green font-bold text-sm uppercase tracking-wide"><i class="fas fa-road mr-1"></i> Infraestructura vial</span>
+          <h2 class="text-3xl md:text-4xl font-bold mt-2 text-gray-800">Limpieza y Mantenimiento de Bermas</h2>
+          <p class="text-gray-600 mt-5 leading-relaxed">
+            RECOVEN SAS presta el servicio de limpieza y mantenimiento de bermas, áreas verdes y zonas perimetrales, contribuyendo a la conservación del entorno, la seguridad vial y el control de residuos sólidos en espacios públicos y privados.
+          </p>
+          <ul class="mt-6 space-y-3">
+            <li class="flex items-center gap-3"><i class="fas fa-check-circle text-primary-green"></i><span class="text-gray-700">Limpieza de zonas perimetrales</span></li>
+            <li class="flex items-center gap-3"><i class="fas fa-check-circle text-primary-green"></i><span class="text-gray-700">Mantenimiento de áreas verdes</span></li>
+            <li class="flex items-center gap-3"><i class="fas fa-check-circle text-primary-green"></i><span class="text-gray-700">Control de residuos en vías públicas</span></li>
+            <li class="flex items-center gap-3"><i class="fas fa-check-circle text-primary-green"></i><span class="text-gray-700">Conservación del entorno y seguridad vial</span></li>
+          </ul>
+          <a href="index.html#contacto"
+             class="inline-flex items-center gap-2 mt-8 bg-primary-green text-white font-bold px-7 py-3 rounded-full hover:bg-opacity-90 transition hover:-translate-y-0.5 shadow-md">
+            <i class="fas fa-truck"></i> Solicitar este servicio
+          </a>
         </div>
       </div>
     </div>
@@ -215,30 +655,44 @@
     </div>
   </section>
 
-  <!-- LIMPIEZA DE BERMAS -->
-  <section class="py-20 bg-white">
-    <div class="container mx-auto px-6 max-w-6xl">
-      <div class="grid md:grid-cols-2 gap-12 items-center">
-        <div class="reveal">
-          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&auto=format&fit=crop&q=80"
-               alt="Limpieza de bermas RECOVEN" class="w-full h-72 object-cover rounded-2xl shadow-lg">
+    <!-- PARA RECICLAR — SECCIÓN EDUCATIVA -->
+  <section class="py-20 bg-gradient-to-br from-[#EFF7EF] to-white">
+    <div class="container mx-auto px-6 max-w-5xl">
+      <div class="text-center reveal">
+        <span class="text-primary-green font-semibold uppercase tracking-wider text-sm"><i class="fas fa-recycle mr-1"></i> Separa para reciclar</span>
+        <h2 class="text-3xl md:text-4xl font-bold mt-2 text-gray-800">Para Reciclar</h2>
+        <p class="text-gray-600 mt-4 max-w-2xl mx-auto leading-relaxed">
+          En RECOVEN SAS promovemos la correcta separación en la fuente como base fundamental del aprovechamiento de residuos. Una adecuada clasificación permite:
+        </p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+        <div class="bg-white rounded-2xl p-6 text-center shadow-sm border border-gray-100 reveal">
+          <div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-4" style="background:#DCFCE7;">
+            <i class="fas fa-chart-line text-primary-green text-2xl"></i>
+          </div>
+          <h4 class="font-bold text-gray-800">Más material reciclable</h4>
+          <p class="text-gray-500 text-sm mt-2">Aumenta el porcentaje de residuos que pueden volver al ciclo productivo.</p>
         </div>
-        <div class="reveal">
-          <span class="text-primary-green font-bold text-sm uppercase tracking-wide"><i class="fas fa-road mr-1"></i> Infraestructura vial</span>
-          <h2 class="text-3xl md:text-4xl font-bold mt-2 text-gray-800">Limpieza y Mantenimiento de Bermas</h2>
-          <p class="text-gray-600 mt-5 leading-relaxed">
-            RECOVEN SAS presta el servicio de limpieza y mantenimiento de bermas, áreas verdes y zonas perimetrales, contribuyendo a la conservación del entorno, la seguridad vial y el control de residuos sólidos en espacios públicos y privados.
-          </p>
-          <ul class="mt-6 space-y-3">
-            <li class="flex items-center gap-3"><i class="fas fa-check-circle text-primary-green"></i><span class="text-gray-700">Limpieza de zonas perimetrales</span></li>
-            <li class="flex items-center gap-3"><i class="fas fa-check-circle text-primary-green"></i><span class="text-gray-700">Mantenimiento de áreas verdes</span></li>
-            <li class="flex items-center gap-3"><i class="fas fa-check-circle text-primary-green"></i><span class="text-gray-700">Control de residuos en vías públicas</span></li>
-            <li class="flex items-center gap-3"><i class="fas fa-check-circle text-primary-green"></i><span class="text-gray-700">Conservación del entorno y seguridad vial</span></li>
-          </ul>
-          <a href="index.html#contacto"
-             class="inline-flex items-center gap-2 mt-8 bg-primary-green text-white font-bold px-7 py-3 rounded-full hover:bg-opacity-90 transition hover:-translate-y-0.5 shadow-md">
-            <i class="fas fa-truck"></i> Solicitar este servicio
-          </a>
+        <div class="bg-white rounded-2xl p-6 text-center shadow-sm border border-gray-100 reveal">
+          <div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-4" style="background:#DCFCE7;">
+            <i class="fas fa-leaf text-primary-green text-2xl"></i>
+          </div>
+          <h4 class="font-bold text-gray-800">Menos contaminación</h4>
+          <p class="text-gray-500 text-sm mt-2">Reduce el impacto ambiental negativo en suelos, agua y aire.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 text-center shadow-sm border border-gray-100 reveal">
+          <div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-4" style="background:#DCFCE7;">
+            <i class="fas fa-star text-primary-green text-2xl"></i>
+          </div>
+          <h4 class="font-bold text-gray-800">Mejor calidad</h4>
+          <p class="text-gray-500 text-sm mt-2">Mejora la calidad del material aprovechado para su reutilización.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 text-center shadow-sm border border-gray-100 reveal">
+          <div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-4" style="background:#DCFCE7;">
+            <i class="fas fa-cogs text-primary-green text-2xl"></i>
+          </div>
+          <h4 class="font-bold text-gray-800">Optimiza la ECA</h4>
+          <p class="text-gray-500 text-sm mt-2">Optimiza los procesos de la Estación de Clasificación y Aprovechamiento.</p>
         </div>
       </div>
     </div>
@@ -246,66 +700,74 @@
 
   <!-- SERVICIOS COMPLEMENTARIOS -->
   <section class="py-20 bg-gray-50">
-    <div class="container mx-auto px-6">
-      <div class="text-center max-w-2xl mx-auto mb-12 reveal">
-        <span class="text-primary-green font-semibold uppercase tracking-wider text-sm"><i class="fas fa-plus-circle mr-1"></i> Más servicios</span>
-        <h2 class="text-3xl md:text-4xl font-bold mt-2 text-gray-800">Servicios Complementarios</h2>
-        <p class="text-gray-500 mt-3">Ampliamos nuestra oferta para cubrir todas las necesidades ambientales de su organización.</p>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-4 items-start reveal">
+        <div class="w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center" style="background:#DCFCE7;">
+          <i class="fas fa-map-marked-alt text-primary-green text-lg"></i>
+        </div>
+        <div>
+          <h4 class="font-bold text-gray-800 text-sm">Planes Parciales de Desarrollo</h4>
+          <p class="text-gray-500 text-xs mt-1">Formulación de planes parciales de desarrollo municipal, regional y nacional.</p>
+        </div>
       </div>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-4 items-start reveal">
-          <div class="w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center" style="background:#DCFCE7;">
-            <i class="fas fa-map-marked-alt text-primary-green text-lg"></i>
-          </div>
-          <div>
-            <h4 class="font-bold text-gray-800 text-sm">Planes Parciales de Desarrollo</h4>
-            <p class="text-gray-500 text-xs mt-1">Formulación de planes municipales, regionales y nacionales de desarrollo sostenible.</p>
-          </div>
+
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-4 items-start reveal">
+        <div class="w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center" style="background:#DCFCE7;">
+          <i class="fas fa-project-diagram text-primary-green text-lg"></i>
         </div>
-        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-4 items-start reveal">
-          <div class="w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center" style="background:#DCFCE7;">
-            <i class="fas fa-project-diagram text-primary-green text-lg"></i>
-          </div>
-          <div>
-            <h4 class="font-bold text-gray-800 text-sm">Proyectos Ambientales</h4>
-            <p class="text-gray-500 text-xs mt-1">Formulación de proyectos ambientales municipales, departamentales y nacionales.</p>
-          </div>
+        <div>
+          <h4 class="font-bold text-gray-800 text-sm">Proyectos Ambientales</h4>
+          <p class="text-gray-500 text-xs mt-1">Formulación de proyectos ambientales municipales, departamentales y nacionales.</p>
         </div>
-        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-4 items-start reveal">
-          <div class="w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center" style="background:#DCFCE7;">
-            <i class="fas fa-chalkboard-teacher text-primary-green text-lg"></i>
-          </div>
-          <div>
-            <h4 class="font-bold text-gray-800 text-sm">Educación y Cultura Ambiental</h4>
-            <p class="text-gray-500 text-xs mt-1">Proyectos de educación ambiental comunitaria y empresarial.</p>
-          </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-4 items-start reveal">
+        <div class="w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center" style="background:#DCFCE7;">
+          <i class="fas fa-chalkboard-teacher text-primary-green text-lg"></i>
         </div>
-        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-4 items-start reveal">
-          <div class="w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center" style="background:#DCFCE7;">
-            <i class="fas fa-tractor text-primary-green text-lg"></i>
-          </div>
-          <div>
-            <h4 class="font-bold text-gray-800 text-sm">Proyectos Agropecuarios</h4>
-            <p class="text-gray-500 text-xs mt-1">Diseño y asistencia en proyectos agropecuarios y agroindustriales sostenibles.</p>
-          </div>
+        <div>
+          <h4 class="font-bold text-gray-800 text-sm">Educación y Cultura Ambiental</h4>
+          <p class="text-gray-500 text-xs mt-1">Proyectos de educación y cultura ambiental.</p>
         </div>
-        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-4 items-start reveal">
-          <div class="w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center" style="background:#DCFCE7;">
-            <i class="fas fa-hard-hat text-primary-green text-lg"></i>
-          </div>
-          <div>
-            <h4 class="font-bold text-gray-800 text-sm">Residuos en Obras Civiles</h4>
-            <p class="text-gray-500 text-xs mt-1">Gestión de residuos sólidos aprovechables para construcciones, viviendas y obras civiles.</p>
-          </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-4 items-start reveal">
+        <div class="w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center" style="background:#DCFCE7;">
+          <i class="fas fa-tractor text-primary-green text-lg"></i>
         </div>
-        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-4 items-start reveal">
-          <div class="w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center" style="background:#FEF9C3;">
-            <i class="fas fa-certificate text-yellow-600 text-lg"></i>
-          </div>
-          <div>
-            <h4 class="font-bold text-gray-800 text-sm">Certificados de Disposición Final</h4>
-            <p class="text-gray-500 text-xs mt-1">Emisión de certificados oficiales que acreditan el correcto aprovechamiento de residuos.</p>
-          </div>
+        <div>
+          <h4 class="font-bold text-gray-800 text-sm">Proyectos Agropecuarios</h4>
+          <p class="text-gray-500 text-xs mt-1">Diseño y asistencia en proyectos agropecuarios y agroindustriales sostenibles.</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-4 items-start reveal">
+        <div class="w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center" style="background:#DCFCE7;">
+          <i class="fas fa-hard-hat text-primary-green text-lg"></i>
+        </div>
+        <div>
+          <h4 class="font-bold text-gray-800 text-sm">Residuos en Obras Civiles</h4>
+          <p class="text-gray-500 text-xs mt-1">Gestión de residuos sólidos aprovechables para construcciones, viviendas y obras civiles.</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-4 items-start reveal">
+        <div class="w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center" style="background:#FEF9C3;">
+          <i class="fas fa-certificate text-yellow-600 text-lg"></i>
+        </div>
+        <div>
+          <h4 class="font-bold text-gray-800 text-sm">Certificados de Disposición Final</h4>
+          <p class="text-gray-500 text-xs mt-1">Emisión de certificados de disposición final de residuos aprovechables.</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-4 items-start reveal">
+        <div class="w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center" style="background:#DCFCE7;">
+          <i class="fas fa-cogs text-primary-green text-lg"></i>
+        </div>
+        <div>
+          <h4 class="font-bold text-gray-800 text-sm">Asesoría en PGIRS</h4>
+          <p class="text-gray-500 text-xs mt-1">Asesoría en implementación y actualización de PGIRS.</p>
         </div>
       </div>
     </div>
@@ -421,6 +883,7 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script type="module" src="js/main.js"></script>
 </body>
 </html>
