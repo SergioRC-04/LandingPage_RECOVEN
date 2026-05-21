@@ -1,6 +1,9 @@
 /**
- * main.js — Orquestador principal
+ * main.js — Orquestador multi-página
  * RECOVEN ECA SAS ESP · v2
+ *
+ * Detecta qué elementos existen en el DOM para inicializar
+ * solo los módulos que aplican a cada página.
  */
 
 import { initMenu }     from './modules/menu.js';
@@ -9,25 +12,27 @@ import { initCarousel } from './modules/carousel.js';
 import { initForm }     from './modules/form.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+  // ── Siempre activos (todas las páginas) ──
   initMenu();
-  initTabs();
-  initCarousel();
-  initForm();
-  initSmoothScroll();
   initReveal();
+  initSmoothScroll();
+
+  // ── Solo en index.html ──
+  if (document.getElementById('carouselTrack')) initCarousel();
+  if (document.getElementById('leadForm'))      initForm();
+
+  // ── Solo en empresa.html ──
+  if (document.getElementById('tabMisionBtn'))  initTabs();
 });
 
-// ── 1. SCROLL SUAVE CON OFFSET Y PRESELECCIÓN CONDICIONAL ────────
-//
-// Regla:
-//  • Botones del hero → apuntan a #tipos-servicio → scroll suave, sin preselección
-//  • Botones de tarjetas y nav → apuntan a #contacto con data-service → scroll + preselección
+// ── Scroll suave con offset navbar ───────────────────────────────
+// Solo intercepta anchors internos (#...).
+// Los links cross-página (index.html#contacto) navegan normalmente.
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', (e) => {
-      const href = anchor.getAttribute('href');
+      const href   = anchor.getAttribute('href');
       if (!href || href === '#') return;
-
       const target = document.querySelector(href);
       if (!target) return;
 
@@ -39,26 +44,23 @@ function initSmoothScroll() {
 
       window.scrollTo({ top: targetTop, behavior: 'smooth' });
 
-      // Preseleccionar el select SOLO cuando el destino es #contacto
+      // Preselección del select SOLO cuando destino es #contacto (index.html)
       const serviceValue = anchor.dataset.service;
-      const destino      = href;
-
-      if (serviceValue && destino === '#contacto') {
+      if (serviceValue && href === '#contacto') {
         setTimeout(() => {
           const select = document.getElementById('servicioTipo');
           if (select) {
             select.value = serviceValue;
-            // Flash verde para que el usuario note la selección
             select.classList.add('ring-2', 'ring-green-500');
             setTimeout(() => select.classList.remove('ring-2', 'ring-green-500'), 1200);
           }
-        }, 600); // esperar a que el scroll termine
+        }, 600);
       }
     });
   });
 }
 
-// ── 2. REVEAL ON SCROLL ──────────────────────────────────────────
+// ── Reveal on scroll (IntersectionObserver) ──────────────────────
 function initReveal() {
   const elements = document.querySelectorAll('.reveal');
   if (!elements.length) return;
@@ -67,15 +69,10 @@ function initReveal() {
     (entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-
         const section  = entry.target.closest('section') ?? document.body;
         const siblings = Array.from(section.querySelectorAll('.reveal'));
         const idx      = siblings.indexOf(entry.target);
-
-        setTimeout(() => {
-          entry.target.classList.add('visible');
-        }, idx * 100);
-
+        setTimeout(() => entry.target.classList.add('visible'), idx * 100);
         observer.unobserve(entry.target);
       });
     },

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RECOVEN ECA SAS ESP — Catálogo completo de servicios: residencial, industrial, consultoría, bodegas y más.">
+  <title>RECOVEN ECA ESP | Servicios</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .bg-primary-green   { background-color: #1E5A3C; }
+    .text-primary-green { color: #1E5A3C; }
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity .6s ease,transform .6s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .service-card { transition:transform .25s ease,box-shadow .25s ease; }
+    .service-card:hover { transform:translateY(-5px); box-shadow:0 20px 25px -12px rgba(0,0,0,.1); }
+    .ham-line { display:block; width:24px; height:2px; background-color:#1E5A3C; border-radius:2px; transition:all .3s ease; }
+    #menu-btn.open .ham-line:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+    #menu-btn.open .ham-line:nth-child(2) { opacity:0; transform:scaleX(0); }
+    #menu-btn.open .ham-line:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+    #mobile-menu { max-height:0; overflow:hidden; transition:max-height .4s ease,opacity .4s ease; opacity:0; }
+    #mobile-menu.open { max-height:500px; opacity:1; }
+    #whatsapp-fab { position:fixed; bottom:1.5rem; right:1.5rem; z-index:1000; background:#25D366; color:#fff; border-radius:9999px; padding:.9rem 1.4rem; display:flex; align-items:center; gap:.6rem; font-weight:700; font-size:.95rem; box-shadow:0 8px 24px rgba(37,211,102,.45); text-decoration:none; transition:transform .2s; }
+    #whatsapp-fab:hover { transform:translateY(-3px) scale(1.04); }
+    #whatsapp-fab::before { content:''; position:absolute; inset:-4px; border-radius:9999px; background:rgba(37,211,102,.35); animation:waPulse 2s ease-out infinite; }
+    @keyframes waPulse { 0%{transform:scale(1);opacity:.7} 70%{transform:scale(1.25);opacity:0} 100%{transform:scale(1.25);opacity:0} }
+    @media(max-width:479px){#whatsapp-fab .wa-label{display:none}}
+    /* Código de colores */
+    .bin-card { border-radius:1rem; padding:1.5rem; text-align:center; color:#fff; }
+    .bin-card h4 { font-weight:700; font-size:1rem; margin-bottom:.5rem; }
+    .bin-card ul { list-style:none; padding:0; margin:0; font-size:.85rem; opacity:.9; }
+    .bin-card ul li { margin-bottom:.2rem; }
+  </style>
+</head>
+<body class="bg-white text-gray-800">
+
+<!-- WhatsApp FAB -->
+<a id="whatsapp-fab" href="https://wa.me/573209350289?text=Hola%2C%20me%20interesa%20solicitar%20un%20servicio%20de%20RECOVEN%20ECA." target="_blank" rel="noopener" aria-label="WhatsApp">
+  <i class="fab fa-whatsapp text-2xl"></i><span class="wa-label">Escríbenos</span>
+</a>
+
+<!-- HEADER -->
+<header id="navbar" class="sticky top-0 z-50 bg-white shadow-md py-3 px-4 md:px-8 lg:px-16">
+  <div class="container mx-auto flex justify-between items-center">
+    <a href="index.html" class="flex items-center space-x-2">
+      <i class="fas fa-leaf text-3xl text-primary-green"></i>
+      <div>
+        <h1 class="font-extrabold text-xl md:text-2xl text-primary-green tracking-tight">RECOVEN ECA</h1>
+        <p class="text-[11px] md:text-xs text-gray-500 -mt-1">SAS ESP · Economía Circular</p>
+      </div>
+    </a>
+    <nav class="hidden md:flex space-x-8 text-gray-700 font-semibold">
+      <a href="index.html"     class="hover:text-primary-green transition">Inicio</a>
+      <a href="empresa.html"   class="hover:text-primary-green transition">Nosotros</a>
+      <a href="servicios.html" class="text-primary-green font-bold border-b-2 border-primary-green pb-0.5">Servicios</a>
+      <a href="index.html#contacto" class="hover:text-primary-green transition">Contacto</a>
+    </nav>
+    <div class="hidden md:block">
+      <a href="index.html#contacto" class="bg-primary-green text-white px-6 py-2 rounded-full font-bold shadow-md flex items-center gap-2 hover:bg-opacity-90 transition">
+        <i class="fas fa-truck"></i> Solicitar Servicio
+      </a>
+    </div>
+    <button id="menu-btn" class="block md:hidden flex flex-col gap-1.5 p-1" aria-label="Menú" aria-expanded="false">
+      <span class="ham-line"></span><span class="ham-line"></span><span class="ham-line"></span>
+    </button>
+  </div>
+  <div id="mobile-menu" class="md:hidden bg-white px-4 border-t border-gray-100 mt-2">
+    <div class="flex flex-col space-y-1 pb-4 pt-3">
+      <a href="index.html"     class="mobile-link font-medium hover:text-primary-green py-2 px-2 rounded-lg hover:bg-gray-50">Inicio</a>
+      <a href="empresa.html"   class="mobile-link font-medium hover:text-primary-green py-2 px-2 rounded-lg hover:bg-gray-50">Nosotros</a>
+      <a href="servicios.html" class="mobile-link font-bold text-primary-green py-2 px-2 rounded-lg bg-green-50">Servicios</a>
+      <a href="index.html#contacto" class="mobile-link font-medium hover:text-primary-green py-2 px-2 rounded-lg hover:bg-gray-50">Contacto</a>
+      <a href="index.html#contacto" class="mobile-link bg-primary-green text-white text-center rounded-full py-2 font-semibold mt-2"><i class="fas fa-truck mr-1"></i> Solicitar Servicio</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO BANNER -->
+  <section class="relative bg-cover bg-center py-20 md:py-32"
+    style="background-image:linear-gradient(135deg,rgba(228,179,99,.88),rgba(180,130,50,.92)),
+           url('https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=1600&auto=format&fit=crop&q=80');
+           background-size:cover;">
+    <div class="container mx-auto px-6 text-center text-white reveal">
+      <span class="inline-block bg-white/20 border border-white/30 text-white text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-5">Catálogo 2026</span>
+      <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">Nuestros Servicios</h1>
+      <p class="text-xl mt-4 opacity-90 max-w-xl mx-auto">Soluciones ambientales integrales para tu negocio y comunidad</p>
+    </div>
+  </section>
+
+  <!-- SERVICIOS PRINCIPALES — 4 CARDS -->
+  <section id="servicios-principales" class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+      <div class="text-center max-w-2xl mx-auto reveal">
+        <span class="text-primary-green font-semibold uppercase tracking-wider text-sm">Oferta integral</span>
+        <h2 class="text-3xl md:text-4xl font-bold mt-2">Soluciones que generan valor ambiental y empresarial</h2>
+        <p class="text-gray-500 mt-3">Gestión de residuos, consultoría y economía circular bajo estándares legales.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-14">
+        <div class="service-card bg-gray-50 rounded-2xl p-6 shadow-sm reveal">
+          <i class="fas fa-industry text-4xl text-primary-green"></i>
+          <h4 class="font-bold text-xl mt-4">Gestión Corporativa de Residuos</h4>
+          <p class="text-gray-600 text-sm mt-2">Recolección de residuos aprovechables en sector industrial, comercial y oficinas. <strong class="text-primary-green">Emitimos Certificado de Disposición Final</strong> con trazabilidad garantizada.</p>
+        </div>
+        <div class="service-card bg-gray-50 rounded-2xl p-6 shadow-sm reveal">
+          <i class="fas fa-tint text-4xl text-primary-green"></i>
+          <h4 class="font-bold text-xl mt-4">Ingeniería & Servicios Especializados</h4>
+          <p class="text-gray-600 text-sm mt-2">Evacuación, transporte y disposición de lodos, aguas residuales domésticas, industriales y peligrosas. Limpieza de bermas, drenaje pluvial y siembra de árboles.</p>
+        </div>
+        <div class="service-card bg-gray-50 rounded-2xl p-6 shadow-sm reveal">
+          <i class="fas fa-file-alt text-4xl text-primary-green"></i>
+          <h4 class="font-bold text-xl mt-4">Consultoría Ambiental</h4>
+          <p class="text-gray-600 text-sm mt-2">Implementación y actualización de PGIRS, formulación de proyectos ambientales municipales, departamentales y planes parciales de desarrollo territorial.</p>
+        </div>
+        <div class="service-card bg-gray-50 rounded-2xl p-6 shadow-sm reveal">
+          <i class="fas fa-seedling text-4xl text-primary-green"></i>
+          <h4 class="font-bold text-xl mt-4">Abonos & Sostenibilidad</h4>
+          <p class="text-gray-600 text-sm mt-2">Recolección y disposición final de poda para convertirla en abono orgánico. Proyectos agropecuarios sostenibles y educación ambiental comunitaria.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARA RECICLAR — SECCIÓN EDUCATIVA -->
+  <section class="py-20 bg-gradient-to-br from-[#EFF7EF] to-white">
+    <div class="container mx-auto px-6 max-w-5xl">
+      <div class="text-center reveal">
+        <span class="text-primary-green font-semibold uppercase tracking-wider text-sm"><i class="fas fa-recycle mr-1"></i> Separa para reciclar</span>
+        <h2 class="text-3xl md:text-4xl font-bold mt-2 text-gray-800">Para Reciclar</h2>
+        <p class="text-gray-600 mt-4 max-w-2xl mx-auto leading-relaxed">
+          En RECOVEN SAS promovemos la correcta separación en la fuente como base fundamental del aprovechamiento de residuos. Una adecuada clasificación permite:
+        </p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+        <div class="bg-white rounded-2xl p-6 text-center shadow-sm border border-gray-100 reveal">
+          <div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-4" style="background:#DCFCE7;">
+            <i class="fas fa-chart-line text-primary-green text-2xl"></i>
+          </div>
+          <h4 class="font-bold text-gray-800">Más material reciclable</h4>
+          <p class="text-gray-500 text-sm mt-2">Aumenta el porcentaje de residuos que pueden volver al ciclo productivo.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 text-center shadow-sm border border-gray-100 reveal">
+          <div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-4" style="background:#DCFCE7;">
+            <i class="fas fa-leaf text-primary-green text-2xl"></i>
+          </div>
+          <h4 class="font-bold text-gray-800">Menos contaminación</h4>
+          <p class="text-gray-500 text-sm mt-2">Reduce el impacto ambiental negativo en suelos, agua y aire.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 text-center shadow-sm border border-gray-100 reveal">
+          <div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-4" style="background:#DCFCE7;">
+            <i class="fas fa-star text-primary-green text-2xl"></i>
+          </div>
+          <h4 class="font-bold text-gray-800">Mejor calidad</h4>
+          <p class="text-gray-500 text-sm mt-2">Mejora la calidad del material aprovechado para su reutilización.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 text-center shadow-sm border border-gray-100 reveal">
+          <div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-4" style="background:#DCFCE7;">
+            <i class="fas fa-cogs text-primary-green text-2xl"></i>
+          </div>
+          <h4 class="font-bold text-gray-800">Optimiza la ECA</h4>
+          <p class="text-gray-500 text-sm mt-2">Optimiza los procesos de la Estación de Clasificación y Aprovechamiento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓDIGO DE COLORES -->
+  <section class="py-16 bg-gray-900">
+    <div class="container mx-auto px-6 max-w-4xl">
+      <div class="text-center mb-10 reveal">
+        <span class="text-[#E4B363] font-semibold uppercase tracking-wider text-sm">Resolución 2184 de 2019</span>
+        <h2 class="text-3xl md:text-4xl font-bold mt-2 text-white">Código de Colores</h2>
+        <p class="text-gray-400 mt-2">Más que una obligación, reciclar es una necesidad.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6 reveal">
+        <!-- Blanco -->
+        <div class="bin-card" style="background:#4B5563;">
+          <div class="text-5xl mb-3">🗑️</div>
+          <h4>Residuos Aprovechables</h4>
+          <ul>
+            <li>Plástico</li><li>Cartón</li><li>Vidrio</li><li>Papel</li><li>Metales</li>
+          </ul>
+          <div class="mt-3 text-xs font-bold uppercase tracking-widest opacity-70">Caneca blanca o gris</div>
+        </div>
+        <!-- Verde -->
+        <div class="bin-card" style="background:#166534;">
+          <div class="text-5xl mb-3">🌿</div>
+          <h4>Residuos Orgánicos Aprovechables</h4>
+          <ul>
+            <li>Restos de comida</li><li>Desechos agrícolas</li>
+          </ul>
+          <div class="mt-3 text-xs font-bold uppercase tracking-widest opacity-70">Caneca verde</div>
+        </div>
+        <!-- Negro -->
+        <div class="bin-card" style="background:#374151; border:2px solid #6B7280;">
+          <div class="text-5xl mb-3">🚮</div>
+          <h4>Residuos No Aprovechables</h4>
+          <ul>
+            <li>Papel higiénico</li><li>Servilletas</li><li>Papeles contaminados</li><li>Papeles metalizados</li>
+          </ul>
+          <div class="mt-3 text-xs font-bold uppercase tracking-widest opacity-70">Caneca negra</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIMPIEZA DE BERMAS -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-6 max-w-6xl">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="reveal">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&auto=format&fit=crop&q=80"
+               alt="Limpieza de bermas RECOVEN" class="w-full h-72 object-cover rounded-2xl shadow-lg">
+        </div>
+        <div class="reveal">
+          <span class="text-primary-green font-bold text-sm uppercase tracking-wide"><i class="fas fa-road mr-1"></i> Infraestructura vial</span>
+          <h2 class="text-3xl md:text-4xl font-bold mt-2 text-gray-800">Limpieza y Mantenimiento de Bermas</h2>
+          <p class="text-gray-600 mt-5 leading-relaxed">
+            RECOVEN SAS presta el servicio de limpieza y mantenimiento de bermas, áreas verdes y zonas perimetrales, contribuyendo a la conservación del entorno, la seguridad vial y el control de residuos sólidos en espacios públicos y privados.
+          </p>
+          <ul class="mt-6 space-y-3">
+            <li class="flex items-center gap-3"><i class="fas fa-check-circle text-primary-green"></i><span class="text-gray-700">Limpieza de zonas perimetrales</span></li>
+            <li class="flex items-center gap-3"><i class="fas fa-check-circle text-primary-green"></i><span class="text-gray-700">Mantenimiento de áreas verdes</span></li>
+            <li class="flex items-center gap-3"><i class="fas fa-check-circle text-primary-green"></i><span class="text-gray-700">Control de residuos en vías públicas</span></li>
+            <li class="flex items-center gap-3"><i class="fas fa-check-circle text-primary-green"></i><span class="text-gray-700">Conservación del entorno y seguridad vial</span></li>
+          </ul>
+          <a href="index.html#contacto"
+             class="inline-flex items-center gap-2 mt-8 bg-primary-green text-white font-bold px-7 py-3 rounded-full hover:bg-opacity-90 transition hover:-translate-y-0.5 shadow-md">
+            <i class="fas fa-truck"></i> Solicitar este servicio
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS COMPLEMENTARIOS -->
+  <section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-6">
+      <div class="text-center max-w-2xl mx-auto mb-12 reveal">
+        <span class="text-primary-green font-semibold uppercase tracking-wider text-sm"><i class="fas fa-plus-circle mr-1"></i> Más servicios</span>
+        <h2 class="text-3xl md:text-4xl font-bold mt-2 text-gray-800">Servicios Complementarios</h2>
+        <p class="text-gray-500 mt-3">Ampliamos nuestra oferta para cubrir todas las necesidades ambientales de su organización.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-4 items-start reveal">
+          <div class="w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center" style="background:#DCFCE7;">
+            <i class="fas fa-map-marked-alt text-primary-green text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-800 text-sm">Planes Parciales de Desarrollo</h4>
+            <p class="text-gray-500 text-xs mt-1">Formulación de planes municipales, regionales y nacionales de desarrollo sostenible.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-4 items-start reveal">
+          <div class="w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center" style="background:#DCFCE7;">
+            <i class="fas fa-project-diagram text-primary-green text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-800 text-sm">Proyectos Ambientales</h4>
+            <p class="text-gray-500 text-xs mt-1">Formulación de proyectos ambientales municipales, departamentales y nacionales.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-4 items-start reveal">
+          <div class="w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center" style="background:#DCFCE7;">
+            <i class="fas fa-chalkboard-teacher text-primary-green text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-800 text-sm">Educación y Cultura Ambiental</h4>
+            <p class="text-gray-500 text-xs mt-1">Proyectos de educación ambiental comunitaria y empresarial.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-4 items-start reveal">
+          <div class="w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center" style="background:#DCFCE7;">
+            <i class="fas fa-tractor text-primary-green text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-800 text-sm">Proyectos Agropecuarios</h4>
+            <p class="text-gray-500 text-xs mt-1">Diseño y asistencia en proyectos agropecuarios y agroindustriales sostenibles.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-4 items-start reveal">
+          <div class="w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center" style="background:#DCFCE7;">
+            <i class="fas fa-hard-hat text-primary-green text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-800 text-sm">Residuos en Obras Civiles</h4>
+            <p class="text-gray-500 text-xs mt-1">Gestión de residuos sólidos aprovechables para construcciones, viviendas y obras civiles.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-4 items-start reveal">
+          <div class="w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center" style="background:#FEF9C3;">
+            <i class="fas fa-certificate text-yellow-600 text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-800 text-sm">Certificados de Disposición Final</h4>
+            <p class="text-gray-500 text-xs mt-1">Emisión de certificados oficiales que acreditan el correcto aprovechamiento de residuos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BODEGAS -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-6 max-w-5xl">
+      <div class="text-center mb-12 reveal">
+        <span class="text-primary-green font-semibold uppercase tracking-wider text-sm"><i class="fas fa-warehouse mr-1"></i> Infraestructura propia</span>
+        <h2 class="text-3xl md:text-4xl font-bold mt-2 text-gray-800">Nuestras Bodegas ECA</h2>
+        <p class="text-gray-500 mt-3">Contamos con instalaciones propias para la clasificación y disposición final de residuos.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8">
+
+        <!-- Bodega 1 -->
+        <div class="rounded-2xl overflow-hidden shadow-lg border border-gray-100 reveal">
+          <div class="h-48 flex items-center justify-center" style="background:linear-gradient(135deg,#1E5A3C,#2D7A50);">
+            <div class="text-center text-white">
+              <i class="fas fa-home text-5xl opacity-80 mb-2"></i>
+              <div class="font-extrabold text-xl uppercase tracking-wide">Bodega 1</div>
+            </div>
+          </div>
+          <div class="p-6 bg-white">
+            <h3 class="font-bold text-xl text-gray-800">ECA de Residuos Aprovechables Residenciales</h3>
+            <p class="text-gray-600 text-sm mt-3 leading-relaxed">
+              Estación de Clasificación y Aprovechamiento especializada en el manejo de residuos sólidos aprovechables provenientes del sector residencial: viviendas, conjuntos y urbanizaciones.
+            </p>
+            <ul class="mt-4 space-y-2 text-sm text-gray-600">
+              <li class="flex items-center gap-2"><i class="fas fa-check text-primary-green"></i>Clasificación y segregación de materiales</li>
+              <li class="flex items-center gap-2"><i class="fas fa-check text-primary-green"></i>Plástico, cartón, vidrio, papel y metales</li>
+              <li class="flex items-center gap-2"><i class="fas fa-check text-primary-green"></i>Emisión de certificado de aprovechamiento</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Bodega 2 -->
+        <div class="rounded-2xl overflow-hidden shadow-lg border border-gray-100 reveal">
+          <div class="h-48 flex items-center justify-center" style="background:linear-gradient(135deg,#92400e,#B45309);">
+            <div class="text-center text-white">
+              <i class="fas fa-industry text-5xl opacity-80 mb-2"></i>
+              <div class="font-extrabold text-xl uppercase tracking-wide">Bodega 2</div>
+            </div>
+          </div>
+          <div class="p-6 bg-white">
+            <h3 class="font-bold text-xl text-gray-800">Disposición Final de Residuos Industriales</h3>
+            <p class="text-gray-600 text-sm mt-3 leading-relaxed">
+              Instalación especializada en la recepción, clasificación y disposición final de residuos industriales aprovechables, con capacidad para grandes volúmenes y vehículos de carga pesada.
+            </p>
+            <ul class="mt-4 space-y-2 text-sm text-gray-600">
+              <li class="flex items-center gap-2"><i class="fas fa-check" style="color:#B45309;"></i>Residuos industriales aprovechables</li>
+              <li class="flex items-center gap-2"><i class="fas fa-check" style="color:#B45309;"></i>Materiales ferrosos y no ferrosos</li>
+              <li class="flex items-center gap-2"><i class="fas fa-check" style="color:#B45309;"></i>Certificado de Disposición Final empresarial</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="py-16 bg-primary-green">
+    <div class="container mx-auto px-6 text-center reveal">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-white">¿Listo para gestionar tus residuos?</h2>
+      <p class="text-white mt-3 text-lg max-w-xl mx-auto">Contacta a nuestro equipo y recibe una propuesta personalizada en menos de 24 horas.</p>
+      <div class="flex flex-wrap justify-center gap-4 mt-8">
+        <a href="index.html#contacto"
+           class="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white border border-white/40 font-bold px-8 py-3 rounded-full transition hover:-translate-y-0.5">
+          <i class="fas fa-paper-plane"></i> Solicitar servicio
+        </a>
+        <a href="https://wa.me/573209350289" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white border border-white/40 font-bold px-8 py-3 rounded-full transition hover:-translate-y-0.5">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-gray-300 py-12">
+  <div class="container mx-auto px-6 grid md:grid-cols-4 gap-8">
+    <div>
+      <i class="fas fa-leaf text-2xl text-primary-green"></i>
+      <h4 class="font-bold text-white text-lg mt-2">RECOVEN ECA SAS ESP</h4>
+      <p class="text-sm mt-1">Soluciones ambientales con certificación y responsabilidad social.</p>
+    </div>
+    <div>
+      <h5 class="font-semibold text-white">Páginas</h5>
+      <ul class="mt-2 space-y-1 text-sm">
+        <li><a href="index.html"          class="hover:text-primary-green transition">Inicio</a></li>
+        <li><a href="empresa.html"        class="hover:text-primary-green transition">Nosotros</a></li>
+        <li><a href="servicios.html"      class="hover:text-primary-green transition">Servicios</a></li>
+        <li><a href="index.html#contacto" class="hover:text-primary-green transition">Contacto</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="font-semibold text-white">Contacto directo</h5>
+      <p class="text-sm mt-2"><i class="fas fa-phone-alt mr-2"></i>320 935 0289<br><i class="fas fa-envelope mr-2"></i>recovenecasasesp@gmail.com<br><i class="fas fa-map-pin mr-2"></i>Barranquilla / Puerto Colombia</p>
+      <a href="https://wa.me/573209350289" target="_blank" rel="noopener" class="inline-flex items-center gap-2 mt-3 text-sm font-semibold" style="color:#25D366;"><i class="fab fa-whatsapp text-lg"></i> WhatsApp directo</a>
+    </div>
+    <div>
+      <h5 class="font-semibold text-white">Certificaciones</h5>
+      <p class="text-sm mt-2">✔️ Registro como ECA<br>✔️ Cumplimiento Res. 2184/2019<br>✔️ Alianza sector zonas francas</p>
+    </div>
+  </div>
+  <div class="text-center text-sm text-gray-500 border-t border-gray-800 pt-6 mt-8">
+    © 2026 RECOVEN ECA SAS ESP — Economía Circular y Desarrollo Sostenible.
+  </div>
+</footer>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
