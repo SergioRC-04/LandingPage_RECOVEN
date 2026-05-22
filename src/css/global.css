@@ -1,0 +1,45 @@
+/* ==================== GLOBAL STYLES ==================== */
+
+/* Tipografía y colores */
+:root {
+  --primary-green: #1e5a3c;
+  --gold-accent: #e4b363;
+  --white: #ffffff;
+  --text-dark: #1f2937;
+  --gray-light: #f9fafb;
+  --overlay-dark: rgba(0, 0, 0, 0.6);
+  --transition-smooth: all 0.3s ease;
+}
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  background-color: #ffffff;
+  color: #1f2937;
+}
+
+/* Colores principales */
+.bg-primary-green {
+  background-color: var(--primary-green);
+}
+
+.text-primary-green {
+  color: var(--primary-green);
+}
+
+/* Utilidades de estilo */
+.error-msg {
+  color: #dc2626;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+#form-success,
+#form-error-msg {
+  display: none;
+}
+
+#form-success.show,
+#form-error-msg.show {
+  display: block;
+  animation: fadeIn 0.4s ease;
+}

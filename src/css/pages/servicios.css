@@ -1,0 +1,429 @@
+/* ==================== SERVICIOS.HTML SPECIFIC STYLES ==================== */
+
+/* Código de colores - Bin Cards */
+.bin-card {
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  color: white;
+}
+
+.bin-card h4 {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.bin-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.bin-card ul li {
+  margin-bottom: 0.2rem;
+}
+
+/* ==================== HERO + CAROUSEL UNIFIED ==================== */
+.hero-carousel-unified {
+  display: flex;
+  min-height: 80vh;
+  background: var(--gray-light);
+}
+
+/* COLUMNA IZQUIERDA - HERO FIJO (30%) */
+.hero-column {
+  width: 35%;
+  background: linear-gradient(135deg, var(--primary-green), #2d7a50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-column::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 300px;
+  background: rgba(228, 179, 99, 0.1);
+  border-radius: 50%;
+  filter: blur(60px);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: left;
+  max-width: 90%;
+}
+
+.hero-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(228, 179, 99, 0.5);
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(10px);
+}
+
+.hero-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  color: white;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+  letter-spacing: -1px;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.hero-description {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  max-width: 85%;
+}
+
+.hero-cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--gold-accent);
+  color: var(--primary-green);
+  padding: 1rem 1.8rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+  box-shadow: 0 8px 20px rgba(228, 179, 99, 0.35);
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.hero-cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(228, 179, 99, 0.45);
+  background: #f0c470;
+}
+
+.hero-cta-button:active {
+  transform: translateY(-1px);
+}
+
+/* COLUMNA DERECHA - CARRUSEL (70%) */
+.carousel-column {
+  width: 65%;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-carousel-swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-slide {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 3rem;
+}
+
+.carousel-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--overlay-dark);
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+
+.carousel-slide:hover .carousel-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.carousel-content {
+  position: relative;
+  z-index: 2;
+  color: white;
+  animation: slideUp 0.6s ease forwards;
+  max-width: 100%;
+}
+
+.carousel-icon {
+  font-size: 3rem;
+  color: var(--gold-accent);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.carousel-title {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 800;
+  margin-bottom: 0.8rem;
+  line-height: 1.2;
+}
+
+.carousel-description {
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  line-height: 1.6;
+  opacity: 0.95;
+  max-width: 95%;
+}
+
+/* ==================== NAVEGACIÓN DEL CARRUSEL ==================== */
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: var(--transition-smooth);
+  font-size: 1.2rem;
+  backdrop-filter: blur(10px);
+}
+
+.carousel-nav:hover {
+  background: rgba(255, 255, 255, 0.35);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-nav:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.carousel-nav-prev {
+  left: 1.5rem;
+}
+
+.carousel-nav-next {
+  right: 1.5rem;
+}
+
+/* ==================== PAGINACIÓN ==================== */
+.carousel-pagination {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.8rem;
+  z-index: 10;
+}
+
+.swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  border: 2px solid transparent;
+}
+
+.swiper-pagination-bullet:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--gold-accent);
+  width: 32px;
+  border-radius: 9999px;
+}
+
+/* ==================== RESPONSIVE - TABLET ==================== */
+@media (max-width: 1024px) {
+  .hero-carousel-unified {
+    min-height: 80vh;
+  }
+
+  .hero-column {
+    width: 42%;
+    padding: 2rem 1.5rem;
+  }
+
+  .carousel-column {
+    width: 58%;
+  }
+
+  .hero-title {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .carousel-nav {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .carousel-nav-prev {
+    left: 1rem;
+  }
+
+  .carousel-nav-next {
+    right: 1rem;
+  }
+}
+
+/* ==================== RESPONSIVE - MÓVIL ==================== */
+@media (max-width: 768px) {
+  .hero-carousel-unified {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .hero-column {
+    width: 100%;
+    min-height: 45vh;
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+
+  .hero-content {
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .hero-description {
+    max-width: 100%;
+  }
+
+  .carousel-column {
+    width: 100%;
+    min-height: 55vh;
+  }
+
+  .carousel-slide {
+    padding: 2rem 1.5rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .carousel-content {
+    text-align: center;
+  }
+
+  .carousel-icon {
+    margin-bottom: 0.8rem;
+  }
+
+  .carousel-nav {
+    width: 45px;
+    height: 45px;
+    font-size: 1.1rem;
+  }
+
+  .carousel-nav-prev {
+    left: 0.8rem;
+  }
+
+  .carousel-nav-next {
+    right: 0.8rem;
+  }
+
+  .carousel-pagination {
+    bottom: 1rem;
+  }
+
+  .carousel-title {
+    font-size: 1.3rem;
+  }
+
+  .carousel-description {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-column {
+    min-height: 50vh;
+    padding: 1.5rem 1rem;
+  }
+
+  .hero-title {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .hero-description {
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .carousel-column {
+    min-height: 50vh;
+  }
+
+  .carousel-slide {
+    padding: 1.5rem 1rem;
+  }
+
+  .carousel-nav {
+    width: 40px;
+    height: 40px;
+    font-size: 0.9rem;
+  }
+
+  .carousel-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .carousel-description {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+
+  .carousel-icon {
+    font-size: 2rem;
+  }
+
+  .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+  }
+
+  .swiper-pagination-bullet-active {
+    width: 28px;
+  }
+}

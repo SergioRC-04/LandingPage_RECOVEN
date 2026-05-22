@@ -1,4 +1,5 @@
 Cambiar Logo
 Orgnizar carpetas
 Tener imagenes locales
-Eliminar pdf
+Enviar al correo
+Se esta demorando en cargar
