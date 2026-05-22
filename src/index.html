@@ -1,295 +1,704 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="RECOVEN ECA SAS ESP — Recolección de residuos para hogares e industrias en Barranquilla y Puerto Colombia. Solicite su servicio.">
-  <title>RECOVEN ECA ESP | Inicio</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Inter', system-ui, sans-serif; }
-    .bg-primary-green   { background-color: #1E5A3C; }
-    .text-primary-green { color: #1E5A3C; }
-    .service-card { transition: transform .25s ease, box-shadow .25s ease; }
-    .service-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -12px rgba(0,0,0,.1); }
-    .hero-service-card { background:#fff; border-radius:1.25rem; padding:2rem 1.5rem; text-align:center; transition:transform .25s,box-shadow .25s; box-shadow:0 4px 20px rgba(0,0,0,.12); }
-    .hero-service-card:hover { transform:translateY(-4px); box-shadow:0 16px 32px rgba(0,0,0,.15); }
-    .hero-service-card.industrial  { border-top:4px solid #E4B363; }
-    .hero-service-card.residencial { border-top:4px solid #1E5A3C; }
-    .carousel-container { overflow:hidden; width:100%; position:relative; }
-    .carousel-container::before,.carousel-container::after { content:''; position:absolute; top:0; bottom:0; width:80px; z-index:2; pointer-events:none; }
-    .carousel-container::before { left:0;  background:linear-gradient(to right,#F9FAFB,transparent); }
-    .carousel-container::after  { right:0; background:linear-gradient(to left, #F9FAFB,transparent); }
-    .carousel-track { display:flex; gap:2rem; will-change:transform; width:max-content; }
-    .carousel-slide { flex-shrink:0; width:160px; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#fff; padding:1rem .5rem; border-radius:1rem; box-shadow:0 2px 8px rgba(0,0,0,.07); border:1px solid #E5E7EB; }
-    @media(min-width:768px){.carousel-slide{width:180px;}}
-    .carousel-slide i { font-size:2.5rem; color:#1E5A3C; margin-bottom:.5rem; }
-    .carousel-slide span { font-weight:600; font-size:.85rem; text-align:center; color:#1F2937; }
-    .reveal { opacity:0; transform:translateY(28px); transition:opacity .6s ease,transform .6s ease; }
-    .reveal.visible { opacity:1; transform:translateY(0); }
-    .ham-line { display:block; width:24px; height:2px; background-color:#1E5A3C; border-radius:2px; transition:all .3s ease; }
-    #menu-btn.open .ham-line:nth-child(1) { transform:translateY(7px) rotate(45deg); }
-    #menu-btn.open .ham-line:nth-child(2) { opacity:0; transform:scaleX(0); }
-    #menu-btn.open .ham-line:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
-    #mobile-menu { max-height:0; overflow:hidden; transition:max-height .4s ease,opacity .4s ease; opacity:0; }
-    #mobile-menu.open { max-height:500px; opacity:1; }
-    .error-msg { color:#dc2626; font-size:.75rem; margin-top:.25rem; }
-    #form-success,#form-error-msg { display:none; }
-    #form-success.show,#form-error-msg.show { display:block; animation:fadeIn .4s ease; }
-    @keyframes fadeIn { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:translateY(0)} }
-    #whatsapp-fab { position:fixed; bottom:1.5rem; right:1.5rem; z-index:1000; background:#25D366; color:#fff; border-radius:9999px; padding:.9rem 1.4rem; display:flex; align-items:center; gap:.6rem; font-weight:700; font-size:.95rem; box-shadow:0 8px 24px rgba(37,211,102,.45); text-decoration:none; transition:transform .2s,box-shadow .2s; }
-    #whatsapp-fab:hover { transform:translateY(-3px) scale(1.04); }
-    #whatsapp-fab::before { content:''; position:absolute; inset:-4px; border-radius:9999px; background:rgba(37,211,102,.35); animation:waPulse 2s ease-out infinite; }
-    @keyframes waPulse { 0%{transform:scale(1);opacity:.7} 70%{transform:scale(1.25);opacity:0} 100%{transform:scale(1.25);opacity:0} }
-    @media(max-width:479px){#whatsapp-fab .wa-label{display:none}}
-  </style>
-</head>
-<body class="bg-white text-gray-800">
-
-<!-- WhatsApp FAB -->
-<a id="whatsapp-fab" href="https://wa.me/573209350289?text=Hola%2C%20me%20interesa%20solicitar%20un%20servicio%20de%20RECOVEN%20ECA." target="_blank" rel="noopener" aria-label="WhatsApp">
-  <i class="fab fa-whatsapp text-2xl"></i><span class="wa-label">Escríbenos</span>
-</a>
-
-<!-- HEADER -->
-<header id="navbar" class="sticky top-0 z-50 bg-white shadow-md py-3 px-4 md:px-8 lg:px-16">
-  <div class="container mx-auto flex justify-between items-center">
-    <a href="index.html" class="flex items-center space-x-2">
-      <i class="fas fa-leaf text-3xl text-primary-green"></i>
-      <div>
-        <h1 class="font-extrabold text-xl md:text-2xl text-primary-green tracking-tight">RECOVEN ECA</h1>
-        <p class="text-[11px] md:text-xs text-gray-500 -mt-1">SAS ESP · Economía Circular</p>
-      </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="RECOVEN ECA SAS ESP — Recolección de residuos para hogares e industrias en Barranquilla y Puerto Colombia. Solicite su servicio."
+    />
+    <title>RECOVEN ECA ESP | Inicio</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+      }
+      .bg-primary-green {
+        background-color: #1e5a3c;
+      }
+      .text-primary-green {
+        color: #1e5a3c;
+      }
+      .service-card {
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.25s ease;
+      }
+      .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.1);
+      }
+      .hero-service-card {
+        background: #fff;
+        border-radius: 1.25rem;
+        padding: 2rem 1.5rem;
+        text-align: center;
+        transition:
+          transform 0.25s,
+          box-shadow 0.25s;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+      }
+      .hero-service-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+      }
+      .hero-service-card.industrial {
+        border-top: 4px solid #e4b363;
+      }
+      .hero-service-card.residencial {
+        border-top: 4px solid #1e5a3c;
+      }
+      .carousel-container {
+        overflow: hidden;
+        width: 100%;
+        position: relative;
+      }
+      .carousel-container::before,
+      .carousel-container::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 80px;
+        z-index: 2;
+        pointer-events: none;
+      }
+      .carousel-container::before {
+        left: 0;
+        background: linear-gradient(to right, #f9fafb, transparent);
+      }
+      .carousel-container::after {
+        right: 0;
+        background: linear-gradient(to left, #f9fafb, transparent);
+      }
+      .carousel-track {
+        display: flex;
+        gap: 2rem;
+        will-change: transform;
+        width: max-content;
+      }
+      .carousel-slide {
+        flex-shrink: 0;
+        width: 160px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        padding: 1rem 0.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+        border: 1px solid #e5e7eb;
+      }
+      @media (min-width: 768px) {
+        .carousel-slide {
+          width: 180px;
+        }
+      }
+      .carousel-slide i {
+        font-size: 2.5rem;
+        color: #1e5a3c;
+        margin-bottom: 0.5rem;
+      }
+      .carousel-slide span {
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-align: center;
+        color: #1f2937;
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.6s ease,
+          transform 0.6s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .ham-line {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background-color: #1e5a3c;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+      }
+      #menu-btn.open .ham-line:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+      #menu-btn.open .ham-line:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+      #menu-btn.open .ham-line:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+      #mobile-menu {
+        max-height: 0;
+        overflow: hidden;
+        transition:
+          max-height 0.4s ease,
+          opacity 0.4s ease;
+        opacity: 0;
+      }
+      #mobile-menu.open {
+        max-height: 500px;
+        opacity: 1;
+      }
+      .error-msg {
+        color: #dc2626;
+        font-size: 0.75rem;
+        margin-top: 0.25rem;
+      }
+      #form-success,
+      #form-error-msg {
+        display: none;
+      }
+      #form-success.show,
+      #form-error-msg.show {
+        display: block;
+        animation: fadeIn 0.4s ease;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      #whatsapp-fab {
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        z-index: 1000;
+        background: #25d366;
+        color: #fff;
+        border-radius: 9999px;
+        padding: 0.9rem 1.4rem;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-weight: 700;
+        font-size: 0.95rem;
+        box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45);
+        text-decoration: none;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      #whatsapp-fab:hover {
+        transform: translateY(-3px) scale(1.04);
+      }
+      #whatsapp-fab::before {
+        content: "";
+        position: absolute;
+        inset: -4px;
+        border-radius: 9999px;
+        background: rgba(37, 211, 102, 0.35);
+        animation: waPulse 2s ease-out infinite;
+      }
+      @keyframes waPulse {
+        0% {
+          transform: scale(1);
+          opacity: 0.7;
+        }
+        70% {
+          transform: scale(1.25);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1.25);
+          opacity: 0;
+        }
+      }
+      @media (max-width: 479px) {
+        #whatsapp-fab .wa-label {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-white text-gray-800">
+    <!-- WhatsApp FAB -->
+    <a
+      id="whatsapp-fab"
+      href="https://wa.me/573209350289?text=Hola%2C%20me%20interesa%20solicitar%20un%20servicio%20de%20RECOVEN%20ECA."
+      target="_blank"
+      rel="noopener"
+      aria-label="WhatsApp"
+    >
+      <i class="fab fa-whatsapp text-2xl"></i><span class="wa-label">Escríbenos</span>
     </a>
-    <nav class="hidden md:flex space-x-8 text-gray-700 font-semibold">
-      <a href="#inicio"      class="hover:text-primary-green transition">Inicio</a>
-      <a href="empresa.html" class="hover:text-primary-green transition">Nosotros</a>
-      <a href="servicios.html" class="hover:text-primary-green transition">Servicios</a>
-      <a href="#contacto"    class="nav-link hover:text-primary-green transition">Contacto</a>
-    </nav>
-    <div class="hidden md:block">
-      <a href="#contacto" class="nav-link bg-primary-green text-white px-6 py-2 rounded-full font-bold shadow-md flex items-center gap-2 hover:bg-opacity-90 transition">
-        <i class="fas fa-truck"></i> Solicitar Servicio
-      </a>
-    </div>
-    <button id="menu-btn" class="block md:hidden flex flex-col gap-1.5 p-1" aria-label="Menú" aria-expanded="false">
-      <span class="ham-line"></span><span class="ham-line"></span><span class="ham-line"></span>
-    </button>
-  </div>
-  <div id="mobile-menu" class="md:hidden bg-white px-4 border-t border-gray-100 mt-2">
-    <div class="flex flex-col space-y-1 pb-4 pt-3">
-      <a href="#inicio"       class="mobile-link font-medium hover:text-primary-green py-2 px-2 rounded-lg hover:bg-gray-50">Inicio</a>
-      <a href="empresa.html"  class="mobile-link font-medium hover:text-primary-green py-2 px-2 rounded-lg hover:bg-gray-50">Nosotros</a>
-      <a href="servicios.html" class="mobile-link font-medium hover:text-primary-green py-2 px-2 rounded-lg hover:bg-gray-50">Servicios</a>
-      <a href="#contacto"     class="nav-link mobile-link font-medium hover:text-primary-green py-2 px-2 rounded-lg hover:bg-gray-50">Contacto</a>
-      <a href="#contacto"     class="nav-link mobile-link bg-primary-green text-white text-center rounded-full py-2 font-semibold mt-2"><i class="fas fa-truck mr-1"></i> Solicitar Servicio</a>
-    </div>
-  </div>
-</header>
 
-<main>
-  <!-- HERO -->
-  <section id="inicio" class="relative bg-cover bg-center bg-no-repeat"
-    style="background-image:linear-gradient(115deg,rgba(0,0,0,.65),rgba(0,40,20,.70)),url('https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');background-size:cover;background-position:center;">
-    <div class="container mx-auto px-6 py-24 md:py-32 lg:py-40">
-      <div class="max-w-2xl reveal">
-        <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight">
-          Recolección de residuos para <span class="text-[#E4B363]">hogares e industrias</span>
-        </h2>
-        <p class="text-lg text-gray-200 mt-5 font-light">
-          Ofrecemos servicio de recolección de residuos sólidos aprovechables y no aprovechables, con cobertura en Barranquilla, Puerto Colombia y próximamente más zonas.
-        </p>
-        <div class="flex flex-wrap gap-4 mt-10">
-          <a href="#tipos-servicio" class="nav-link inline-flex items-center gap-2 bg-primary-green text-white font-bold px-7 py-3 rounded-full shadow-lg hover:bg-opacity-90 transition hover:-translate-y-0.5" data-service="Servicio Residencial">
-            <i class="fas fa-home"></i> Servicio Residencial
-          </a>
-          <a href="#tipos-servicio" class="nav-link inline-flex items-center gap-2 font-bold px-7 py-3 rounded-full shadow-lg transition hover:-translate-y-0.5 border-2 border-[#E4B363] text-white hover:bg-[#E4B363] hover:text-gray-900" data-service="Servicio Industrial / Comercial">
-            <i class="fas fa-industry"></i> Servicio Industrial
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TIPOS DE SERVICIO -->
-  <section id="tipos-servicio" class="py-16 bg-white">
-    <div class="container mx-auto px-6">
-      <div class="text-center mb-10 reveal">
-        <span class="text-primary-green font-semibold uppercase tracking-wider text-sm">¿Qué necesitas?</span>
-        <h2 class="text-3xl md:text-4xl font-bold mt-2 text-gray-800">Elige el servicio para ti</h2>
-        <p class="text-gray-500 mt-2">Soluciones para el hogar y para el sector empresarial.</p>
-      </div>
-      <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-        <div class="hero-service-card residencial reveal">
-          <i class="fas fa-home text-5xl text-primary-green mb-4"></i>
-          <h3 class="text-xl font-bold text-gray-800 mb-2">Servicio Residencial</h3>
-          <p class="text-gray-600 text-sm mb-6">Recolección en viviendas, conjuntos residenciales y urbanizaciones. Frecuencias flexibles (2 o 3 veces por semana) con altos estándares de limpieza.</p>
-          <a href="#contacto" class="nav-link bg-primary-green text-white px-6 py-3 rounded-xl font-bold w-full block hover:bg-opacity-90 transition" data-service="Servicio Residencial">
-            Solicitar servicio residencial →
-          </a>
-        </div>
-        <div class="hero-service-card industrial reveal">
-          <i class="fas fa-industry text-5xl mb-4" style="color:#E4B363;"></i>
-          <h3 class="text-xl font-bold text-gray-800 mb-2">Servicio Industrial / Comercial</h3>
-          <p class="text-gray-600 text-sm mb-6">Para fábricas, bodegas, centros comerciales, oficinas y zonas francas. Gestión de residuos aprovechables, no aprovechables y especiales.</p>
-          <a href="#contacto" class="nav-link text-white px-6 py-3 rounded-xl font-bold w-full block hover:opacity-90 transition" style="background-color:#E4B363;" data-service="Servicio Industrial / Comercial">
-            Solicitar servicio industrial →
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EMPRESA MINI -->
-  <section id="empresa-mini" class="py-12 bg-gray-50">
-    <div class="container mx-auto px-6 max-w-3xl text-center reveal">
-      <span class="text-primary-green font-semibold uppercase tracking-wider text-sm"><i class="fas fa-leaf mr-1"></i>Nuestra empresa</span>
-      <h2 class="text-2xl md:text-3xl font-bold mt-2 text-gray-800">Soluciones ambientales con responsabilidad social</h2>
-      <p class="text-gray-600 mt-4 leading-relaxed max-w-2xl mx-auto">
-        Somos RECOVEN ECA SAS ESP, empresa prestadora del servicio público de aseo dedicada a brindar soluciones ambientales integrales. Especialistas en gestión de residuos sólidos no peligrosos aprovechables con énfasis en sector agroquímico y zonas francas, promovemos la dignificación del reciclador de oficio, la inclusión social y el aprovechamiento responsable de los recursos.
-      </p>
-      <a href="empresa.html" class="inline-flex items-center gap-2 mt-6 text-primary-green font-bold hover:opacity-80 transition">
-        Conoce más sobre nosotros <i class="fas fa-arrow-right"></i>
-      </a>
-    </div>
-  </section>
-
-  <!-- CLIENTES -->
-  <section id="clientes" class="py-16 bg-white">
-    <div class="container mx-auto px-6">
-      <div class="text-center mb-8 reveal">
-        <h3 class="text-2xl font-bold text-gray-800">Empresas que confían en RECOVEN</h3>
-        <p class="text-gray-500">Aliados estratégicos en la gestión sostenible</p>
-      </div>
-      <div class="carousel-container relative">
-        <div id="carouselTrack" class="carousel-track"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACTO -->
-  <section id="contacto" class="py-20 bg-white">
-    <div class="container mx-auto px-6 max-w-6xl">
-      <div class="grid lg:grid-cols-5 gap-12 items-start">
-        <div class="lg:col-span-2 reveal">
-          <h3 class="text-3xl font-bold text-gray-800">Solicite su servicio o <span class="text-primary-green">Certificado de Disposición Final</span></h3>
-          <p class="text-gray-600 mt-3">Complete el formulario y nuestro equipo lo contactará en menos de 24 horas hábiles.</p>
-          <div class="mt-8 space-y-4">
-            <div class="flex gap-3"><i class="fas fa-map-marker-alt text-primary-green mt-1"></i><div><p class="font-semibold">Oficinas operativas</p><p class="text-sm text-gray-600">Carrera 38 #123-45 Barranquilla<br>Calle 13 #13-56 Puerto Colombia</p></div></div>
-            <div class="flex gap-3"><i class="fas fa-phone-alt text-primary-green"></i><div><p class="font-semibold">Teléfono / WhatsApp</p><a href="tel:3209350289" class="text-sm hover:text-primary-green">320 935 0289</a></div></div>
-            <div class="flex gap-3"><i class="fas fa-envelope text-primary-green"></i><div><p class="font-semibold">Correo oficial</p><a href="mailto:recovenecasasesp@gmail.com" class="text-sm break-all hover:text-primary-green">recovenecasasesp@gmail.com</a></div></div>
-            <div class="flex gap-3"><i class="fas fa-building text-primary-green"></i><div><p class="font-semibold">NIT</p><p class="text-sm">901.427.170-6</p></div></div>
+    <!-- HEADER -->
+    <header id="navbar" class="sticky top-0 z-50 bg-white shadow-md py-3 px-4 md:px-8 lg:px-16">
+      <div class="container mx-auto flex justify-between items-center">
+        <a href="index.html" class="flex items-center space-x-2">
+          <i class="fas fa-leaf text-3xl text-primary-green"></i>
+          <div>
+            <h1 class="font-extrabold text-xl md:text-2xl text-primary-green tracking-tight">
+              RECOVEN ECA
+            </h1>
+            <p class="text-[11px] md:text-xs text-gray-500 -mt-1">SAS ESP · Economía Circular</p>
           </div>
-          <div class="mt-8">
-            <a href="https://wa.me/573209350289?text=Hola%2C%20me%20interesa%20solicitar%20un%20servicio%20de%20RECOVEN%20ECA." target="_blank" rel="noopener"
-               class="flex items-center justify-center gap-3 w-full py-3 px-6 rounded-xl font-bold text-white hover:opacity-90 hover:-translate-y-1 transition"
-               style="background:#25D366;box-shadow:0 6px 20px rgba(37,211,102,.35);">
-              <i class="fab fa-whatsapp text-2xl"></i> Chatear por WhatsApp ahora
-            </a>
-            <p class="text-xs text-gray-400 text-center mt-2">Respuesta inmediata en horario laboral</p>
+        </a>
+        <nav class="hidden md:flex space-x-8 text-gray-700 font-semibold">
+          <a href="#inicio" class="hover:text-primary-green transition">Inicio</a>
+          <a href="empresa.html" class="hover:text-primary-green transition">Nosotros</a>
+          <a href="servicios.html" class="hover:text-primary-green transition">Servicios</a>
+          <a href="#contacto" class="nav-link hover:text-primary-green transition">Contacto</a>
+        </nav>
+        <div class="hidden md:block">
+          <a
+            href="#contacto"
+            class="nav-link bg-primary-green text-white px-6 py-2 rounded-full font-bold shadow-md flex items-center gap-2 hover:bg-opacity-90 transition"
+          >
+            <i class="fas fa-truck"></i> Solicitar Servicio
+          </a>
+        </div>
+        <button
+          id="menu-btn"
+          class="block md:hidden flex flex-col gap-1.5 p-1"
+          aria-label="Menú"
+          aria-expanded="false"
+        >
+          <span class="ham-line"></span><span class="ham-line"></span><span class="ham-line"></span>
+        </button>
+      </div>
+      <div id="mobile-menu" class="md:hidden bg-white px-4 border-t border-gray-100 mt-2">
+        <div class="flex flex-col space-y-1 pb-4 pt-3">
+          <a
+            href="#inicio"
+            class="mobile-link font-medium hover:text-primary-green py-2 px-2 rounded-lg hover:bg-gray-50"
+            >Inicio</a
+          >
+          <a
+            href="empresa.html"
+            class="mobile-link font-medium hover:text-primary-green py-2 px-2 rounded-lg hover:bg-gray-50"
+            >Nosotros</a
+          >
+          <a
+            href="servicios.html"
+            class="mobile-link font-medium hover:text-primary-green py-2 px-2 rounded-lg hover:bg-gray-50"
+            >Servicios</a
+          >
+          <a
+            href="#contacto"
+            class="nav-link mobile-link font-medium hover:text-primary-green py-2 px-2 rounded-lg hover:bg-gray-50"
+            >Contacto</a
+          >
+          <a
+            href="#contacto"
+            class="nav-link mobile-link bg-primary-green text-white text-center rounded-full py-2 font-semibold mt-2"
+            ><i class="fas fa-truck mr-1"></i> Solicitar Servicio</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section
+        id="inicio"
+        class="relative bg-cover bg-center bg-no-repeat"
+        style="
+          background-image:
+            linear-gradient(115deg, rgba(0, 0, 0, 0.65), rgba(0, 40, 20, 0.7)),
+            url(&quot;https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80&quot;);
+          background-size: cover;
+          background-position: center;
+        "
+      >
+        <div class="container mx-auto px-6 py-24 md:py-32 lg:py-40">
+          <div class="max-w-2xl reveal">
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight">
+              Recolección de residuos para <span class="text-[#E4B363]">hogares e industrias</span>
+            </h2>
+            <p class="text-lg text-gray-200 mt-5 font-light">
+              Ofrecemos servicio de recolección de residuos sólidos aprovechables y no
+              aprovechables, con cobertura en Barranquilla, Puerto Colombia y próximamente más
+              zonas.
+            </p>
+            <div class="flex flex-wrap gap-4 mt-10">
+              <a
+                href="#tipos-servicio"
+                class="nav-link inline-flex items-center gap-2 bg-primary-green text-white font-bold px-7 py-3 rounded-full shadow-lg hover:bg-opacity-90 transition hover:-translate-y-0.5"
+                data-service="Servicio Residencial"
+              >
+                <i class="fas fa-home"></i> Servicio Residencial
+              </a>
+              <a
+                href="#tipos-servicio"
+                class="nav-link inline-flex items-center gap-2 font-bold px-7 py-3 rounded-full shadow-lg transition hover:-translate-y-0.5 border-2 border-[#E4B363] text-white hover:bg-[#E4B363] hover:text-gray-900"
+                data-service="Servicio Industrial / Comercial"
+              >
+                <i class="fas fa-industry"></i> Servicio Industrial
+              </a>
+            </div>
           </div>
         </div>
-        <div class="lg:col-span-3 bg-gray-50 rounded-2xl shadow-lg p-6 md:p-8 reveal">
-          <form id="leadForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
-            <div class="grid sm:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm font-semibold">Nombre completo *</label>
-                <input type="text" id="nombre" name="nombre" placeholder="Ej: María González"
-                  class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition">
-                <span id="errorNombre" class="error-msg hidden">Nombre requerido.</span>
+      </section>
+
+      <!-- TIPOS DE SERVICIO -->
+      <section id="tipos-servicio" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-10 reveal">
+            <span class="text-primary-green font-semibold uppercase tracking-wider text-sm"
+              >¿Qué necesitas?</span
+            >
+            <h2 class="text-3xl md:text-4xl font-bold mt-2 text-gray-800">
+              Elige el servicio para ti
+            </h2>
+            <p class="text-gray-500 mt-2">Soluciones para el hogar y para el sector empresarial.</p>
+          </div>
+          <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div class="hero-service-card residencial reveal">
+              <i class="fas fa-home text-5xl text-primary-green mb-4"></i>
+              <h3 class="text-xl font-bold text-gray-800 mb-2">Servicio Residencial</h3>
+              <p class="text-gray-600 text-sm mb-6">
+                Recolección en viviendas, conjuntos residenciales y urbanizaciones. Frecuencias
+                flexibles (2 o 3 veces por semana) con altos estándares de limpieza.
+              </p>
+              <a
+                href="#contacto"
+                class="nav-link bg-primary-green text-white px-6 py-3 rounded-xl font-bold w-full block hover:bg-opacity-90 transition"
+                data-service="Servicio Residencial"
+              >
+                Solicitar servicio residencial →
+              </a>
+            </div>
+            <div class="hero-service-card industrial reveal">
+              <i class="fas fa-industry text-5xl mb-4" style="color: #e4b363"></i>
+              <h3 class="text-xl font-bold text-gray-800 mb-2">Servicio Industrial / Comercial</h3>
+              <p class="text-gray-600 text-sm mb-6">
+                Para fábricas, bodegas, centros comerciales, oficinas y zonas francas. Gestión de
+                residuos aprovechables, no aprovechables y especiales.
+              </p>
+              <a
+                href="#contacto"
+                class="nav-link text-white px-6 py-3 rounded-xl font-bold w-full block hover:opacity-90 transition"
+                style="background-color: #e4b363"
+                data-service="Servicio Industrial / Comercial"
+              >
+                Solicitar servicio industrial →
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- EMPRESA MINI -->
+      <section id="empresa-mini" class="py-12 bg-gray-50">
+        <div class="container mx-auto px-6 max-w-3xl text-center reveal">
+          <span class="text-primary-green font-semibold uppercase tracking-wider text-sm"
+            ><i class="fas fa-leaf mr-1"></i>Nuestra empresa</span
+          >
+          <h2 class="text-2xl md:text-3xl font-bold mt-2 text-gray-800">
+            Soluciones ambientales con responsabilidad social
+          </h2>
+          <p class="text-gray-600 mt-4 leading-relaxed max-w-2xl mx-auto">
+            Somos RECOVEN ECA SAS ESP, empresa prestadora del servicio público de aseo dedicada a
+            brindar soluciones ambientales integrales. Especialistas en gestión de residuos sólidos
+            no peligrosos aprovechables con énfasis en sector agroquímico y zonas francas,
+            promovemos la dignificación del reciclador de oficio, la inclusión social y el
+            aprovechamiento responsable de los recursos.
+          </p>
+          <a
+            href="empresa.html"
+            class="inline-flex items-center gap-2 mt-6 text-primary-green font-bold hover:opacity-80 transition"
+          >
+            Conoce más sobre nosotros <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </section>
+
+      <!-- CLIENTES -->
+      <section id="clientes" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-8 reveal">
+            <h3 class="text-2xl font-bold text-gray-800">Empresas que confían en RECOVEN</h3>
+            <p class="text-gray-500">Aliados estratégicos en la gestión sostenible</p>
+          </div>
+          <div class="carousel-container relative">
+            <div id="carouselTrack" class="carousel-track"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACTO -->
+      <section id="contacto" class="py-20 bg-white">
+        <div class="container mx-auto px-6 max-w-6xl">
+          <div class="grid lg:grid-cols-5 gap-12 items-start">
+            <div class="lg:col-span-2 reveal">
+              <h3 class="text-3xl font-bold text-gray-800">
+                Solicite su servicio o
+                <span class="text-primary-green">Certificado de Disposición Final</span>
+              </h3>
+              <p class="text-gray-600 mt-3">
+                Complete el formulario y nuestro equipo lo contactará en menos de 24 horas hábiles.
+              </p>
+              <div class="mt-8 space-y-4">
+                <div class="flex gap-3">
+                  <i class="fas fa-map-marker-alt text-primary-green mt-1"></i>
+                  <div>
+                    <p class="font-semibold">Oficinas operativas</p>
+                    <p class="text-sm text-gray-600">
+                      Carrera 38 #123-45 Barranquilla<br />Calle 13 #13-56 Puerto Colombia
+                    </p>
+                  </div>
+                </div>
+                <div class="flex gap-3">
+                  <i class="fas fa-phone-alt text-primary-green"></i>
+                  <div>
+                    <p class="font-semibold">Teléfono / WhatsApp</p>
+                    <a href="tel:3209350289" class="text-sm hover:text-primary-green"
+                      >320 935 0289</a
+                    >
+                  </div>
+                </div>
+                <div class="flex gap-3">
+                  <i class="fas fa-envelope text-primary-green"></i>
+                  <div>
+                    <p class="font-semibold">Correo oficial</p>
+                    <a
+                      href="mailto:recovenecasasesp@gmail.com"
+                      class="text-sm break-all hover:text-primary-green"
+                      >recovenecasasesp@gmail.com</a
+                    >
+                  </div>
+                </div>
+                <div class="flex gap-3">
+                  <i class="fas fa-building text-primary-green"></i>
+                  <div>
+                    <p class="font-semibold">NIT</p>
+                    <p class="text-sm">901.427.170-6</p>
+                  </div>
+                </div>
               </div>
-              <div>
-                <label class="block text-sm font-semibold">Teléfono / WhatsApp *</label>
-                <input type="tel" id="telefono" name="telefono" placeholder="300 000 0000"
-                  class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition">
-                <span id="errorTelefono" class="error-msg hidden">Teléfono requerido.</span>
-              </div>
-              <div>
-                <label class="block text-sm font-semibold">Correo electrónico *</label>
-                <input type="email" id="email" name="email" placeholder="ejemplo@correo.com"
-                  class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition">
-                <span id="errorEmail" class="error-msg hidden">Correo inválido.</span>
-              </div>
-              <div>
-                <label class="block text-sm font-semibold">Empresa / Conjunto (opcional)</label>
-                <input type="text" id="empresa" name="empresa" placeholder="Ej: Italcol S.A. o Conjunto Los Pinos"
-                  class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition">
+              <div class="mt-8">
+                <a
+                  href="https://wa.me/573209350289?text=Hola%2C%20me%20interesa%20solicitar%20un%20servicio%20de%20RECOVEN%20ECA."
+                  target="_blank"
+                  rel="noopener"
+                  class="flex items-center justify-center gap-3 w-full py-3 px-6 rounded-xl font-bold text-white hover:opacity-90 hover:-translate-y-1 transition"
+                  style="background: #25d366; box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35)"
+                >
+                  <i class="fab fa-whatsapp text-2xl"></i> Chatear por WhatsApp ahora
+                </a>
+                <p class="text-xs text-gray-400 text-center mt-2">
+                  Respuesta inmediata en horario laboral
+                </p>
               </div>
             </div>
-            <div class="mt-4">
-              <label class="block text-sm font-semibold">Tipo de servicio *</label>
-              <select id="servicioTipo" name="servicio"
-                class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition">
-                <option value="">Seleccione...</option>
-                <option value="Servicio Residencial">🏠 Servicio Residencial (viviendas, conjuntos)</option>
-                <option value="Servicio Industrial / Comercial">🏭 Servicio Industrial / Comercial (fábricas, oficinas, zonas francas)</option>
-              </select>
-              <span id="errorServicio" class="error-msg hidden">Seleccione un tipo de servicio.</span>
+            <div class="lg:col-span-3 bg-gray-50 rounded-2xl shadow-lg p-6 md:p-8 reveal">
+              <form
+                id="leadForm"
+                action="https://formspree.io/f/YOUR_FORM_ID"
+                method="POST"
+                novalidate
+              >
+                <div class="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-semibold">Nombre completo *</label>
+                    <input
+                      type="text"
+                      id="nombre"
+                      name="nombre"
+                      placeholder="Ej: María González"
+                      class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition"
+                    />
+                    <span id="errorNombre" class="error-msg hidden">Nombre requerido.</span>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-semibold">Teléfono / WhatsApp *</label>
+                    <input
+                      type="tel"
+                      id="telefono"
+                      name="telefono"
+                      placeholder="300 000 0000"
+                      class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition"
+                    />
+                    <span id="errorTelefono" class="error-msg hidden">Teléfono requerido.</span>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-semibold">Correo electrónico *</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="ejemplo@correo.com"
+                      class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition"
+                    />
+                    <span id="errorEmail" class="error-msg hidden">Correo inválido.</span>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-semibold">Empresa / Conjunto (opcional)</label>
+                    <input
+                      type="text"
+                      id="empresa"
+                      name="empresa"
+                      placeholder="Ej: Italcol S.A. o Conjunto Los Pinos"
+                      class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition"
+                    />
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <label class="block text-sm font-semibold">Tipo de servicio *</label>
+                  <select
+                    id="servicioTipo"
+                    name="servicio"
+                    class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition"
+                  >
+                    <option value="">Seleccione...</option>
+                    <option value="Servicio Residencial">
+                      🏠 Servicio Residencial (viviendas, conjuntos)
+                    </option>
+                    <option value="Servicio Industrial / Comercial">
+                      🏭 Servicio Industrial / Comercial (fábricas, oficinas, zonas francas)
+                    </option>
+                  </select>
+                  <span id="errorServicio" class="error-msg hidden"
+                    >Seleccione un tipo de servicio.</span
+                  >
+                </div>
+                <div class="mt-4">
+                  <label class="block text-sm font-semibold">Dirección / Zona de servicio</label>
+                  <input
+                    type="text"
+                    id="direccion"
+                    name="direccion"
+                    placeholder="Ej: Barranquilla Norte, Puerto Colombia..."
+                    class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition"
+                  />
+                </div>
+                <div class="mt-4">
+                  <label class="block text-sm font-semibold"
+                    >Mensaje / Requerimiento adicional</label
+                  >
+                  <textarea
+                    rows="3"
+                    id="mensaje"
+                    name="mensaje"
+                    class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition resize-none"
+                    placeholder="Frecuencia deseada, volumen estimado..."
+                  ></textarea>
+                </div>
+                <div
+                  id="form-success"
+                  class="mt-4 p-4 bg-green-50 border border-green-300 text-green-800 rounded-xl text-sm font-medium"
+                >
+                  ✅ Solicitud enviada. Nos comunicaremos en máximo 24 horas hábiles.
+                </div>
+                <div
+                  id="form-error-msg"
+                  class="mt-4 p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl text-sm"
+                >
+                  Error al enviar. Escríbenos a <strong>recovenecasasesp@gmail.com</strong> o al
+                  WhatsApp.
+                </div>
+                <button
+                  type="submit"
+                  id="submitBtn"
+                  class="mt-6 w-full bg-primary-green text-white font-bold py-3 rounded-xl shadow-md hover:bg-opacity-90 transition flex justify-center items-center gap-2"
+                >
+                  <i class="fas fa-paper-plane"></i><span id="btnLabel">Enviar solicitud</span>
+                </button>
+                <p class="text-xs text-gray-400 text-center mt-3">
+                  <i class="fas fa-lock"></i> Datos protegidos · Respuesta en menos de 24h
+                </p>
+              </form>
             </div>
-            <div class="mt-4">
-              <label class="block text-sm font-semibold">Dirección / Zona de servicio</label>
-              <input type="text" id="direccion" name="direccion" placeholder="Ej: Barranquilla Norte, Puerto Colombia..."
-                class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition">
-            </div>
-            <div class="mt-4">
-              <label class="block text-sm font-semibold">Mensaje / Requerimiento adicional</label>
-              <textarea rows="3" id="mensaje" name="mensaje"
-                class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition resize-none"
-                placeholder="Frecuencia deseada, volumen estimado..."></textarea>
-            </div>
-            <div id="form-success" class="mt-4 p-4 bg-green-50 border border-green-300 text-green-800 rounded-xl text-sm font-medium">
-              ✅ Solicitud enviada. Nos comunicaremos en máximo 24 horas hábiles.
-            </div>
-            <div id="form-error-msg" class="mt-4 p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl text-sm">
-              Error al enviar. Escríbenos a <strong>recovenecasasesp@gmail.com</strong> o al WhatsApp.
-            </div>
-            <button type="submit" id="submitBtn" class="mt-6 w-full bg-primary-green text-white font-bold py-3 rounded-xl shadow-md hover:bg-opacity-90 transition flex justify-center items-center gap-2">
-              <i class="fas fa-paper-plane"></i><span id="btnLabel">Enviar solicitud</span>
-            </button>
-            <p class="text-xs text-gray-400 text-center mt-3"><i class="fas fa-lock"></i> Datos protegidos · Respuesta en menos de 24h</p>
-          </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-300 py-12">
+      <div class="container mx-auto px-6 grid md:grid-cols-4 gap-8">
+        <div>
+          <i class="fas fa-leaf text-2xl text-primary-green"></i>
+          <h4 class="font-bold text-white text-lg mt-2">RECOVEN ECA SAS ESP</h4>
+          <p class="text-sm mt-1">
+            Soluciones ambientales con certificación y responsabilidad social.
+          </p>
+        </div>
+        <div>
+          <h5 class="font-semibold text-white">Páginas</h5>
+          <ul class="mt-2 space-y-1 text-sm">
+            <li><a href="index.html" class="hover:text-primary-green transition">Inicio</a></li>
+            <li><a href="empresa.html" class="hover:text-primary-green transition">Nosotros</a></li>
+            <li>
+              <a href="servicios.html" class="hover:text-primary-green transition">Servicios</a>
+            </li>
+            <li>
+              <a href="#contacto" class="nav-link hover:text-primary-green transition">Contacto</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-semibold text-white">Contacto directo</h5>
+          <p class="text-sm mt-2">
+            <i class="fas fa-phone-alt mr-2"></i>320 935 0289<br /><i
+              class="fas fa-envelope mr-2"
+            ></i
+            >recovenecasasesp@gmail.com<br /><i class="fas fa-map-pin mr-2"></i>Barranquilla /
+            Puerto Colombia
+          </p>
+          <a
+            href="https://wa.me/573209350289"
+            target="_blank"
+            rel="noopener"
+            class="flex items-center gap-2 mt-3 text-sm font-semibold"
+            style="color: #25d366"
+            ><i class="fab fa-whatsapp text-lg"></i>WhatsApp directo</a
+          >
+          <a
+            href="https://www.instagram.com/recoveneca"
+            target="_blank"
+            rel="noopener"
+            class="flex items-center gap-2 mt-2 text-sm font-semibold"
+            style="color: #e1306c"
+            ><i class="fab fa-instagram text-lg"></i> @recoveneca</a
+          >
+          <a
+            href="https://www.facebook.com/recoveneca"
+            target="_blank"
+            rel="noopener"
+            class="flex items-center gap-2 mt-2 text-sm font-semibold"
+            style="color: #1877f2"
+            ><i class="fab fa-facebook text-lg"></i> @recoveneca</a
+          >
+        </div>
+        <div>
+          <h5 class="font-semibold text-white">Certificaciones</h5>
+          <p class="text-sm mt-2">
+            ✔️ Registro como ECA<br />✔️ Cumplimiento Res. 2184/2019<br />✔️ Alianza sector zonas
+            francas
+          </p>
         </div>
       </div>
-    </div>
-  </section>
-</main>
+      <div class="text-center text-sm text-gray-500 border-t border-gray-800 pt-6 mt-8">
+        © 2026 RECOVEN ECA SAS ESP — Economía Circular y Desarrollo Sostenible.
+      </div>
+    </footer>
 
-<!-- FOOTER -->
-<footer class="bg-gray-900 text-gray-300 py-12">
-  <div class="container mx-auto px-6 grid md:grid-cols-4 gap-8">
-    <div>
-      <i class="fas fa-leaf text-2xl text-primary-green"></i>
-      <h4 class="font-bold text-white text-lg mt-2">RECOVEN ECA SAS ESP</h4>
-      <p class="text-sm mt-1">Soluciones ambientales con certificación y responsabilidad social.</p>
-    </div>
-    <div>
-      <h5 class="font-semibold text-white">Páginas</h5>
-      <ul class="mt-2 space-y-1 text-sm">
-        <li><a href="index.html"     class="hover:text-primary-green transition">Inicio</a></li>
-        <li><a href="empresa.html"   class="hover:text-primary-green transition">Nosotros</a></li>
-        <li><a href="servicios.html" class="hover:text-primary-green transition">Servicios</a></li>
-        <li><a href="#contacto"      class="nav-link hover:text-primary-green transition">Contacto</a></li>
-      </ul>
-    </div>
-    <div>
-      <h5 class="font-semibold text-white">Contacto directo</h5>
-      <p class="text-sm mt-2"><i class="fas fa-phone-alt mr-2"></i>320 935 0289<br><i class="fas fa-envelope mr-2"></i>recovenecasasesp@gmail.com<br><i class="fas fa-map-pin mr-2"></i>Barranquilla / Puerto Colombia</p>
-      <a href="https://wa.me/573209350289" target="_blank" rel="noopener" class="flex items-center gap-2 mt-3 text-sm font-semibold" style="color:#25D366;"><i class="fab fa-whatsapp text-lg"></i>WhatsApp directo</a>
-      <a href="https://www.instagram.com/recoveneca" target="_blank" rel="noopener" class="flex items-center gap-2 mt-2 text-sm font-semibold" style="color:#E1306C;"><i class="fab fa-instagram text-lg"></i> @recoveneca</a>
-      <a href="https://www.facebook.com/recoveneca" target="_blank" rel="noopener" class="flex items-center gap-2 mt-2 text-sm font-semibold" style="color:#1877F2;"><i class="fab fa-facebook text-lg"></i> @recoveneca</a>
-    </div>
-    <div>
-      <h5 class="font-semibold text-white">Certificaciones</h5>
-      <p class="text-sm mt-2">✔️ Registro como ECA<br>✔️ Cumplimiento Res. 2184/2019<br>✔️ Alianza sector zonas francas</p>
-    </div>
-  </div>
-  <div class="text-center text-sm text-gray-500 border-t border-gray-800 pt-6 mt-8">
-    © 2026 RECOVEN ECA SAS ESP — Economía Circular y Desarrollo Sostenible.
-  </div>
-</footer>
-
-<script type="module" src="js/main.js"></script>
-</body>
+    <script type="module" src="js/main.js"></script>
+  </body>
 </html>

@@ -1,1 +1,4 @@
-quitar margen del elemento de residuos no aprovechables
+Cambiar Logo
+Orgnizar carpetas
+Tener imagenes locales
+Eliminar pdf
