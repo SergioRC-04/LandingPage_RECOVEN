@@ -222,62 +222,54 @@
               </div>
             </div>
             <div class="lg:col-span-3 bg-gray-50 rounded-2xl shadow-lg p-6 md:p-8 reveal">
-              <form
-                id="leadForm"
-                action="https://formspree.io/f/YOUR_FORM_ID"
-                method="POST"
-                novalidate
-              >
+              <form action="https://formsubmit.co/dianagoethe03@gmail.com" method="POST" novalidate>
                 <div class="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label class="block text-sm font-semibold">Nombre completo *</label>
                     <input
                       type="text"
-                      id="nombre"
                       name="nombre"
                       placeholder="Ej: María González"
+                      required
                       class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition"
                     />
-                    <span id="errorNombre" class="error-msg hidden">Nombre requerido.</span>
                   </div>
                   <div>
                     <label class="block text-sm font-semibold">Teléfono / WhatsApp *</label>
                     <input
                       type="tel"
-                      id="telefono"
                       name="telefono"
                       placeholder="300 000 0000"
+                      required
                       class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition"
                     />
-                    <span id="errorTelefono" class="error-msg hidden">Teléfono requerido.</span>
                   </div>
                   <div>
                     <label class="block text-sm font-semibold">Correo electrónico *</label>
                     <input
                       type="email"
-                      id="email"
                       name="email"
                       placeholder="ejemplo@correo.com"
+                      required
                       class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition"
                     />
-                    <span id="errorEmail" class="error-msg hidden">Correo inválido.</span>
                   </div>
                   <div>
                     <label class="block text-sm font-semibold">Empresa / Conjunto (opcional)</label>
                     <input
                       type="text"
-                      id="empresa"
                       name="empresa"
                       placeholder="Ej: Italcol S.A. o Conjunto Los Pinos"
                       class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition"
                     />
                   </div>
                 </div>
+
                 <div class="mt-4">
                   <label class="block text-sm font-semibold">Tipo de servicio *</label>
                   <select
-                    id="servicioTipo"
                     name="servicio"
+                    required
                     class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition"
                   >
                     <option value="">Seleccione...</option>
@@ -288,52 +280,41 @@
                       🏭 Servicio Industrial / Comercial (fábricas, oficinas, zonas francas)
                     </option>
                   </select>
-                  <span id="errorServicio" class="error-msg hidden"
-                    >Seleccione un tipo de servicio.</span
-                  >
                 </div>
+
                 <div class="mt-4">
                   <label class="block text-sm font-semibold">Dirección / Zona de servicio</label>
                   <input
                     type="text"
-                    id="direccion"
                     name="direccion"
                     placeholder="Ej: Barranquilla Norte, Puerto Colombia..."
                     class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition"
                   />
                 </div>
+
                 <div class="mt-4">
                   <label class="block text-sm font-semibold"
                     >Mensaje / Requerimiento adicional</label
                   >
                   <textarea
-                    rows="3"
-                    id="mensaje"
                     name="mensaje"
+                    rows="3"
                     class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition resize-none"
                     placeholder="Frecuencia deseada, volumen estimado..."
                   ></textarea>
                 </div>
-                <div
-                  id="form-success"
-                  class="mt-4 p-4 bg-green-50 border border-green-300 text-green-800 rounded-xl text-sm font-medium"
-                >
-                  ✅ Solicitud enviada. Nos comunicaremos en máximo 24 horas hábiles.
-                </div>
-                <div
-                  id="form-error-msg"
-                  class="mt-4 p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl text-sm"
-                >
-                  Error al enviar. Escríbenos a <strong>recovenecasasesp@gmail.com</strong> o al
-                  WhatsApp.
-                </div>
+
+                <!-- Campos ocultos de FormSubmit -->
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_next" value="https://tu-dominio.com/exito.html" />
+
                 <button
                   type="submit"
-                  id="submitBtn"
                   class="mt-6 w-full bg-primary-green text-white font-bold py-3 rounded-xl shadow-md hover:bg-opacity-90 transition flex justify-center items-center gap-2"
                 >
-                  <i class="fas fa-paper-plane"></i><span id="btnLabel">Enviar solicitud</span>
+                  <i class="fas fa-paper-plane"></i> Enviar solicitud
                 </button>
+
                 <p class="text-xs text-gray-400 text-center mt-3">
                   <i class="fas fa-lock"></i> Datos protegidos · Respuesta en menos de 24h
                 </p>

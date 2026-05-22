@@ -1,3 +1,5 @@
 Enviar al correo
 Se esta demorando en cargar
 Poner fotos en las bodegas
+desactivar catcha
+redirigir a dominio
