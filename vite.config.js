@@ -2,29 +2,41 @@ import { defineConfig } from "vite";
 import fs from "fs";
 import path from "path";
 
-// Plugin para copiar src/components a dist/components
-const copyComponentsPlugin = () => ({
-  name: "copy-components",
+// Plugin para copiar src/components y src/assets/img/logo.png a dist/
+const copyFilesPlugin = () => ({
+  name: "copy-files",
   writeBundle() {
-    const srcDir = "src/components";
-    const destDir = "dist/components";
+    // Copiar components
+    const srcComponentsDir = "src/components";
+    const destComponentsDir = "dist/components";
+
+    if (!fs.existsSync(destComponentsDir)) {
+      fs.mkdirSync(destComponentsDir, { recursive: true });
+    }
+
+    const componentFiles = fs.readdirSync(srcComponentsDir);
+    componentFiles.forEach((file) => {
+      const src = path.join(srcComponentsDir, file);
+      const dest = path.join(destComponentsDir, file);
+      fs.copyFileSync(src, dest);
+    });
+
+    // Copiar solo logo.png
+    const srcLogo = "src/assets/img/logo.png";
+    const destDir = "dist/assets/img";
+    const destLogo = path.join(destDir, "logo.png");
 
     if (!fs.existsSync(destDir)) {
       fs.mkdirSync(destDir, { recursive: true });
     }
 
-    const files = fs.readdirSync(srcDir);
-    files.forEach((file) => {
-      const src = path.join(srcDir, file);
-      const dest = path.join(destDir, file);
-      fs.copyFileSync(src, dest);
-    });
+    fs.copyFileSync(srcLogo, destLogo);
   },
 });
 
 export default defineConfig({
   root: "src",
-  publicDir: false, // Desactiva publicDir
+  publicDir: false,
   build: {
     outDir: "../dist",
     emptyOutDir: true,
@@ -36,7 +48,7 @@ export default defineConfig({
       },
     },
   },
-  plugins: [copyComponentsPlugin()],
+  plugins: [copyFilesPlugin()],
   server: {
     port: 3000,
     open: true,
