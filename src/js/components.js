@@ -1,56 +1,48 @@
-/* ==================== COMPONENT INJECTION SYSTEM ==================== */
+/* ==================== COMPONENT INJECTION SYSTEM (VITE OPTIMIZED) ==================== */
 
 import { initMenu } from "./modules/menu.js";
 import { initNavigation } from "./modules/navigation.js";
 
+// 1. Importamos los HTMLs en crudo usando la magia de Vite
+import whatsappHTML from "../components/whatsapp-fab.html?raw";
+import headerHTML from "../components/header.html?raw";
+import footerHTML from "../components/footer.html?raw";
+
 /**
- * Inyecta un componente HTML desde una URL
+ * Inyecta un componente HTML pre-cargado como string
  * @param {string} selector - Selector CSS del contenedor donde insertar
- * @param {string} path - Ruta del archivo HTML a cargar
+ * @param {string} htmlContent - El contenido HTML en crudo (string)
  * @param {object} options - Opciones configurables (opcional)
- *   - position: "beforeend" | "afterbegin" (default: "beforeend")
- *   - callback: function a ejecutar después de inyectar (default: null)
- *   - strict: boolean - lanzar error si elemento no existe (default: true)
  */
-async function injectComponent(selector, path, options = {}) {
+function injectComponent(selector, htmlContent, options = {}) {
   const { position = "beforeend", callback = null, strict = true } = options;
 
   try {
-    // 1. Descargar archivo
-    const response = await fetch(path);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch ${path}: ${response.status}`);
-    }
-
-    // 2. Convertir a HTML
-    const html = await response.text();
-
-    // 3. Buscar elemento
+    // Buscar elemento
     const element = document.querySelector(selector);
     if (!element) {
       if (strict) {
         throw new Error(`Element not found: ${selector}`);
       }
-      return; // Fail silently si no strict
+      return; // Fail silently si no es strict
     }
 
-    // 4. Insertar HTML
-    element.insertAdjacentHTML(position, html);
+    // Insertar HTML de forma directa e instantánea
+    element.insertAdjacentHTML(position, htmlContent);
 
-    // 5. Ejecutar callback si existe
+    // Ejecutar callback si existe
     if (callback && typeof callback === "function") {
       callback();
     }
   } catch (error) {
-    console.error(`Error injecting component from ${path}:`, error);
+    console.error(`Error injecting component into ${selector}:`, error);
   }
 }
 
 /**
  * Inyecta los componentes globales (header, footer, whatsapp-fab)
  */
-async function initializeComponents() {
-  // Esperar a que DOM esté listo
+function initializeComponents() {
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", injectComponents);
   } else {
@@ -58,18 +50,18 @@ async function initializeComponents() {
   }
 }
 
-async function injectComponents() {
+function injectComponents() {
   try {
-    // Inyectar WhatsApp FAB - uso simple (strict: false)
-    await injectComponent("body", "components/whatsapp-fab.html", {
+    // Inyectar WhatsApp FAB - Le pasamos directamente el string importado
+    injectComponent("body", whatsappHTML, {
       strict: false,
     });
 
-    // Inyectar Header al inicio del body con callback
-    await injectComponent("body", "components/header.html", {
+    // Inyectar Header al inicio del body con su callback
+    injectComponent("body", headerHTML, {
       position: "afterbegin",
       callback: () => {
-        // Inicializar menú DESPUÉS de que el header está inyectado
+        // Inicializar menú inmediatamente después
         initMenu();
         initNavigation();
       },
@@ -82,7 +74,7 @@ async function injectComponents() {
     }
 
     // Inyectar Footer dinámico al final del body
-    await injectComponent("body", "components/footer.html", {
+    injectComponent("body", footerHTML, {
       position: "beforeend",
     });
   } catch (error) {
