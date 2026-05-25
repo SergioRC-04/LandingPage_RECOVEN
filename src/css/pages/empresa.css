@@ -1,44 +1,6 @@
 /* ==================== EMPRESA.HTML SPECIFIC STYLES ==================== */
 
-/* Tab Styles */
-.tab-active {
-  background-color: var(--primary-green);
-  color: white;
-  border-bottom: 2px solid #e4b363;
-}
-
-.tab-inactive {
-  background-color: #f3f4f6;
-  color: var(--text-dark);
-}
-
-/* Tab Content */
-.tab-content {
-  display: none;
-}
-
-.tab-content.active-tab {
-  display: block;
+/* Tab Content Animation */
+.animate-fadeTab {
   animation: fadeTab 0.3s ease;
-}
-
-/* Normatividad Pills */
-.norm-pill {
-  display: inline-flex;
-  align-items: center;
-  background: #f3f4f6;
-  color: #374151;
-  padding: 0.4rem 1.1rem;
-  border-radius: 9999px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition:
-    background 0.2s,
-    color 0.2s;
-  cursor: default;
-}
-
-.norm-pill:hover {
-  background: #dcfce7;
-  color: var(--primary-green);
 }

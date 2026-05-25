@@ -2,6 +2,8 @@ Poner fotos en las bodegas (cuando las pasen)
 Arreglar boton en la cabecera de solicitar, se ve muy unido en el modo responsive
 El modo responsive de servicios, se cambia muy tarde, deberia ser antes.
 Poner boton contactar en cada uno del carrusel de servicios
+Reorganizar el formulario
+Corregir carrusel de empresas. se detiene cuando lo undes y es poco visual porque hay que esperar mucho. (se puede colocar una animacion para que sea mas grande y muestre mas info)
 
 correo temporal:
 desactivar catcha
@@ -9,4 +11,4 @@ redirigir a dominio
 
 Hacer testeo
 Mirar si vite es la mejor opcion
-instalar prettier+tailwind
+corregir los componentes repetitivos de tailwind

@@ -80,7 +80,9 @@
             <p class="mt-2 text-gray-500">Soluciones para el hogar y para el sector empresarial.</p>
           </div>
           <div class="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
-            <div class="hero-service-card residencial reveal">
+            <div
+              class="reveal border-primary-green rounded-[1.25rem] border-t-4 bg-white px-6 py-8 text-center shadow-md transition-all duration-250 hover:-translate-y-1 hover:shadow-2xl"
+            >
               <i class="fas fa-home text-primary-green mb-4 text-5xl"></i>
               <h3 class="mb-2 text-xl font-bold text-gray-800">Servicio Residencial</h3>
               <p class="mb-6 text-sm text-gray-600">
@@ -95,7 +97,9 @@
                 Solicitar servicio residencial →
               </a>
             </div>
-            <div class="hero-service-card industrial reveal">
+            <div
+              class="reveal rounded-[1.25rem] border-t-4 border-[#E4B363] bg-white px-6 py-8 text-center shadow-md transition-all duration-250 hover:-translate-y-1 hover:shadow-2xl"
+            >
               <i class="fas fa-industry mb-4 text-5xl" style="color: #e4b363"></i>
               <h3 class="mb-2 text-xl font-bold text-gray-800">Servicio Industrial / Comercial</h3>
               <p class="mb-6 text-sm text-gray-600">
@@ -147,8 +151,8 @@
             <h3 class="text-2xl font-bold text-gray-800">Empresas que confían en RECOVEN</h3>
             <p class="text-gray-500">Aliados estratégicos en la gestión sostenible</p>
           </div>
-          <div class="carousel-container relative">
-            <div id="carouselTrack" class="carousel-track"></div>
+          <div class="carousel-container relative w-full overflow-hidden">
+            <div id="carouselTrack" class="flex w-max gap-8" style="will-change: transform"></div>
           </div>
         </div>
       </section>
@@ -219,7 +223,12 @@
               </div>
             </div>
             <div class="reveal rounded-2xl bg-gray-50 p-6 shadow-lg md:p-8 lg:col-span-3">
-              <form action="https://formsubmit.co/dianagoethe03@gmail.com" method="POST" novalidate>
+              <form
+                id="leadForm"
+                action="https://formsubmit.co/dianagoethe03@gmail.com"
+                method="POST"
+                novalidate
+              >
                 <div class="grid gap-4 sm:grid-cols-2">
                   <div>
                     <label class="block text-sm font-semibold">Nombre completo *</label>
@@ -265,6 +274,7 @@
                 <div class="mt-4">
                   <label class="block text-sm font-semibold">Tipo de servicio *</label>
                   <select
+                    id="servicioTipo"
                     name="servicio"
                     required
                     class="mt-1 w-full rounded-lg border border-gray-300 p-3 transition focus:ring-2 focus:ring-green-600 focus:outline-none"
@@ -306,6 +316,7 @@
                 <input type="hidden" name="_next" value="https://tu-dominio.com/exito.html" />
 
                 <button
+                  id="submitBtn"
                   type="submit"
                   class="bg-primary-green hover:bg-opacity-90 mt-6 flex w-full items-center justify-center gap-2 rounded-xl py-3 font-bold text-white shadow-md transition"
                 >

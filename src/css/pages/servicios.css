@@ -1,50 +1,49 @@
 /* ==================== SERVICIOS.HTML SPECIFIC STYLES ==================== */
 
-/* Código de colores - Bin Cards */
-.bin-card {
-  border-radius: 1rem;
-  padding: 1.5rem;
-  text-align: center;
-  color: white;
+/* Swiper Container */
+.hero-carousel-swiper {
+  width: 100%;
+  height: 100%;
 }
 
-.bin-card h4 {
-  font-weight: 700;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-}
-
-.bin-card ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  font-size: 0.85rem;
-  opacity: 0.9;
-}
-
-.bin-card ul li {
-  margin-bottom: 0.2rem;
-}
-
-/* ==================== HERO + CAROUSEL UNIFIED ==================== */
-.hero-carousel-unified {
-  display: flex;
-  min-height: 80vh;
-  background: var(--gray-light);
-}
-
-/* COLUMNA IZQUIERDA - HERO FIJO (30%) */
-.hero-column {
-  width: 35%;
-  background: linear-gradient(135deg, var(--primary-green), #2d7a50);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem 2rem;
+/* Carousel Slide Base */
+.carousel-slide {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
   position: relative;
-  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 3rem;
 }
 
+/* Carousel Overlay */
+.carousel-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+
+.carousel-slide:hover .carousel-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Carousel Content */
+.carousel-content {
+  position: relative;
+  z-index: 2;
+  color: white;
+  animation: slideUp 0.6s ease forwards;
+  max-width: 100%;
+}
+
+/* Hero Column - Pseudoelemento con blur (no convertible a Tailwind) */
 .hero-column::before {
   content: "";
   position: absolute;
@@ -57,72 +56,20 @@
   filter: blur(60px);
 }
 
-.hero-content {
-  position: relative;
-  z-index: 1;
-  text-align: left;
-  max-width: 90%;
-}
-
-.hero-badge {
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(228, 179, 99, 0.5);
-  color: white;
-  padding: 0.5rem 1.2rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 1.5rem;
-  backdrop-filter: blur(10px);
-}
-
+/* Hero Styles - Responsive font-sizing con clamp */
 .hero-title {
   font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 900;
-  color: white;
-  line-height: 1.1;
-  margin-bottom: 0.5rem;
-  letter-spacing: -1px;
 }
 
 .hero-subtitle {
   font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 1rem;
-  font-weight: 600;
 }
 
 .hero-description {
   font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.8);
-  line-height: 1.6;
-  margin-bottom: 2rem;
-  max-width: 85%;
-}
-
-.hero-cta-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  background: var(--gold-accent);
-  color: var(--primary-green);
-  padding: 1rem 1.8rem;
-  border-radius: 9999px;
-  font-weight: 700;
-  text-decoration: none;
-  transition: var(--transition-smooth);
-  box-shadow: 0 8px 20px rgba(228, 179, 99, 0.35);
-  border: none;
-  cursor: pointer;
-  font-size: 0.95rem;
 }
 
 .hero-cta-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 28px rgba(228, 179, 99, 0.45);
   background: #f0c470;
 }
 
@@ -130,55 +77,10 @@
   transform: translateY(-1px);
 }
 
-/* COLUMNA DERECHA - CARRUSEL (70%) */
-.carousel-column {
-  width: 65%;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-carousel-swiper {
-  width: 100%;
-  height: 100%;
-}
-
-.carousel-slide {
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  padding: 3rem;
-}
-
-.carousel-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--overlay-dark);
-  z-index: 1;
-  transition: background 0.3s ease;
-}
-
-.carousel-slide:hover .carousel-overlay {
-  background: rgba(0, 0, 0, 0.5);
-}
-
-.carousel-content {
-  position: relative;
-  z-index: 2;
-  color: white;
-  animation: slideUp 0.6s ease forwards;
-  max-width: 100%;
-}
-
+/* Carousel Styles */
 .carousel-icon {
   font-size: 3rem;
-  color: var(--gold-accent);
+  color: #e4b363;
   margin-bottom: 1rem;
   display: block;
 }
@@ -197,7 +99,7 @@
   max-width: 95%;
 }
 
-/* ==================== NAVEGACIÓN DEL CARRUSEL ==================== */
+/* Carousel Navigation con backdrop-filter */
 .carousel-nav {
   position: absolute;
   top: 50%;
@@ -213,9 +115,11 @@
   justify-content: center;
   cursor: pointer;
   z-index: 10;
-  transition: var(--transition-smooth);
+  transition: all 0.3s ease;
   font-size: 1.2rem;
   backdrop-filter: blur(10px);
+  border: none;
+  padding: 0;
 }
 
 .carousel-nav:hover {
@@ -236,7 +140,7 @@
   right: 1.5rem;
 }
 
-/* ==================== PAGINACIÓN ==================== */
+/* Pagination */
 .carousel-pagination {
   position: absolute;
   bottom: 1.5rem;
@@ -253,8 +157,9 @@
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.4);
   cursor: pointer;
-  transition: var(--transition-smooth);
+  transition: all 0.3s ease;
   border: 2px solid transparent;
+  padding: 0;
 }
 
 .swiper-pagination-bullet:hover {
@@ -262,26 +167,13 @@
 }
 
 .swiper-pagination-bullet-active {
-  background: var(--gold-accent);
+  background: #e4b363;
   width: 32px;
   border-radius: 9999px;
 }
 
 /* ==================== RESPONSIVE - TABLET ==================== */
 @media (max-width: 1024px) {
-  .hero-carousel-unified {
-    min-height: 80vh;
-  }
-
-  .hero-column {
-    width: 42%;
-    padding: 2rem 1.5rem;
-  }
-
-  .carousel-column {
-    width: 58%;
-  }
-
   .hero-title {
     font-size: clamp(1.5rem, 4vw, 2.5rem);
   }
@@ -301,15 +193,10 @@
   }
 }
 
-/* ==================== RESPONSIVE - MÓVIL ==================== */
+/* ==================== RESPONSIVE - MOBILE ==================== */
 @media (max-width: 768px) {
-  .hero-carousel-unified {
-    flex-direction: column;
-    min-height: auto;
-  }
-
   .hero-column {
-    width: 100%;
+    width: 100% !important;
     min-height: 45vh;
     padding: 2rem 1.5rem;
     text-align: center;
@@ -325,7 +212,7 @@
   }
 
   .carousel-column {
-    width: 100%;
+    width: 100% !important;
     min-height: 55vh;
   }
 

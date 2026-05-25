@@ -28,6 +28,10 @@ body {
   color: var(--primary-green);
 }
 
+.border-primary-green {
+  border-color: var(--primary-green);
+}
+
 /* Utilidades de estilo */
 .error-msg {
   color: #dc2626;

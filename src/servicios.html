@@ -27,34 +27,47 @@
   <body class="bg-white text-gray-800">
     <main>
       <!-- HERO + SERVICIOS UNIFIED (Pantalla Dividida) -->
-      <section id="hero-carousel-container" class="hero-carousel-unified">
+      <section id="hero-carousel-container" class="flex min-h-[80vh] bg-gray-50">
         <!-- COLUMNA IZQUIERDA: HERO FIJO (30%) -->
-        <div class="hero-column">
-          <div class="hero-content">
-            <span class="hero-badge">Gestión Ambiental Integral</span>
-            <h1 class="hero-title">Nuestros Servicios</h1>
-            <p class="hero-subtitle">
+        <div
+          class="hero-column from-primary-green bg-primary-green relative flex w-[35%] items-center justify-center overflow-hidden p-12"
+        >
+          <div class="hero-content relative z-10 max-w-[90%] text-left">
+            <span
+              class="hero-badge mb-6 inline-block rounded-full border border-[#e4b363]/50 bg-white/20 px-5 py-2 text-xs font-semibold tracking-widest text-white uppercase backdrop-blur-sm"
+              >Gestión Ambiental Integral</span
+            >
+            <h1
+              class="hero-title mb-2 text-5xl leading-tight font-black -tracking-[1px] text-white lg:text-[3.5rem]"
+            >
+              Nuestros Servicios
+            </h1>
+            <p class="hero-subtitle mb-4 text-lg font-semibold text-white/90">
               Soluciones ambientales integrales para tu negocio y comunidad
             </p>
-            <p class="hero-description">
+            <p class="hero-description mb-8 max-w-[85%] text-base leading-relaxed text-white/80">
               Especialistas en gestión de residuos sólidos aprovechables para sector industrial,
               comercial y residencial.
             </p>
-            <a href="index.html#contacto" class="hero-cta-button">
+            <a
+              href="index.html#contacto"
+              class="hero-cta-button text-primary-green inline-flex items-center gap-2 rounded-full bg-[#e4b363] px-7 py-4 text-base font-bold shadow-lg transition hover:-translate-y-1 hover:opacity-90 hover:shadow-xl active:-translate-y-0.5"
+              style="box-shadow: 0 8px 20px rgba(228, 179, 99, 0.35)"
+            >
               <i class="fas fa-paper-plane"></i> Conecta con nosotros
             </a>
           </div>
         </div>
 
         <!-- COLUMNA DERECHA: CARRUSEL (70%) -->
-        <div class="carousel-column">
+        <div class="carousel-column relative w-[65%] overflow-hidden">
           <!-- Swiper Container -->
           <div class="swiper hero-carousel-swiper">
             <div class="swiper-wrapper">
               <!-- Slide 1-->
               <div
                 class="swiper-slide carousel-slide"
-                style="background-image: url(&quot;../public/assets/img/slide1.webp&quot;)"
+                style="background-image: url(&quot;/assets/img/slide1.webp&quot;)"
               >
                 <div class="carousel-overlay"></div>
                 <div class="carousel-content">
@@ -71,7 +84,7 @@
               <!-- Slide 2-->
               <div
                 class="swiper-slide carousel-slide"
-                style="background-image: url(&quot;../public/assets/img/slide2.webp&quot;)"
+                style="background-image: url(&quot;/assets/img/slide2.webp&quot;)"
               >
                 <div class="carousel-overlay"></div>
                 <div class="carousel-content">
@@ -87,7 +100,7 @@
               <!-- Slide 3-->
               <div
                 class="swiper-slide carousel-slide"
-                style="background-image: url(&quot;../public/assets/img/slide3.webp&quot;)"
+                style="background-image: url(&quot;/assets/img/slide3.webp&quot;)"
               >
                 <div class="carousel-overlay"></div>
                 <div class="carousel-content">
@@ -103,7 +116,7 @@
               <!-- Slide 4-->
               <div
                 class="swiper-slide carousel-slide"
-                style="background-image: url(&quot;./assets/img/slide4.webp&quot;)"
+                style="background-image: url(&quot;/assets/img/slide4.webp&quot;)"
               >
                 <div class="carousel-overlay"></div>
                 <div class="carousel-content">
@@ -196,41 +209,41 @@
           </div>
           <div class="reveal grid gap-6 md:grid-cols-3">
             <!-- Blanco -->
-            <div class="bin-card" style="background: #4b5563">
+            <div class="rounded-lg p-6 text-center text-white" style="background: #4b5563">
               <div class="mb-3 text-5xl">🗑️</div>
-              <h4>Residuos Aprovechables</h4>
-              <ul>
-                <li>Plástico</li>
-                <li>Cartón</li>
-                <li>Vidrio</li>
-                <li>Papel</li>
-                <li>Metales</li>
+              <h4 class="mb-2 text-base font-bold">Residuos Aprovechables</h4>
+              <ul class="m-0 list-none p-0 text-sm opacity-90">
+                <li class="mb-0.5">Plástico</li>
+                <li class="mb-0.5">Cartón</li>
+                <li class="mb-0.5">Vidrio</li>
+                <li class="mb-0.5">Papel</li>
+                <li class="mb-0.5">Metales</li>
               </ul>
               <div class="mt-3 text-xs font-bold tracking-widest uppercase opacity-70">
                 Caneca blanca o gris
               </div>
             </div>
             <!-- Verde -->
-            <div class="bin-card" style="background: #166534">
+            <div class="rounded-lg p-6 text-center text-white" style="background: #166534">
               <div class="mb-3 text-5xl">🌿</div>
-              <h4>Residuos Orgánicos Aprovechables</h4>
-              <ul>
-                <li>Restos de comida</li>
-                <li>Desechos agrícolas</li>
+              <h4 class="mb-2 text-base font-bold">Residuos Orgánicos Aprovechables</h4>
+              <ul class="m-0 list-none p-0 text-sm opacity-90">
+                <li class="mb-0.5">Restos de comida</li>
+                <li class="mb-0.5">Desechos agrícolas</li>
               </ul>
               <div class="mt-3 text-xs font-bold tracking-widest uppercase opacity-70">
                 Caneca verde
               </div>
             </div>
             <!-- Negro -->
-            <div class="bin-card" style="background: #374151">
+            <div class="rounded-lg p-6 text-center text-white" style="background: #374151">
               <div class="mb-3 text-5xl">🚮</div>
-              <h4>Residuos No Aprovechables</h4>
-              <ul>
-                <li>Papel higiénico</li>
-                <li>Servilletas</li>
-                <li>Papeles contaminados</li>
-                <li>Papeles metalizados</li>
+              <h4 class="mb-2 text-base font-bold">Residuos No Aprovechables</h4>
+              <ul class="m-0 list-none p-0 text-sm opacity-90">
+                <li class="mb-0.5">Papel higiénico</li>
+                <li class="mb-0.5">Servilletas</li>
+                <li class="mb-0.5">Papeles contaminados</li>
+                <li class="mb-0.5">Papeles metalizados</li>
               </ul>
               <div class="mt-3 text-xs font-bold tracking-widest uppercase opacity-70">
                 Caneca negra
@@ -316,7 +329,21 @@
 
       <!-- SERVICIOS COMPLEMENTARIOS -->
       <section class="bg-gray-50 py-20">
-        <div class="mx-auto grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="container mx-auto px-6">
+          <div class="reveal mx-auto mb-12 max-w-2xl text-center">
+            <span class="text-primary-green text-sm font-semibold tracking-wider uppercase"
+              ><i class="fas fa-plus-circle mr-1"></i> Más servicios</span
+            >
+            <h2 class="mt-2 text-3xl font-bold text-gray-800 md:text-4xl">
+              Servicios Complementarios
+            </h2>
+            <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-gray-600">
+              Ampliamos nuestra oferta para cubrir todas las necesidades ambientales de su
+              organización.
+            </p>
+          </div>
+        </div>
+        <div class="mx-auto grid max-w-6xl gap-6 px-6 sm:grid-cols-2 lg:grid-cols-3">
           <div
             class="reveal flex items-start gap-4 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm"
           >
@@ -445,7 +472,7 @@
               ><i class="fas fa-warehouse mr-1"></i> Infraestructura propia</span
             >
             <h2 class="mt-2 text-3xl font-bold text-gray-800 md:text-4xl">Nuestras Bodegas ECA</h2>
-            <p class="mt-3 text-gray-500">
+            <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-gray-600">
               Contamos con instalaciones propias para la clasificación y disposición final de
               residuos.
             </p>

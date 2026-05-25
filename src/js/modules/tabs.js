@@ -12,15 +12,24 @@ export function initTabs() {
   if (!btnMision || !btnVision) return;
 
   function activateTab(activeBtn, inactiveBtn, activeContent, inactiveContent) {
-    // Botones
-    activeBtn.classList.remove("tab-inactive");
-    activeBtn.classList.add("tab-active");
-    inactiveBtn.classList.remove("tab-active");
-    inactiveBtn.classList.add("tab-inactive");
+    // Botones activo
+    inactiveBtn.classList.remove(
+      "bg-primary-green",
+      "text-white",
+      "border-b-2",
+      "border-[#E4B363]"
+    );
+    inactiveBtn.classList.add("bg-gray-100", "text-gray-900");
+
+    activeBtn.classList.remove("bg-gray-100", "text-gray-900");
+    activeBtn.classList.add("bg-primary-green", "text-white", "border-b-2", "border-[#E4B363]");
 
     // Contenido
-    inactiveContent.classList.remove("active-tab");
-    activeContent.classList.add("active-tab");
+    inactiveContent.classList.remove("block", "animate-fadeTab");
+    inactiveContent.classList.add("hidden");
+
+    activeContent.classList.remove("hidden");
+    activeContent.classList.add("block", "animate-fadeTab");
   }
 
   btnMision.addEventListener("click", () =>
