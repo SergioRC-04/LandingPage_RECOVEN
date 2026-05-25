@@ -1,8 +1,7 @@
-Se esta demorando en cargar (La cabecera carga de ultimo, se ve primero la pagina y despues sale la cabecera)
-Poner fotos en las bodegas
+Poner fotos en las bodegas (cuando las pasen)
 Arreglar boton en la cabecera de solicitar, se ve muy unido en el modo responsive
 El modo responsive de servicios, se cambia muy tarde, deberia ser antes.
-icono de la pestaña
+Poner boton contactar en cada uno del carrusel de servicios
 
 correo temporal:
 desactivar catcha

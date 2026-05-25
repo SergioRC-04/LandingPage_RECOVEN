@@ -3,7 +3,7 @@
 import { initMenu } from "./modules/menu.js";
 import { initNavigation } from "./modules/navigation.js";
 
-// 1. Importamos los HTMLs en crudo usando la magia de Vite
+// 1. Importamos los HTMLs en crudo
 import whatsappHTML from "../components/whatsapp-fab.html?raw";
 import headerHTML from "../components/header.html?raw";
 import footerHTML from "../components/footer.html?raw";
