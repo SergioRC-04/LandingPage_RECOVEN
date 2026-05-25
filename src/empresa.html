@@ -10,10 +10,6 @@
     <title>RECOVEN ECA ESP | Empresa</title>
     <link rel="icon" type="image/x-icon" href="/assets/recoven.ico" />
     <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
@@ -39,79 +35,79 @@
           background-size: cover;
         "
       >
-        <div class="container mx-auto px-6 text-center text-white reveal">
+        <div class="reveal container mx-auto px-6 text-center text-white">
           <span
-            class="inline-block bg-white/20 border border-white/30 text-white text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-5"
+            class="mb-5 inline-block rounded-full border border-white/30 bg-white/20 px-4 py-1.5 text-xs font-bold tracking-widest text-white uppercase"
             >NIT 901.427.170-6</span
           >
-          <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">RECOVEN ECA SAS ESP</h1>
-          <p class="text-xl mt-4 opacity-90 max-w-xl mx-auto">
+          <h1 class="text-4xl leading-tight font-extrabold md:text-6xl">RECOVEN ECA SAS ESP</h1>
+          <p class="mx-auto mt-4 max-w-xl text-xl opacity-90">
             Compromiso ambiental, desarrollo sostenible y responsabilidad social
           </p>
         </div>
       </section>
 
       <!-- QUIÉNES SOMOS (versión completa) -->
-      <section id="quienes-somos" class="py-20 bg-gray-50">
+      <section id="quienes-somos" class="bg-gray-50 py-20">
         <div class="container mx-auto px-6 md:px-12">
-          <div class="grid md:grid-cols-2 gap-12 items-start">
+          <div class="grid items-start gap-12 md:grid-cols-2">
             <!-- Columna texto -->
             <div class="reveal">
-              <span class="text-primary-green font-bold text-sm uppercase tracking-wide">
+              <span class="text-primary-green text-sm font-bold tracking-wide uppercase">
                 <i class="fas fa-recycle mr-1"></i> Quiénes Somos
               </span>
-              <h2 class="text-3xl md:text-4xl font-bold mt-2 text-gray-800">
+              <h2 class="mt-2 text-3xl font-bold text-gray-800 md:text-4xl">
                 Compromiso con la sostenibilidad y el desarrollo social
               </h2>
-              <p class="text-gray-600 mt-5 leading-relaxed">
+              <p class="mt-5 leading-relaxed text-gray-600">
                 Somos una empresa legalmente constituida y prestadora del servicio público de aseo,
                 dedicada a brindar soluciones ambientales integrales mediante planes, programas y
                 proyectos orientados a la protección del medio ambiente, el desarrollo sostenible y
                 el fortalecimiento de la economía circular.
               </p>
-              <p class="text-gray-600 mt-4 leading-relaxed">
+              <p class="mt-4 leading-relaxed text-gray-600">
                 Nuestra labor se basa en la importancia de mantener espacios limpios y saludables,
                 aportando al bienestar colectivo y a la sostenibilidad territorial. Nos
                 especializamos en la gestión y aprovechamiento de residuos sólidos no peligrosos
                 aprovechables, con énfasis en el sector agroquímico ubicado en zonas francas.
               </p>
-              <p class="text-gray-600 mt-4 leading-relaxed">
+              <p class="mt-4 leading-relaxed text-gray-600">
                 Promovemos la dignificación del reciclador de oficio, la inclusión social y el
                 aprovechamiento responsable de los recursos, posicionándonos como aliados
                 estratégicos para el sector empresarial.
               </p>
-              <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div class="flex items-center gap-3">
-                  <i class="fas fa-chalkboard-user text-2xl text-primary-green"></i
+                  <i class="fas fa-chalkboard-user text-primary-green text-2xl"></i
                   ><span class="text-gray-700">Asesoría PGIRS y normatividad</span>
                 </div>
                 <div class="flex items-center gap-3">
-                  <i class="fas fa-hand-holding-heart text-2xl text-primary-green"></i
+                  <i class="fas fa-hand-holding-heart text-primary-green text-2xl"></i
                   ><span class="text-gray-700">Impacto social: jóvenes recicladores</span>
                 </div>
                 <div class="flex items-center gap-3">
-                  <i class="fas fa-file-certificate text-2xl text-primary-green"></i
+                  <i class="fas fa-file-certificate text-primary-green text-2xl"></i
                   ><span class="text-gray-700">Certificado disposición final</span>
                 </div>
                 <div class="flex items-center gap-3">
-                  <i class="fas fa-building text-2xl text-primary-green"></i
+                  <i class="fas fa-building text-primary-green text-2xl"></i
                   ><span class="text-gray-700">Aliados zonas francas</span>
                 </div>
               </div>
             </div>
 
             <!-- TABS Misión / Visión -->
-            <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 reveal">
+            <div class="reveal rounded-2xl bg-white p-6 shadow-xl md:p-8">
               <div class="flex space-x-2 border-b border-gray-200 pb-2">
                 <button
                   id="tabMisionBtn"
-                  class="tab-active px-6 py-2 rounded-t-lg font-bold transition"
+                  class="tab-active rounded-t-lg px-6 py-2 font-bold transition"
                 >
                   📌 Misión
                 </button>
                 <button
                   id="tabVisionBtn"
-                  class="tab-inactive px-6 py-2 rounded-t-lg font-bold transition"
+                  class="tab-inactive rounded-t-lg px-6 py-2 font-bold transition"
                 >
                   🔭 Visión
                 </button>
@@ -119,7 +115,7 @@
               <div class="mt-6">
                 <div id="misionContent" class="tab-content active-tab">
                   <i class="fas fa-quote-left text-primary-green text-3xl opacity-30"></i>
-                  <p class="text-gray-700 leading-relaxed italic mt-3">
+                  <p class="mt-3 leading-relaxed text-gray-700 italic">
                     Nuestra misión es brindar el servicio de recolección a los ciudadanos del sector
                     industrial, comercial, público y de la salud a través del desarrollo sostenible
                     y sustentable, en el cual prestaremos nuestros servicios ambientales como parte
@@ -131,7 +127,7 @@
                 </div>
                 <div id="visionContent" class="tab-content">
                   <i class="fas fa-chart-line text-primary-green text-3xl opacity-30"></i>
-                  <p class="text-gray-700 leading-relaxed mt-3">
+                  <p class="mt-3 leading-relaxed text-gray-700">
                     RECOVEN ECA SAS ESP busca ubicarse en el primer lugar entre las organizaciones
                     de su género, apoyados en la fortaleza del recurso humano, los deseos y
                     capacidad de sacar adelante los procesos que acometemos, buscando la eficiencia,
@@ -140,7 +136,7 @@
                   </p>
                 </div>
               </div>
-              <div class="mt-8 pt-4 border-t border-gray-100">
+              <div class="mt-8 border-t border-gray-100 pt-4">
                 <div class="flex items-center gap-2 text-sm text-gray-500">
                   <i class="fas fa-check-circle text-primary-green"></i>
                   Certificados de cumplimiento ambiental – Resolución 1407/2018
@@ -152,38 +148,38 @@
       </section>
 
       <!-- NUESTRO COMPROMISO CON EL RECICLAJE -->
-      <section class="py-20 bg-gradient-to-br from-[#EFF7EF] to-white">
+      <section class="bg-gradient-to-br from-[#EFF7EF] to-white py-20">
         <div class="container mx-auto px-6">
-          <div class="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+          <div class="mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-2">
             <!-- Imagen / stat visual -->
             <div class="reveal">
-              <div class="relative rounded-3xl overflow-hidden shadow-xl">
+              <div class="relative overflow-hidden rounded-3xl shadow-xl">
                 <img
-                  src="../public/assets/img/recycling-hands.webp"
+                  src="/assets/img/recycling-hands.webp"
                   alt="Jóvenes recicladores RECOVEN"
-                  class="w-full h-72 md:h-96 object-cover"
+                  class="h-72 w-full object-cover md:h-96"
                 />
               </div>
             </div>
 
             <!-- Texto -->
             <div class="reveal">
-              <span class="text-primary-green font-bold text-sm uppercase tracking-wide">
+              <span class="text-primary-green text-sm font-bold tracking-wide uppercase">
                 <i class="fas fa-hand-holding-heart mr-1"></i> Nuestro compromiso
               </span>
-              <h2 class="text-3xl md:text-4xl font-bold mt-2 text-gray-800">Con el Reciclaje</h2>
-              <div class="mt-5 bg-white rounded-2xl shadow-md p-6 border-l-4 border-primary-green">
-                <p class="text-gray-700 leading-relaxed">
+              <h2 class="mt-2 text-3xl font-bold text-gray-800 md:text-4xl">Con el Reciclaje</h2>
+              <div class="border-primary-green mt-5 rounded-2xl border-l-4 bg-white p-6 shadow-md">
+                <p class="leading-relaxed text-gray-700">
                   Estamos contribuyendo a un impacto positivo en la vida de muchos jóvenes con bajos
                   recursos, hijos de recicladores de oficio. Cada botella reciclada, cada papel
                   reutilizado y cada acción sostenible que realizamos se traduce en oportunidades
                   para que estos jóvenes puedan perseguir sus sueños de estudiar.
                 </p>
-                <p class="text-gray-700 leading-relaxed mt-4">
+                <p class="mt-4 leading-relaxed text-gray-700">
                   Juntos, estamos construyendo un futuro más brillante y sostenible.
                 </p>
               </div>
-              <p class="font-bold text-primary-green mt-5 text-lg">
+              <p class="text-primary-green mt-5 text-lg font-bold">
                 ¡Gracias por ser parte de esta causa!
               </p>
             </div>
@@ -192,18 +188,18 @@
       </section>
 
       <!-- ALIANZA PARA EL DESARROLLO SOSTENIBLE -->
-      <section class="py-20 bg-white">
-        <div class="container mx-auto px-6 max-w-6xl">
-          <div class="grid md:grid-cols-2 gap-12 items-center">
+      <section class="bg-white py-20">
+        <div class="container mx-auto max-w-6xl px-6">
+          <div class="grid items-center gap-12 md:grid-cols-2">
             <!-- Texto -->
             <div class="reveal">
-              <span class="text-primary-green font-bold text-sm uppercase tracking-wide">
+              <span class="text-primary-green text-sm font-bold tracking-wide uppercase">
                 <i class="fas fa-handshake mr-1"></i> Alianzas estratégicas
               </span>
-              <h2 class="text-3xl md:text-4xl font-bold mt-2 text-gray-800">
+              <h2 class="mt-2 text-3xl font-bold text-gray-800 md:text-4xl">
                 Alianza para el Desarrollo Sostenible
               </h2>
-              <p class="text-gray-600 mt-5 leading-relaxed">
+              <p class="mt-5 leading-relaxed text-gray-600">
                 En RECOVEN creemos en el valor del trabajo conjunto entre las empresas y las
                 comunidades como una herramienta para generar un impacto real y sostenible. Por
                 ello, establecemos convenios con las
@@ -224,7 +220,7 @@
                   <span class="text-gray-600">El fortalecimiento social de los territorios</span>
                 </li>
               </ul>
-              <p class="text-gray-600 mt-5 leading-relaxed">
+              <p class="mt-5 leading-relaxed text-gray-600">
                 A través de nuestros servicios, ayudamos a que las empresas puedan materializar sus
                 compromisos de
                 <strong class="text-gray-800">Responsabilidad Social Empresarial</strong>,
@@ -237,51 +233,51 @@
             <!-- Tarjetas de impacto -->
             <div class="reveal grid grid-cols-1 gap-5">
               <div
-                class="bg-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm flex gap-4 items-start"
+                class="flex items-start gap-4 rounded-2xl border border-gray-100 bg-gray-50 p-6 shadow-sm"
               >
                 <div
-                  class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center"
+                  class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl"
                   style="background: #dcfce7"
                 >
                   <i class="fas fa-city text-primary-green text-xl"></i>
                 </div>
                 <div>
                   <h4 class="font-bold text-gray-800">Convenios con JAC</h4>
-                  <p class="text-gray-500 text-sm mt-1">
+                  <p class="mt-1 text-sm text-gray-500">
                     Trabajo conjunto con Juntas de Acción Comunal para iniciativas de impacto
                     territorial real.
                   </p>
                 </div>
               </div>
               <div
-                class="bg-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm flex gap-4 items-start"
+                class="flex items-start gap-4 rounded-2xl border border-gray-100 bg-gray-50 p-6 shadow-sm"
               >
                 <div
-                  class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center"
+                  class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl"
                   style="background: #dcfce7"
                 >
                   <i class="fas fa-briefcase text-primary-green text-xl"></i>
                 </div>
                 <div>
                   <h4 class="font-bold text-gray-800">RSE Empresarial</h4>
-                  <p class="text-gray-500 text-sm mt-1">
+                  <p class="mt-1 text-sm text-gray-500">
                     Materializamos los compromisos de Responsabilidad Social de tus aliados
                     corporativos.
                   </p>
                 </div>
               </div>
               <div
-                class="bg-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm flex gap-4 items-start"
+                class="flex items-start gap-4 rounded-2xl border border-gray-100 bg-gray-50 p-6 shadow-sm"
               >
                 <div
-                  class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center"
+                  class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl"
                   style="background: #dcfce7"
                 >
                   <i class="fas fa-globe-americas text-primary-green text-xl"></i>
                 </div>
                 <div>
                   <h4 class="font-bold text-gray-800">Cultura de sostenibilidad</h4>
-                  <p class="text-gray-500 text-sm mt-1">
+                  <p class="mt-1 text-sm text-gray-500">
                     Promovemos el compromiso colectivo con el ambiente en comunidades y empresas.
                   </p>
                 </div>
@@ -292,20 +288,20 @@
       </section>
 
       <!-- NORMATIVIDAD -->
-      <section class="py-16 bg-gray-50 border-t border-b border-gray-100">
+      <section class="border-t border-b border-gray-100 bg-gray-50 py-16">
         <div class="container mx-auto px-6">
-          <div class="text-center mb-10 reveal">
-            <span class="text-primary-green font-semibold uppercase tracking-wider text-sm"
+          <div class="reveal mb-10 text-center">
+            <span class="text-primary-green text-sm font-semibold tracking-wider uppercase"
               ><i class="fas fa-gavel mr-1"></i> Marco legal</span
             >
-            <h2 class="text-2xl md:text-3xl font-bold mt-2 text-gray-800">
+            <h2 class="mt-2 text-2xl font-bold text-gray-800 md:text-3xl">
               Cumplimos con la normatividad ambiental vigente
             </h2>
-            <p class="text-gray-500 mt-2">
+            <p class="mt-2 text-gray-500">
               Certificamos operaciones bajo estrictos marcos legales colombianos.
             </p>
           </div>
-          <div class="flex flex-wrap justify-center gap-3 reveal">
+          <div class="reveal flex flex-wrap justify-center gap-3">
             <span class="norm-pill">📜 Resolución 1407 de 2018</span>
             <span class="norm-pill">⚖️ Decreto 596 de 2016</span>
             <span class="norm-pill">🏛️ Ley 142 de 1994</span>
@@ -315,7 +311,7 @@
             <span class="norm-pill">📋 Resolución 0082</span>
             <span class="norm-pill">📋 Resolución 2490</span>
           </div>
-          <p class="text-center text-sm text-gray-400 mt-6">
+          <p class="mt-6 text-center text-sm text-gray-400">
             <i class="fas fa-check-circle text-primary-green mr-1"></i>
             Más que una obligación, reciclar es una necesidad — Resolución 2184 de 2019
           </p>
@@ -323,19 +319,19 @@
       </section>
 
       <!-- CTA FINAL -->
-      <section class="py-16 bg-primary-green">
-        <div class="container mx-auto px-6 text-center reveal">
-          <h2 class="text-3xl md:text-4xl font-extrabold text-white">
+      <section class="bg-primary-green py-16">
+        <div class="reveal container mx-auto px-6 text-center">
+          <h2 class="text-3xl font-extrabold text-white md:text-4xl">
             ¿Listo para ser parte del cambio?
           </h2>
-          <p class="text-white mt-3 text-lg max-w-xl mx-auto">
+          <p class="mx-auto mt-3 max-w-xl text-lg text-white">
             Contáctanos y diseñamos juntos la solución ambiental que tu empresa o comunidad
             necesita.
           </p>
-          <div class="flex flex-wrap justify-center gap-4 mt-8">
+          <div class="mt-8 flex flex-wrap justify-center gap-4">
             <a
               href="index.html#contacto"
-              class="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white border border-white/40 font-bold px-8 py-3 rounded-full transition hover:-translate-y-0.5"
+              class="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/15 px-8 py-3 font-bold text-white transition hover:-translate-y-0.5 hover:bg-white/25"
             >
               <i class="fas fa-paper-plane"></i> Solicitar servicio
             </a>
@@ -343,7 +339,7 @@
               href="https://wa.me/573209350289"
               target="_blank"
               rel="noopener"
-              class="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white border border-white/40 font-bold px-8 py-3 rounded-full transition hover:-translate-y-0.5"
+              class="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/15 px-8 py-3 font-bold text-white transition hover:-translate-y-0.5 hover:bg-white/25"
             >
               <i class="fab fa-whatsapp"></i> WhatsApp
             </a>

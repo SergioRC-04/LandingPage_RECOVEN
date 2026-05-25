@@ -6,3 +6,7 @@ Poner boton contactar en cada uno del carrusel de servicios
 correo temporal:
 desactivar catcha
 redirigir a dominio
+
+Hacer testeo
+Mirar si vite es la mejor opcion
+instalar prettier+tailwind

@@ -10,10 +10,6 @@
     <title>RECOVEN ECA ESP | Inicio</title>
     <link rel="icon" type="image/x-icon" href="/assets/recoven.ico" />
     <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
@@ -42,26 +38,26 @@
         "
       >
         <div class="container mx-auto px-6 py-24 md:py-32 lg:py-40">
-          <div class="max-w-2xl reveal">
-            <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight">
+          <div class="reveal max-w-2xl">
+            <h2 class="text-4xl leading-tight font-extrabold text-white md:text-5xl lg:text-6xl">
               Recolección de residuos para <span class="text-[#E4B363]">hogares e industrias</span>
             </h2>
-            <p class="text-lg text-gray-200 mt-5 font-light">
+            <p class="mt-5 text-lg font-light text-gray-200">
               Ofrecemos servicio de recolección de residuos sólidos aprovechables y no
               aprovechables, con cobertura en Barranquilla, Puerto Colombia y próximamente más
               zonas.
             </p>
-            <div class="flex flex-wrap gap-4 mt-10">
+            <div class="mt-10 flex flex-wrap gap-4">
               <a
                 href="#tipos-servicio"
-                class="nav-link inline-flex items-center gap-2 bg-primary-green text-white font-bold px-7 py-3 rounded-full shadow-lg hover:bg-opacity-90 transition hover:-translate-y-0.5"
+                class="nav-link bg-primary-green hover:bg-opacity-90 inline-flex items-center gap-2 rounded-full px-7 py-3 font-bold text-white shadow-lg transition hover:-translate-y-0.5"
                 data-service="Servicio Residencial"
               >
                 <i class="fas fa-home"></i> Servicio Residencial
               </a>
               <a
                 href="#tipos-servicio"
-                class="nav-link inline-flex items-center gap-2 font-bold px-7 py-3 rounded-full shadow-lg transition hover:-translate-y-0.5 border-2 border-[#E4B363] text-white hover:bg-[#E4B363] hover:text-gray-900"
+                class="nav-link inline-flex items-center gap-2 rounded-full border-2 border-[#E4B363] px-7 py-3 font-bold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-[#E4B363] hover:text-gray-900"
                 data-service="Servicio Industrial / Comercial"
               >
                 <i class="fas fa-industry"></i> Servicio Industrial
@@ -72,43 +68,43 @@
       </section>
 
       <!-- TIPOS DE SERVICIO -->
-      <section id="tipos-servicio" class="py-16 bg-white">
+      <section id="tipos-servicio" class="bg-white py-16">
         <div class="container mx-auto px-6">
-          <div class="text-center mb-10 reveal">
-            <span class="text-primary-green font-semibold uppercase tracking-wider text-sm"
+          <div class="reveal mb-10 text-center">
+            <span class="text-primary-green text-sm font-semibold tracking-wider uppercase"
               >¿Qué necesitas?</span
             >
-            <h2 class="text-3xl md:text-4xl font-bold mt-2 text-gray-800">
+            <h2 class="mt-2 text-3xl font-bold text-gray-800 md:text-4xl">
               Elige el servicio para ti
             </h2>
-            <p class="text-gray-500 mt-2">Soluciones para el hogar y para el sector empresarial.</p>
+            <p class="mt-2 text-gray-500">Soluciones para el hogar y para el sector empresarial.</p>
           </div>
-          <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div class="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
             <div class="hero-service-card residencial reveal">
-              <i class="fas fa-home text-5xl text-primary-green mb-4"></i>
-              <h3 class="text-xl font-bold text-gray-800 mb-2">Servicio Residencial</h3>
-              <p class="text-gray-600 text-sm mb-6">
+              <i class="fas fa-home text-primary-green mb-4 text-5xl"></i>
+              <h3 class="mb-2 text-xl font-bold text-gray-800">Servicio Residencial</h3>
+              <p class="mb-6 text-sm text-gray-600">
                 Recolección en viviendas, conjuntos residenciales y urbanizaciones. Frecuencias
                 flexibles (2 o 3 veces por semana) con altos estándares de limpieza.
               </p>
               <a
                 href="#contacto"
-                class="nav-link bg-primary-green text-white px-6 py-3 rounded-xl font-bold w-full block hover:bg-opacity-90 transition"
+                class="nav-link bg-primary-green hover:bg-opacity-90 block w-full rounded-xl px-6 py-3 font-bold text-white transition"
                 data-service="Servicio Residencial"
               >
                 Solicitar servicio residencial →
               </a>
             </div>
             <div class="hero-service-card industrial reveal">
-              <i class="fas fa-industry text-5xl mb-4" style="color: #e4b363"></i>
-              <h3 class="text-xl font-bold text-gray-800 mb-2">Servicio Industrial / Comercial</h3>
-              <p class="text-gray-600 text-sm mb-6">
+              <i class="fas fa-industry mb-4 text-5xl" style="color: #e4b363"></i>
+              <h3 class="mb-2 text-xl font-bold text-gray-800">Servicio Industrial / Comercial</h3>
+              <p class="mb-6 text-sm text-gray-600">
                 Para fábricas, bodegas, centros comerciales, oficinas y zonas francas. Gestión de
                 residuos aprovechables, no aprovechables y especiales.
               </p>
               <a
                 href="#contacto"
-                class="nav-link text-white px-6 py-3 rounded-xl font-bold w-full block hover:opacity-90 transition"
+                class="nav-link block w-full rounded-xl px-6 py-3 font-bold text-white transition hover:opacity-90"
                 style="background-color: #e4b363"
                 data-service="Servicio Industrial / Comercial"
               >
@@ -120,15 +116,15 @@
       </section>
 
       <!-- EMPRESA MINI -->
-      <section id="empresa-mini" class="py-12 bg-gray-50">
-        <div class="container mx-auto px-6 max-w-3xl text-center reveal">
-          <span class="text-primary-green font-semibold uppercase tracking-wider text-sm"
+      <section id="empresa-mini" class="bg-gray-50 py-12">
+        <div class="reveal container mx-auto max-w-3xl px-6 text-center">
+          <span class="text-primary-green text-sm font-semibold tracking-wider uppercase"
             ><i class="fas fa-leaf mr-1"></i>Nuestra empresa</span
           >
-          <h2 class="text-2xl md:text-3xl font-bold mt-2 text-gray-800">
+          <h2 class="mt-2 text-2xl font-bold text-gray-800 md:text-3xl">
             Soluciones ambientales con responsabilidad social
           </h2>
-          <p class="text-gray-600 mt-4 leading-relaxed max-w-2xl mx-auto">
+          <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-gray-600">
             Somos RECOVEN ECA SAS ESP, empresa prestadora del servicio público de aseo dedicada a
             brindar soluciones ambientales integrales. Especialistas en gestión de residuos sólidos
             no peligrosos aprovechables con énfasis en sector agroquímico y zonas francas,
@@ -137,7 +133,7 @@
           </p>
           <a
             href="empresa.html"
-            class="inline-flex items-center gap-2 mt-6 text-primary-green font-bold hover:opacity-80 transition"
+            class="text-primary-green mt-6 inline-flex items-center gap-2 font-bold transition hover:opacity-80"
           >
             Conoce más sobre nosotros <i class="fas fa-arrow-right"></i>
           </a>
@@ -145,9 +141,9 @@
       </section>
 
       <!-- CLIENTES -->
-      <section id="clientes" class="py-16 bg-white">
+      <section id="clientes" class="bg-white py-16">
         <div class="container mx-auto px-6">
-          <div class="text-center mb-8 reveal">
+          <div class="reveal mb-8 text-center">
             <h3 class="text-2xl font-bold text-gray-800">Empresas que confían en RECOVEN</h3>
             <p class="text-gray-500">Aliados estratégicos en la gestión sostenible</p>
           </div>
@@ -158,15 +154,15 @@
       </section>
 
       <!-- CONTACTO -->
-      <section id="contacto" class="py-20 bg-white">
-        <div class="container mx-auto px-6 max-w-6xl">
-          <div class="grid lg:grid-cols-5 gap-12 items-start">
-            <div class="lg:col-span-2 reveal">
+      <section id="contacto" class="bg-white py-20">
+        <div class="container mx-auto max-w-6xl px-6">
+          <div class="grid items-start gap-12 lg:grid-cols-5">
+            <div class="reveal lg:col-span-2">
               <h3 class="text-3xl font-bold text-gray-800">
                 Solicite su servicio o
                 <span class="text-primary-green">Certificado de Disposición Final</span>
               </h3>
-              <p class="text-gray-600 mt-3">
+              <p class="mt-3 text-gray-600">
                 Complete el formulario y nuestro equipo lo contactará en menos de 24 horas hábiles.
               </p>
               <div class="mt-8 space-y-4">
@@ -183,7 +179,7 @@
                   <i class="fas fa-phone-alt text-primary-green"></i>
                   <div>
                     <p class="font-semibold">Teléfono / WhatsApp</p>
-                    <a href="tel:3209350289" class="text-sm hover:text-primary-green"
+                    <a href="tel:3209350289" class="hover:text-primary-green text-sm"
                       >320 935 0289</a
                     >
                   </div>
@@ -194,7 +190,7 @@
                     <p class="font-semibold">Correo oficial</p>
                     <a
                       href="mailto:recovenecasasesp@gmail.com"
-                      class="text-sm break-all hover:text-primary-green"
+                      class="hover:text-primary-green text-sm break-all"
                       >recovenecasasesp@gmail.com</a
                     >
                   </div>
@@ -212,19 +208,19 @@
                   href="https://wa.me/573209350289?text=Hola%2C%20me%20interesa%20solicitar%20un%20servicio%20de%20RECOVEN%20ECA."
                   target="_blank"
                   rel="noopener"
-                  class="flex items-center justify-center gap-3 w-full py-3 px-6 rounded-xl font-bold text-white hover:opacity-90 hover:-translate-y-1 transition"
+                  class="flex w-full items-center justify-center gap-3 rounded-xl px-6 py-3 font-bold text-white transition hover:-translate-y-1 hover:opacity-90"
                   style="background: #25d366; box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35)"
                 >
                   <i class="fab fa-whatsapp text-2xl"></i> Chatear por WhatsApp ahora
                 </a>
-                <p class="text-xs text-gray-400 text-center mt-2">
+                <p class="mt-2 text-center text-xs text-gray-400">
                   Respuesta inmediata en horario laboral
                 </p>
               </div>
             </div>
-            <div class="lg:col-span-3 bg-gray-50 rounded-2xl shadow-lg p-6 md:p-8 reveal">
+            <div class="reveal rounded-2xl bg-gray-50 p-6 shadow-lg md:p-8 lg:col-span-3">
               <form action="https://formsubmit.co/dianagoethe03@gmail.com" method="POST" novalidate>
-                <div class="grid sm:grid-cols-2 gap-4">
+                <div class="grid gap-4 sm:grid-cols-2">
                   <div>
                     <label class="block text-sm font-semibold">Nombre completo *</label>
                     <input
@@ -232,7 +228,7 @@
                       name="nombre"
                       placeholder="Ej: María González"
                       required
-                      class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition"
+                      class="mt-1 w-full rounded-lg border border-gray-300 p-3 transition focus:ring-2 focus:ring-green-600 focus:outline-none"
                     />
                   </div>
                   <div>
@@ -242,7 +238,7 @@
                       name="telefono"
                       placeholder="300 000 0000"
                       required
-                      class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition"
+                      class="mt-1 w-full rounded-lg border border-gray-300 p-3 transition focus:ring-2 focus:ring-green-600 focus:outline-none"
                     />
                   </div>
                   <div>
@@ -252,7 +248,7 @@
                       name="email"
                       placeholder="ejemplo@correo.com"
                       required
-                      class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition"
+                      class="mt-1 w-full rounded-lg border border-gray-300 p-3 transition focus:ring-2 focus:ring-green-600 focus:outline-none"
                     />
                   </div>
                   <div>
@@ -261,7 +257,7 @@
                       type="text"
                       name="empresa"
                       placeholder="Ej: Italcol S.A. o Conjunto Los Pinos"
-                      class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition"
+                      class="mt-1 w-full rounded-lg border border-gray-300 p-3 transition focus:ring-2 focus:ring-green-600 focus:outline-none"
                     />
                   </div>
                 </div>
@@ -271,7 +267,7 @@
                   <select
                     name="servicio"
                     required
-                    class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition"
+                    class="mt-1 w-full rounded-lg border border-gray-300 p-3 transition focus:ring-2 focus:ring-green-600 focus:outline-none"
                   >
                     <option value="">Seleccione...</option>
                     <option value="Servicio Residencial">
@@ -289,7 +285,7 @@
                     type="text"
                     name="direccion"
                     placeholder="Ej: Barranquilla Norte, Puerto Colombia..."
-                    class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition"
+                    class="mt-1 w-full rounded-lg border border-gray-300 p-3 transition focus:ring-2 focus:ring-green-600 focus:outline-none"
                   />
                 </div>
 
@@ -300,7 +296,7 @@
                   <textarea
                     name="mensaje"
                     rows="3"
-                    class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition resize-none"
+                    class="mt-1 w-full resize-none rounded-lg border border-gray-300 p-3 transition focus:ring-2 focus:ring-green-600 focus:outline-none"
                     placeholder="Frecuencia deseada, volumen estimado..."
                   ></textarea>
                 </div>
@@ -311,12 +307,12 @@
 
                 <button
                   type="submit"
-                  class="mt-6 w-full bg-primary-green text-white font-bold py-3 rounded-xl shadow-md hover:bg-opacity-90 transition flex justify-center items-center gap-2"
+                  class="bg-primary-green hover:bg-opacity-90 mt-6 flex w-full items-center justify-center gap-2 rounded-xl py-3 font-bold text-white shadow-md transition"
                 >
                   <i class="fas fa-paper-plane"></i> Enviar solicitud
                 </button>
 
-                <p class="text-xs text-gray-400 text-center mt-3">
+                <p class="mt-3 text-center text-xs text-gray-400">
                   <i class="fas fa-lock"></i> Datos protegidos · Respuesta en menos de 24h
                 </p>
               </form>

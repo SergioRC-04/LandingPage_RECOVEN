@@ -1,5 +1,7 @@
 /* ==================== GLOBAL STYLES ==================== */
 
+@import "tailwindcss";
+
 /* Tipografía y colores */
 :root {
   --primary-green: #1e5a3c;

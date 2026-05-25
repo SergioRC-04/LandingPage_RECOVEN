@@ -1,15 +1,14 @@
 import { defineConfig } from "vite";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  // 1. Establecemos la raíz en la carpeta del proyecto
   root: "src",
 
-  // 2. Activamos de forma nativa la carpeta public (ya no necesitas false)
   publicDir: "../public",
 
+  plugins: [tailwindcss()],
+
   build: {
-    // 3. Como root es "./", el outDir debe ser simplemente "dist"
-    // (Ya no necesitas salir con "../dist")
     outDir: "../dist",
     emptyOutDir: true,
 
