@@ -272,6 +272,16 @@
                 </div>
 
                 <div class="mt-4">
+                  <label class="block text-sm font-semibold">Dirección / Zona de servicio</label>
+                  <input
+                    type="text"
+                    name="direccion"
+                    placeholder="Ej: Calle 84 # 12-34, Barranquilla Norte..."
+                    class="mt-1 w-full rounded-lg border border-gray-300 p-3 transition focus:ring-2 focus:ring-green-600 focus:outline-none"
+                  />
+                </div>
+
+                <div class="mt-4">
                   <label class="block text-sm font-semibold">Tipo de servicio *</label>
                   <select
                     id="servicioTipo"
@@ -290,24 +300,34 @@
                 </div>
 
                 <div class="mt-4">
-                  <label class="block text-sm font-semibold">Dirección / Zona de servicio</label>
-                  <input
-                    type="text"
-                    name="direccion"
-                    placeholder="Ej: Barranquilla Norte, Puerto Colombia..."
+                  <label class="block text-sm font-semibold">Especialidad del Servicio</label>
+                  <select
+                    id="especialidadServicio"
+                    name="especialidad"
                     class="mt-1 w-full rounded-lg border border-gray-300 p-3 transition focus:ring-2 focus:ring-green-600 focus:outline-none"
-                  />
+                  >
+                    <option value="">Seleccione (opcional)...</option>
+                    <option value="Gestión de Residuos Aprovechables">
+                      Gestión de Residuos Aprovechables
+                    </option>
+                    <option value="Abonos & Sostenibilidad">Abonos & Sostenibilidad</option>
+                    <option value="Saneamiento & Manejo Ambiental">
+                      Saneamiento & Manejo Ambiental
+                    </option>
+                    <option value="Gestión Ambiental Integral">Gestión Ambiental Integral</option>
+                    <option value="Otros">Otros</option>
+                  </select>
                 </div>
 
                 <div class="mt-4">
                   <label class="block text-sm font-semibold"
-                    >Mensaje / Requerimiento adicional</label
+                    >Detalles del servicio solicitado</label
                   >
                   <textarea
                     name="mensaje"
                     rows="3"
                     class="mt-1 w-full resize-none rounded-lg border border-gray-300 p-3 transition focus:ring-2 focus:ring-green-600 focus:outline-none"
-                    placeholder="Frecuencia deseada, volumen estimado..."
+                    placeholder="Ej: Necesito un servicio de recolección de residuos..."
                   ></textarea>
                 </div>
 

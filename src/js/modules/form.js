@@ -70,6 +70,30 @@ function initServicePreselect() {
   }
 }
 
+// ── Preselección de la especialidad del servicio ──────────────────
+/**
+ * Lee el parámetro de URL "service" y pre-rellena el campo
+ * "especialidadServicio" con ese valor. Esto lo usan los botones
+ * en los slides del carrusel de servicios.html
+ */
+function initSpecialtyPreselect() {
+  const select = getField("especialidadServicio");
+  if (!select) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const serviceValue = params.get("service");
+
+  if (serviceValue) {
+    select.value = serviceValue;
+    // Limpiar URL para que no se muestre el parámetro
+    window.history.replaceState(
+      {},
+      document.title,
+      window.location.pathname + window.location.hash
+    );
+  }
+}
+
 // ── Init principal ────────────────────────────────────────────────
 export function initForm() {
   const form = document.getElementById("leadForm");
@@ -81,6 +105,7 @@ export function initForm() {
   if (!form) return;
 
   initServicePreselect();
+  initSpecialtyPreselect();
 
   // Validación al salir de cada campo
   Object.keys(RULES).forEach((id) => {

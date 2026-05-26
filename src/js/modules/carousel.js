@@ -34,7 +34,7 @@ export function initCarousel() {
   track.innerHTML = allClients
     .map(
       (c) => `
-    <div class="carousel-slide flex-shrink-0 w-40 md:w-44 flex flex-col items-center justify-center bg-white py-4 px-2 rounded-lg shadow-sm border border-gray-200">
+    <div class="carousel-slide flex shrink-0 w-40 md:w-44 flex-col items-center justify-center bg-white py-4 px-2 rounded-lg shadow-sm border border-gray-200">
       <i class="${c.icon} text-[2.5rem] text-primary-green mb-2"></i>
       <span class="font-semibold text-xs text-center text-gray-900">${c.label}</span>
     </div>

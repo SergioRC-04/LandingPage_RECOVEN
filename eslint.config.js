@@ -18,6 +18,7 @@ export default [
         clearInterval: "readonly",
         fetch: "readonly",
         FormData: "readonly",
+        URLSearchParams: "readonly",
         sessionStorage: "readonly",
         localStorage: "readonly",
         IntersectionObserver: "readonly",

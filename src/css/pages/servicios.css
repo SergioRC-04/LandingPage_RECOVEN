@@ -43,6 +43,32 @@
   max-width: 100%;
 }
 
+/* Carousel CTA Button */
+.carousel-cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #e4b363;
+  color: #1e5a3c;
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(228, 179, 99, 0.3);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.carousel-cta-button:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+  box-shadow: 0 6px 20px rgba(228, 179, 99, 0.4);
+}
+
+.carousel-cta-button:active {
+  transform: translateY(0);
+}
+
 /* Hero Column - Pseudoelemento con blur (no convertible a Tailwind) */
 .hero-column::before {
   content: "";
@@ -195,9 +221,13 @@
 
 /* ==================== RESPONSIVE - MOBILE ==================== */
 @media (max-width: 768px) {
+  #hero-carousel-container {
+    flex-direction: column;
+  }
+
   .hero-column {
     width: 100% !important;
-    min-height: 45vh;
+    height: 50vh;
     padding: 2rem 1.5rem;
     text-align: center;
   }
@@ -213,7 +243,7 @@
 
   .carousel-column {
     width: 100% !important;
-    min-height: 55vh;
+    height: 50vh;
   }
 
   .carousel-slide {
