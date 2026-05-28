@@ -28,8 +28,16 @@ body {
   color: var(--primary-green);
 }
 
+.text-gold-accent {
+  color: var(--gold-accent);
+}
+
 .border-primary-green {
   border-color: var(--primary-green);
+}
+
+.border-gold-accent {
+  border-color: var(--gold-accent);
 }
 
 /* Utilidades de estilo */

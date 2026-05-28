@@ -1,5 +1,6 @@
 Poner fotos en las bodegas (cuando las pasen)
-Corregir carrusel de empresas. se detiene cuando lo undes y es poco visual porque hay que esperar mucho. (se puede colocar una animacion para que sea mas grande y muestre mas info)
+hacer mapa
+Se puede colocar una animacion en el carusel de clientes que indique el componente se puede arrastrar.
 
 correo temporal:
 desactivar catcha
@@ -7,5 +8,5 @@ redirigir a dominio
 Hacer sistema de correo real.
 
 Hacer testeo
-Mirar si vite es la mejor opcion
 corregir los componentes repetitivos de tailwind
+Mejorar ui

@@ -1,5 +1,5 @@
 <!-- HEADER/NAVBAR -->
-<header id="navbar" class="sticky top-0 z-50 bg-white px-4 py-3 shadow-md md:px-8 lg:px-16">
+<header id="navbar" class="sticky top-0 z-50 bg-white px-4 py-3 shadow-md md:px-6 lg:px-8 xl:px-16">
   <div class="container mx-auto flex items-center justify-between">
     <a href="index.html" class="flex items-center space-x-2">
       <img src="/assets/img/logo.png" alt="RECOVEN ECA Logo" class="h-12 object-contain md:h-14" />
@@ -15,10 +15,21 @@
       aria-label="Menú"
       aria-expanded="false"
     >
-      <span class="ham-line"></span><span class="ham-line"></span><span class="ham-line"></span>
+      <span
+        class="ham-line bg-primary-green block h-0.5 w-6 rounded transition-all duration-300"
+      ></span>
+      <span
+        class="ham-line bg-primary-green block h-0.5 w-6 rounded transition-all duration-300"
+      ></span>
+      <span
+        class="ham-line bg-primary-green block h-0.5 w-6 rounded transition-all duration-300"
+      ></span>
     </button>
   </div>
-  <div id="mobile-menu" class="mt-2 border-t border-gray-100 bg-white px-4 md:hidden">
+  <div
+    id="mobile-menu"
+    class="mt-2 max-h-0 overflow-hidden border-t border-gray-100 bg-white px-4 opacity-0 transition-all duration-400 md:hidden"
+  >
     <div id="mobile-nav" class="flex flex-col space-y-1 pt-3 pb-4"></div>
   </div>
 </header>
