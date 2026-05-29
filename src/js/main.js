@@ -10,6 +10,7 @@ import { initTabs } from "./modules/tabs.js";
 import { initCarousel } from "./modules/carousel.js";
 import { initForm } from "./modules/form.js";
 import { initHeroCarousel } from "./modules/hero-carousel.js";
+import { initAnalyticsCharts } from "./modules/analytics.js";
 import { initReveal, initSmoothScroll } from "./utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -26,4 +27,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ── Solo en servicios.html ──
   if (document.querySelector(".hero-carousel-swiper")) initHeroCarousel();
+  if (document.getElementById("estadisticas-bodegas")) initAnalyticsCharts();
 });

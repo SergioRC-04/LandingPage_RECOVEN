@@ -18,6 +18,8 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- CSS Global y Componentes -->
     <link rel="stylesheet" href="css/global.css" />
     <link rel="stylesheet" href="css/components.css" />
@@ -590,6 +592,73 @@
                     Final empresarial
                   </li>
                 </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ESTADÍSTICAS DE BODEGAS -->
+      <section id="estadisticas-bodegas" class="bg-gray-50 py-20">
+        <div class="container mx-auto max-w-6xl px-6">
+          <div class="reveal mb-12 text-center">
+            <span class="text-primary-green text-sm font-semibold tracking-wider uppercase"
+              ><i class="fas fa-chart-bar mr-1"></i> Desempeño consolidado</span
+            >
+            <h2 class="mt-2 text-3xl font-bold text-gray-800 md:text-4xl">
+              Estadísticas de Aprovechamiento
+            </h2>
+            <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-gray-600">
+              Análisis comparativo del desempeño operacional de nuestras bodegas RECOVEN, mostrando
+              toneladas de aprovechamiento y rechazo por mes.
+            </p>
+          </div>
+          <div class="grid gap-8 md:grid-cols-2">
+            <!-- Gráfica Barranquilla -->
+            <div class="reveal rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+              <h3 class="mb-4 text-lg font-bold text-gray-800">
+                <i class="fas fa-warehouse text-primary-green mr-2"></i>Barranquilla RECOVEN
+              </h3>
+              <div class="relative h-80 w-full">
+                <canvas id="barranquilla-bodegas"></canvas>
+              </div>
+              <div class="mt-4 grid gap-3 sm:grid-cols-2">
+                <div class="flex items-center gap-2 rounded-lg bg-emerald-50 p-3">
+                  <div class="h-3 w-3 rounded-full bg-emerald-600"></div>
+                  <div class="text-xs text-gray-700">
+                    <span class="font-semibold">Aprovechamiento</span> Enero-Abril
+                  </div>
+                </div>
+                <div class="flex items-center gap-2 rounded-lg bg-slate-50 p-3">
+                  <div class="h-3 w-3 rounded-full bg-slate-400"></div>
+                  <div class="text-xs text-gray-700">
+                    <span class="font-semibold">Rechazo</span> Enero-Abril
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Gráfica Puerto Colombia -->
+            <div class="reveal rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+              <h3 class="mb-4 text-lg font-bold text-gray-800">
+                <i class="fas fa-warehouse text-primary-green mr-2"></i>Puerto Colombia RECOVEN
+              </h3>
+              <div class="relative h-80 w-full">
+                <canvas id="colombia-bodegas"></canvas>
+              </div>
+              <div class="mt-4 grid gap-3 sm:grid-cols-2">
+                <div class="flex items-center gap-2 rounded-lg bg-emerald-50 p-3">
+                  <div class="h-3 w-3 rounded-full bg-emerald-600"></div>
+                  <div class="text-xs text-gray-700">
+                    <span class="font-semibold">Aprovechamiento</span> Enero-Abril
+                  </div>
+                </div>
+                <div class="flex items-center gap-2 rounded-lg bg-slate-50 p-3">
+                  <div class="h-3 w-3 rounded-full bg-slate-400"></div>
+                  <div class="text-xs text-gray-700">
+                    <span class="font-semibold">Rechazo</span> Enero-Abril
+                  </div>
+                </div>
               </div>
             </div>
           </div>
