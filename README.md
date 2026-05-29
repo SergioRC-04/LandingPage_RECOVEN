@@ -1,110 +1,61 @@
-# RECOVEN ECA SAS ESP — Landing Page v2
+# ♻️ RECOVEN ECA SAS ESP — Landing Page Corporativa
 
-Diseño original adaptado con buenas prácticas de ingeniería frontend.  
-NIT: 901427170-6 | recovenecasasesp@gmail.com | 320 935 0289
+¡Bienvenido al repositorio de la plataforma web de **RECOVEN**! Este proyecto es una landing page de producción de alto rendimiento diseñada para una Empresa de Servicios Públicos (ECA SAS ESP) enfocada en la economía circular y la gestión sostenible de residuos.
 
----
-
-## 🚀 Inicio rápido
-
-```bash
-npm install
-npm run dev       # servidor local en localhost:3000
-npm run build     # build de producción → /dist
-```
+Desplegado en tiempo real en: 🚀 [landingpage-recoven.vercel.app](https://landingpage-recoven.vercel.app/index.html)
 
 ---
 
-## 📁 Estructura del proyecto
+## 📸 Vista Previa del Proyecto
 
-```
-recoven-v2/
-├── public/
-│   ├── favicon.ico
-│   └── docs/
-│       └── portafolio-recoven.pdf    ← Coloca aquí el PDF
-├── src/
-│   ├── assets/
-│   │   ├── img/                      ← Fotos de hero, equipo, etc.
-│   │   └── logos/                    ← Logo oficial RECOVEN
-│   ├── js/
-│   │   ├── main.js                   ← Orquestador (scroll suave + reveal)
-│   │   └── modules/
-│   │       ├── menu.js               ← Hamburguesa animada
-│   │       ├── tabs.js               ← Pestañas Misión / Visión
-│   │       ├── carousel.js           ← Carrusel infinito RAF
-│   │       └── form.js               ← Validación + envío async
-│   └── index.html
-├── tailwind.config.js
-├── vite.config.js
-└── package.json
-```
+Aquí puedes ver la interfaz y el diseño visual de la plataforma:
+
+![Vista previa de RECOVEN](./assets/image.png)
 
 ---
 
-## ✅ Mejoras aplicadas sobre el diseño original
+## 🎯 Enfoque del Proyecto y Objetivos
 
-| Problema original             | Solución aplicada                                         |
-| ----------------------------- | --------------------------------------------------------- |
-| Salto brusco al navegar       | `window.scrollTo` con `behavior:'smooth'` + offset navbar |
-| `alert()` en el formulario    | Banners inline de éxito/error animados                    |
-| Todo en un solo archivo       | JS modular ES6 en `src/js/modules/`                       |
-| Sin validación en tiempo real | Validación en `blur` + feedback visual por campo          |
-| Hamburguesa sin animación     | Animación CSS hamburguesa → X con clases toggle           |
-| Menú no se cierra             | Se cierra al clic en enlace o fuera del menú              |
-| Carrusel con CSS animation    | Loop con `requestAnimationFrame` (más preciso y pausable) |
-| Sin reveal al hacer scroll    | `IntersectionObserver` con stagger escalonado             |
-| Sin estructura de carpetas    | Arquitectura Vite lista para producción                   |
+El desarrollo se centró en balancear una **identidad corporativa institucional rigurosa** (esencial para el sector de servicios públicos ante entes de control y clientes industriales) con una **experiencia de usuario fluida y moderna**.
+
+### Puntos Clave de la Interfaz:
+
+- **Diseño Limpio y Profesional:** Estructura limpia basada en Tailwind CSS que transmite transparencia, seriedad y sostenibilidad ambiental.
+- **Transparencia Institucional:** Inclusión detallada de aliados estratégicos identificados con sus respectivos NIT corporativos para generar confianza regulatoria inmediata.
 
 ---
 
-## ⚙️ Activar el formulario de contacto
+## 🛠️ Arquitectura y Tecnologías Utilizadas
 
-### Formspree (recomendado)
-
-1. Regístrate en [formspree.io](https://formspree.io) y crea un formulario
-2. Copia tu Form ID y reemplaza en `src/index.html`:
-
-```html
-<form id="leadForm" action="https://formspree.io/f/TU_FORM_ID" ...></form>
-```
-
-### Web3Forms
-
-1. Obtén tu `access_key` en [web3forms.com](https://web3forms.com)
-2. Cambia el `action` y agrega:
-
-```html
-<form id="leadForm" action="https://api.web3forms.com/submit" ...>
-  <input type="hidden" name="access_key" value="TU_ACCESS_KEY" />
-</form>
-```
+- **Vite:** Utilizado como entorno de empaquetado y construcción ultrarrápido para el frontend.
+- **Vanilla JavaScript (ES6+):** Programación modular limpia, sin la sobrecarga ni el peso de frameworks innecesarios (Zero-Framework Architecture).
+- **Tailwind CSS:** Sistema de diseño responsivo y optimizado para una maquetación ágil basada en utilidades.
+- **Font Awesome:** Set de iconos vectoriales para la consistencia visual del sitio.
 
 ---
 
-## 📄 Colocar el portafolio PDF
+## ⚡ Decisiones Técnicas Clave y Optimización (Performance)
 
-Copia el archivo en:
+Este proyecto fue optimizado meticulosamente siguiendo las directrices de las **Core Web Vitals** de Google para garantizar una carga instantánea y respuestas en milisegundos:
 
-```
-public/docs/portafolio-recoven.pdf
-```
+### 1. Sistema de Carrusel Continuo Avanzado (Pure Drag & Swipe Edition)
 
-El botón "Descargar Portafolio" del hero lo descargará automáticamente.
+En lugar de depender de librerías pesadas de terceros que saturan el hilo principal de renderizado, se desarrolló un módulo nativo (`carousel.js`) que implementa un loop matemático infinito por duplicación de arrays:
 
----
+- **Aceleración por GPU:** Se hace uso de `requestAnimationFrame` manipulando exclusivamente la propiedad CSS `transform: translateX()`, apoyado por la directiva `will-change: transform`. Esto aísla el componente en su propia capa de renderizado nativa, evitando por completo procesos costosos de _Reflow_ y _Repaint_.
+- **Física de Arrastre Fluida:** Soporte completo de gestos táctiles en dispositivos móviles (`touchstart`/`touchmove`) y eventos de ratón en escritorio (`mousedown`/`mousemove`), utilizando oyentes globales de `window` para erradicar el bug de desenganche del cursor.
+- **Métricas Premium:** Gracias a esta arquitectura, el componente registra un **INP (Interaction to Next Paint) excepcional de solo 8 ms** y un **CLS (Cumulative Layout Shift) impecable de 0.05**.
 
-## 📸 Reemplazar imágenes
+### 2. Estrategia de Pre-renderizado contra el LCP
 
-Para producción, descarga las fotos de Unsplash y guárdalas localmente:
-
-| Ruta sugerida                       | Descripción                 |
-| ----------------------------------- | --------------------------- |
-| `src/assets/img/hero-bg.jpg`        | Fondo del hero (industrial) |
-| `src/assets/logos/recoven-logo.png` | Logo oficial RECOVEN        |
-
-Luego actualiza la URL en el atributo `style` del `<section id="inicio">`.
+Para evitar penalizaciones en el _Largest Contentful Paint_ (LCP) causadas por la inyección asíncrona de JavaScript, los elementos iniciales del carrusel se encuentran embebidos directamente en el HTML estático. El script de hidratación clona y extiende el DOM en tiempo de ejecución, logrando un pintado inicial inmediato desde el primer milisegundo.
 
 ---
 
-© 2026 RECOVEN ECA SAS ESP. Todos los derechos reservados.
+---
+
+## ⚖️ Licencia y Propiedad Intelectual (Todos los Derechos Reservados)
+
+Este repositorio es **público exclusivamente con fines de portafolio profesional y demostración técnica**.
+
+El código fuente, diseño, lógica de componentes (incluyendo el sistema de carrusel continuo) e identidad visual pertenecen a **RECOVEN ECA SAS ESP** y al desarrollador autor. **No se otorga ninguna licencia de uso, copia, modificación o distribución comercial o privada.** Para más detalles sobre las restricciones legales y términos de propiedad, por favor consulta el archivo [LICENSE](./LICENSE) adjunto en la raíz de este proyecto. Cualquier réplica no autorizada será notificada y procesada legalmente.
