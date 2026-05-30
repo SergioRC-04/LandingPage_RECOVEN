@@ -1,8 +1,6 @@
-Poner fotos en las bodegas (cuando las pasen)
 hacer mapa
 Se puede colocar una animacion en el carusel de clientes que indique el componente se puede arrastrar.
-mirar char porque es un cdn
-pasar las imagenes a webp correctamente
+se pueden colocar logos reales en el carrusel de clientes
 
 correo temporal:
 desactivar catcha
