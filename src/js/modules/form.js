@@ -1,11 +1,8 @@
 /**
  * form.js — Validación, envío async y preselección de servicio
  * RECOVEN ECA SAS ESP · v2
- *
- * Preselección: cualquier <a> con data-service="..." que apunte a
- * #contacto pasará el valor al select automáticamente al hacer clic.
  */
-
+import { recovenApi } from "../../api/recovenApi.js";
 // ── Reglas de validación ─────────────────────────────────────────
 const RULES = {
   nombre: { test: (v) => v.trim().length >= 2, errorId: "errorNombre" },
@@ -100,14 +97,13 @@ export function initForm() {
   const successBox = document.getElementById("form-success");
   const errorBox = document.getElementById("form-error-msg");
   const submitBtn = document.getElementById("submitBtn");
-  const btnLabel = document.getElementById("btnLabel");
 
   if (!form) return;
 
   initServicePreselect();
   initSpecialtyPreselect();
 
-  // Validación al salir de cada campo
+  // Validación al salir de cada campo (Se queda igual)
   Object.keys(RULES).forEach((id) => {
     const field = getField(id);
     if (!field) return;
@@ -117,10 +113,11 @@ export function initForm() {
     });
   });
 
-  // Submit
+  // ── Submit Modificado para NestJS ──────────────────────────────────
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
+    // Validar todas las reglas antes de enviar
     const results = Object.keys(RULES).map((id) => validateField(id));
     if (results.includes(false)) {
       form
@@ -129,38 +126,60 @@ export function initForm() {
       return;
     }
 
-    // Estado de carga
+    // Estado de carga visual en tu botón
     submitBtn.disabled = true;
-    btnLabel.textContent = "Enviando...";
+    // Como tu botón no tiene un ID interno para el texto (btnLabel),
+    // modificamos el textContent guardando el icono de FontAwesome
+    const originalBtnHtml = submitBtn.innerHTML;
+    submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Enviando...`;
     submitBtn.classList.add("opacity-70", "cursor-not-allowed");
-    successBox.classList.remove("show");
-    errorBox.classList.remove("show");
+
+    if (successBox) successBox.classList.remove("show");
+    if (errorBox) errorBox.classList.remove("show");
+
+    // 📦 Mapear los datos del formulario a un Objeto JSON puro para el DTO
+    const formData = new FormData(form);
+    const leadData = {
+      nombre: formData.get("nombre"),
+      telefono: formData.get("telefono"),
+      email: formData.get("email"),
+      empresa: formData.get("empresa") || undefined, // Si está vacío, NestJS lo toma como opcional
+      direccion: formData.get("direccion") || undefined, // Si está vacío, NestJS lo toma como opcional
+      servicio: formData.get("servicio"),
+      especialidad: formData.get("especialidad") || undefined, // Si está vacío, NestJS lo toma como opcional
+      mensaje: formData.get("mensaje") || undefined, // Si está vacío, NestJS lo toma como opcional
+    };
 
     try {
-      const res = await fetch(form.action, {
-        method: "POST",
-        body: new FormData(form),
-        headers: { Accept: "application/json" },
+      // 🚀 Consumo directo a tu endpoint RESTful
+      // NestJS recibirá esto, lo validará, lo guardará en SQLite y enviará el mail corporativo
+      await recovenApi.post("/leads/send-lead", leadData);
+
+      // Si todo sale bien (Status 201 Created / 200 OK)
+      form.reset();
+      Object.keys(RULES).forEach((id) => {
+        getField(id)?.classList.remove("border-red-400");
+        getField(id)?.classList.add("border-gray-300");
       });
 
-      if (res.ok) {
-        form.reset();
-        Object.keys(RULES).forEach((id) => {
-          getField(id)?.classList.remove("border-red-400");
-          getField(id)?.classList.add("border-gray-300");
-        });
+      if (successBox) {
         successBox.classList.add("show");
         successBox.scrollIntoView({ behavior: "smooth", block: "center" });
       } else {
-        throw new Error(`HTTP ${res.status}`);
+        window.alert("¡Solicitud enviada con éxito! Nos pondremos en contacto pronto.");
       }
     } catch (err) {
-      console.error("[RECOVEN Form]", err);
-      errorBox.classList.add("show");
-      errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
+      console.error("[RECOVEN API Error]", err);
+      if (errorBox) {
+        errorBox.classList.add("show");
+        errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
+      } else {
+        window.alert("Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.");
+      }
     } finally {
+      // Restaurar el botón a su estado original
       submitBtn.disabled = false;
-      btnLabel.textContent = "Enviar solicitud";
+      submitBtn.innerHTML = originalBtnHtml;
       submitBtn.classList.remove("opacity-70", "cursor-not-allowed");
     }
   });

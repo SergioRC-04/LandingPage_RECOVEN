@@ -3,10 +3,7 @@ Se puede colocar una animacion en el carusel de clientes que indique el componen
 se pueden colocar logos reales en el carrusel de clientes
 falta colocar limpieza de bermas como las predeterminadas del form
 
-correo temporal:
-desactivar catcha
-redirigir a dominio
-Hacer sistema de correo real.
+revisar politica de tratamiento de datos
 
 Hacer testeo
 corregir los componentes repetitivos de tailwind (react)
