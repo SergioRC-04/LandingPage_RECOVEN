@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel de Administración · RECOVEN</title>
+    <link rel="stylesheet" href="./css/global.css" />
+    <link rel="stylesheet" href="./css/pages/admin.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body class="min-h-screen bg-gray-100 font-sans text-gray-800 antialiased">
+    <!-- Secciones login y 2fa iguales que antes (no cambian) -->
+    <section id="view-login" class="flex min-h-screen items-center justify-center px-4">
+      <div class="w-full max-w-md rounded-2xl border border-gray-100 bg-white p-8 shadow-xl">
+        <div class="mb-8 text-center">
+          <h1 class="text-3xl font-extrabold tracking-tight text-gray-900">RECOVEN</h1>
+          <p class="mt-1 text-sm font-semibold text-emerald-600">Core Administrator</p>
+        </div>
+        <form id="loginForm" class="space-y-5" novalidate>
+          <div>
+            <label class="block text-sm font-bold text-gray-700">Usuario</label>
+            <input
+              type="text"
+              id="loginEmail"
+              required
+              class="mt-1 w-full rounded-xl border border-gray-300 p-3 transition focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              placeholder="admin_recoven"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-gray-700">Contraseña</label>
+            <div class="relative mt-1">
+              <input
+                type="password"
+                id="loginPassword"
+                required
+                class="w-full rounded-xl border border-gray-300 p-3 pr-10 transition focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                placeholder="••••••••"
+              />
+              <button
+                type="button"
+                id="togglePasswordBtn"
+                class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-emerald-600 focus:outline-none"
+                aria-label="Mostrar contraseña"
+              >
+                <i class="fas fa-eye-slash"></i>
+              </button>
+            </div>
+          </div>
+          <button
+            type="submit"
+            id="loginBtn"
+            class="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-3 font-bold text-white shadow-md transition hover:bg-emerald-700"
+          >
+            Iniciar Sesión <i class="fas fa-arrow-right"></i>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <section id="view-2fa" class="flex min-h-screen items-center justify-center px-4">
+      <div
+        class="w-full max-w-md rounded-2xl border border-gray-100 bg-white p-8 text-center shadow-xl"
+      >
+        <div
+          class="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50 text-2xl text-emerald-600"
+        >
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-900">Seguridad de la Cuenta</h2>
+        <p class="mt-2 mb-6 text-sm text-gray-500">
+          Hemos enviado un código de verificación de 6 dígitos a su correo electrónico
+          institucional.
+        </p>
+        <form id="faForm" class="space-y-5" novalidate>
+          <div>
+            <input
+              type="text"
+              id="faCode"
+              maxlength="6"
+              required
+              class="w-full rounded-xl border border-gray-300 p-3 text-center text-2xl font-bold tracking-widest transition focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              placeholder="000000"
+            />
+          </div>
+          <button
+            type="submit"
+            id="faBtn"
+            class="w-full rounded-xl bg-emerald-600 px-4 py-3 font-bold text-white shadow-md transition hover:bg-emerald-700"
+          >
+            Verificar Código
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <section id="view-dashboard" class="flex min-h-screen flex-col md:flex-row">
+      <aside class="flex w-full flex-col border-r border-gray-800 bg-gray-900 text-white md:w-64">
+        <div class="border-b border-gray-800 p-6">
+          <h2 class="text-xl font-black tracking-wider text-emerald-500">RECOVEN CORE</h2>
+          <p class="mt-0.5 text-xs text-gray-400">Panel de Control v1.0</p>
+        </div>
+        <nav class="flex-1 space-y-2 p-4" id="dashboard-menu">
+          <button
+            data-tab="tab-leads"
+            class="flex w-full items-center gap-3 rounded-xl bg-emerald-600 px-4 py-3 text-sm font-bold text-white transition"
+          >
+            <i class="fas fa-envelope-open-text w-5 text-lg"></i> Solicitudes
+          </button>
+          <button
+            data-tab="tab-metrics"
+            class="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-gray-400 transition hover:bg-gray-800 hover:text-white"
+          >
+            <i class="fas fa-chart-line w-5 text-lg"></i> Actualizar Graficas
+          </button>
+          <button
+            data-tab="tab-documents"
+            class="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-gray-400 transition hover:bg-gray-800 hover:text-white"
+          >
+            <i class="fas fa-file-upload w-5 text-lg"></i> Documentos Clientes
+          </button>
+        </nav>
+        <div class="border-t border-gray-800 p-4">
+          <button
+            id="logoutBtn"
+            class="flex w-full items-center justify-center gap-2 rounded-xl bg-red-900/40 px-4 py-2 text-sm font-bold text-red-200 transition hover:bg-red-900/60"
+          >
+            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+          </button>
+        </div>
+      </aside>
+
+      <main class="flex-1 overflow-y-auto bg-gray-50 p-6 md:p-10">
+        <!-- Tab Leads (sin cambios) -->
+        <div id="tab-leads" class="space-y-6">
+          <div
+            class="flex flex-col gap-4 border-b border-gray-200 pb-5 sm:flex-row sm:items-center sm:justify-between"
+          >
+            <div>
+              <h1 class="text-2xl font-black text-gray-900">Solicitudes Recientes</h1>
+              <p class="text-sm text-gray-500">
+                Gestión de clientes potenciales registrados desde la landing page.
+              </p>
+            </div>
+            <button
+              id="exportExcelBtn"
+              class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-emerald-700"
+            >
+              <i class="fas fa-file-excel"></i> Exportar a Excel
+            </button>
+          </div>
+          <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+            <div class="overflow-x-auto">
+              <table class="w-full border-collapse text-left">
+                <thead>
+                  <tr
+                    class="border-b border-gray-200 bg-gray-50 text-xs font-bold text-gray-500 uppercase"
+                  >
+                    <th class="p-4">Cliente</th>
+                    <th class="p-4">Contacto</th>
+                    <th class="p-4">Servicio</th>
+                    <th class="p-4">Detalles</th>
+                  </tr>
+                </thead>
+                <tbody id="leadsTableBody" class="divide-y divide-gray-100 text-sm"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab Metrics: NUEVO DISEÑO CON TABLAS -->
+        <div id="tab-metrics" class="hidden space-y-6">
+          <div class="border-b border-gray-200 pb-5">
+            <h1 class="text-2xl font-black text-gray-900">Actualizar Datos de Operaciones</h1>
+            <p class="text-sm text-gray-500">
+              Visualice y agregue métricas mensuales de toneladas aprovechadas y rechazadas.
+            </p>
+          </div>
+
+          <!-- Selector de año -->
+          <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div class="flex items-center gap-3">
+              <label class="text-sm font-bold text-gray-700">Año:</label>
+              <select
+                id="yearSelector"
+                class="rounded-xl border border-gray-300 px-4 py-2 text-sm focus:ring-2 focus:ring-emerald-500"
+              >
+                <!-- Opciones se llenan dinámicamente -->
+              </select>
+            </div>
+            <button
+              id="refreshMetricsBtn"
+              class="inline-flex items-center gap-2 rounded-xl bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-300"
+            >
+              <i class="fas fa-sync-alt"></i> Refrescar
+            </button>
+          </div>
+
+          <!-- Contenedor de las dos tablas (grid responsive) -->
+          <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <!-- Tabla Barranquilla -->
+            <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+              <div class="border-b border-emerald-100 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-emerald-800">
+                  <i class="fas fa-building mr-2"></i> Barranquilla RECOVEN
+                </h2>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead class="bg-gray-50 text-xs font-bold text-gray-600 uppercase">
+                    <tr>
+                      <th class="px-4 py-3 text-left">Mes</th>
+                      <th class="px-4 py-3 text-right">Aprovechamiento (Ton)</th>
+                      <th class="px-4 py-3 text-right">Rechazo (Ton)</th>
+                      <th class="px-4 py-3 text-center">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody id="metricsBarranquillaBody" class="divide-y divide-gray-100">
+                    <!-- Filas dinámicas -->
+                  </tbody>
+                  <tfoot id="metricsBarranquillaFooter" class="border-t border-gray-200 bg-gray-50">
+                    <!-- Fila para agregar nuevo mes -->
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+
+            <!-- Tabla Puerto Colombia -->
+            <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+              <div class="border-b border-emerald-100 bg-emerald-50 px-6 py-4">
+                <h2 class="text-lg font-bold text-emerald-800">
+                  <i class="fas fa-ship mr-2"></i> Puerto Colombia RECOVEN
+                </h2>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead class="bg-gray-50 text-xs font-bold text-gray-600 uppercase">
+                    <tr>
+                      <th class="px-4 py-3 text-left">Mes</th>
+                      <th class="px-4 py-3 text-right">Aprovechamiento (Ton)</th>
+                      <th class="px-4 py-3 text-right">Rechazo (Ton)</th>
+                      <th class="px-4 py-3 text-center">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody id="metricsPuertoBody" class="divide-y divide-gray-100">
+                    <!-- Filas dinámicas -->
+                  </tbody>
+                  <tfoot id="metricsPuertoFooter" class="border-t border-gray-200 bg-gray-50">
+                    <!-- Fila para agregar nuevo mes -->
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab Documents (sin cambios) -->
+        <div id="tab-documents" class="hidden space-y-6">
+          <div class="border-b border-gray-200 pb-5">
+            <h1 class="text-2xl font-black text-gray-900">Envío de Documentos a Empresas</h1>
+            <p class="text-sm text-gray-500">
+              Módulo reservado para la emisión de reportes corporativos y correspondencia directa.
+            </p>
+          </div>
+          <div
+            class="flex max-w-2xl items-start gap-4 rounded-2xl border border-amber-200 bg-amber-50 p-6"
+          >
+            <i class="fas fa-tools mt-0.5 text-xl text-amber-600"></i>
+            <div>
+              <h3 class="font-bold text-amber-900">Sección en Construcción</h3>
+              <p class="mt-1 text-sm text-amber-700">
+                Este panel interactivo estará habilitado próximamente para la gestión del flujo
+                documental de las empresas aliadas.
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </section>
+
+    <script type="module" src="./js/modules/admin.js"></script>
+  </body>
+</html>

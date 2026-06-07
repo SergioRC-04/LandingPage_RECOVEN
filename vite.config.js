@@ -17,6 +17,7 @@ export default defineConfig({
         main: "src/index.html",
         empresa: "src/empresa.html",
         servicios: "src/servicios.html",
+        admin: "src/admin.html",
       },
     },
   },

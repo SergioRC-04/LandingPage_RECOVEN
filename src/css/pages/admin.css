@@ -1,0 +1,36 @@
+/* admin.css — Estilos específicos para el panel de RECOVEN */
+
+/* 1. Ocultar flechas de incremento/decremento en el input del 2FA */
+#faCode::-webkit-outer-spin-button,
+#faCode::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* 2. Transición suave para el renderizado de pestañas (Tabs) */
+main > div {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 3. Ajuste estético para Scrollbars en la tabla de Leads en Linux/Debian */
+.overflow-x-auto::-webkit-scrollbar {
+  height: 6px;
+}
+.overflow-x-auto::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}

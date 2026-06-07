@@ -1,38 +1,66 @@
-// Vite inyecta de forma automática las variables de entorno mediante import.meta.env
-// En desarrollo leerá http://localhost:3000, en producción la URL de tu backend desplegado.
+// recovenApi.js
 const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
+function getToken() {
+  return localStorage.getItem("token");
+}
+
 export const recovenApi = {
-  async post(endpoint, data) {
+  async post(endpoint, data, requiresAuth = false) {
+    const headers = { "Content-Type": "application/json", Accept: "application/json" };
+    if (requiresAuth) {
+      const token = getToken();
+      if (token) headers.Authorization = `Bearer ${token}`;
+    }
     const response = await fetch(`${BASE_URL}${endpoint}`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
+      headers,
       body: JSON.stringify(data),
     });
-
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       throw new Error(errorData.message || `HTTP Error ${response.status}`);
     }
-
     return await response.json();
   },
 
-  async get(endpoint) {
-    const response = await fetch(`${BASE_URL}${endpoint}`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP Error ${response.status}`);
+  async get(endpoint, requiresAuth = false) {
+    const headers = { Accept: "application/json" };
+    if (requiresAuth) {
+      const token = getToken();
+      if (token) headers.Authorization = `Bearer ${token}`;
     }
-
+    const response = await fetch(`${BASE_URL}${endpoint}`, { method: "GET", headers });
+    if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
     return await response.json();
+  },
+
+  async put(endpoint, data, requiresAuth = true) {
+    const headers = { "Content-Type": "application/json" };
+    if (requiresAuth) {
+      const token = getToken();
+      if (token) headers.Authorization = `Bearer ${token}`;
+    }
+    const response = await fetch(`${BASE_URL}${endpoint}`, {
+      method: "PUT",
+      headers,
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || `HTTP Error ${response.status}`);
+    }
+    return await response.json();
+  },
+
+  async getBlob(endpoint, requiresAuth = true) {
+    const headers = {};
+    if (requiresAuth) {
+      const token = getToken();
+      if (token) headers.Authorization = `Bearer ${token}`;
+    }
+    const response = await fetch(`${BASE_URL}${endpoint}`, { method: "GET", headers });
+    if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
+    return await response.blob();
   },
 };
