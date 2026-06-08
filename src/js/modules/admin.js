@@ -1,5 +1,17 @@
 import { recovenApi } from "../../api/recovenApi.js";
 
+window.addEventListener("session-expired", (event) => {
+  const mensaje =
+    event.detail?.message || "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.";
+  window.alert(mensaje);
+  cambiarPantalla("view-login");
+  // Limpia campos del login por si acaso
+  const emailInput = document.getElementById("loginEmail");
+  const passInput = document.getElementById("loginPassword");
+  if (emailInput) emailInput.value = "";
+  if (passInput) passInput.value = "";
+});
+
 // Variables de Estado Local
 let TEMP_USERNAME = "";
 
@@ -27,6 +39,19 @@ function cambiarPantalla(idPantallaActiva) {
       else el.classList.add("hidden");
     }
   });
+  // Restaurar botón de login si se vuelve a la pantalla de login
+  if (idPantallaActiva === "view-login") {
+    const loginBtn = document.getElementById("loginBtn");
+    if (loginBtn) {
+      loginBtn.disabled = false;
+      loginBtn.innerHTML = 'Iniciar Sesión <i class="fas fa-arrow-right"></i>';
+    }
+    // Limpiar campos por si acaso
+    const emailInput = document.getElementById("loginEmail");
+    const passInput = document.getElementById("loginPassword");
+    if (emailInput) emailInput.value = "";
+    if (passInput) passInput.value = "";
+  }
 }
 
 // Configuración de eventos
@@ -35,15 +60,32 @@ function configurarListenersFormularios() {
   const loginForm = document.getElementById("loginForm");
   loginForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
+    const loginBtn = document.getElementById("loginBtn");
+    const originalText = loginBtn.innerHTML;
+
+    // Mostrar estado de carga
+    loginBtn.disabled = true;
+    loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando código...';
+
     const username = document.getElementById("loginEmail").value;
     const password = document.getElementById("loginPassword").value;
 
     try {
       await recovenApi.post("/auth/login", { username, password }, false);
       TEMP_USERNAME = username;
+
+      // Pequeño mensaje opcional (puedes usar un toast)
+      window.alert("Código enviado a tu correo. Revisa tu bandeja (puede tardar unos segundos).");
+
       cambiarPantalla("view-2fa");
     } catch {
       window.alert("Credenciales incorrectas. Verifique e intente nuevamente.");
+    } finally {
+      // Restaurar botón (solo si hubo error, porque si cambia de pantalla el botón ya no es visible)
+      if (document.getElementById("view-login")?.classList.contains("hidden") === false) {
+        loginBtn.disabled = false;
+        loginBtn.innerHTML = originalText;
+      }
     }
   });
 
@@ -66,6 +108,12 @@ function configurarListenersFormularios() {
   const faForm = document.getElementById("faForm");
   faForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
+    const faBtn = document.getElementById("faBtn");
+    const originalText = faBtn.innerHTML;
+
+    faBtn.disabled = true;
+    faBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verificando...';
+
     const code = document.getElementById("faCode").value;
 
     try {
@@ -79,10 +127,43 @@ function configurarListenersFormularios() {
       localStorage.setItem("token", token);
       cambiarPantalla("view-dashboard");
       cargarLeads();
-      cargarMetricas(); // Cargar métricas después del login
+      cargarMetricas();
     } catch (error) {
       console.error(error);
       window.alert("Código de verificación incorrecto o expirado.");
+    } finally {
+      // Restaurar botón si seguimos en la misma pantalla (solo si hubo error)
+      if (document.getElementById("view-2fa")?.classList.contains("hidden") === false) {
+        faBtn.disabled = false;
+        faBtn.innerHTML = originalText;
+      }
+    }
+  });
+
+  // 3. Reenviar código 2FA
+  const resendBtn = document.getElementById("resendCodeBtn");
+  resendBtn?.addEventListener("click", async () => {
+    if (!TEMP_USERNAME) {
+      window.alert("No hay usuario para reenviar código. Por favor, inicie sesión nuevamente.");
+      cambiarPantalla("view-login");
+      return;
+    }
+
+    // Deshabilitar botón temporalmente para evitar spam
+    resendBtn.disabled = true;
+    const originalText = resendBtn.innerHTML;
+    resendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+    try {
+      // Asumiendo que existe el endpoint /auth/resend-2fa
+      await recovenApi.post("/auth/resend-2fa", { username: TEMP_USERNAME }, false);
+      window.alert("Se ha enviado un nuevo código a su correo electrónico.");
+    } catch (error) {
+      console.error(error);
+      window.alert("No se pudo reenviar el código. Intente nuevamente más tarde.");
+    } finally {
+      resendBtn.disabled = false;
+      resendBtn.innerHTML = originalText;
     }
   });
 
@@ -135,6 +216,7 @@ async function cargarLeads() {
       )
       .join("");
   } catch (error) {
+    if (error.message === "SESION_EXPIRADA") return; // ya se manejó globalmente
     console.error("Error cargando leads:", error);
     tableBody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-red-500">Error al cargar las solicitudes de red.</td></tr>`;
   }
@@ -153,6 +235,7 @@ document.getElementById("exportExcelBtn")?.addEventListener("click", async () =>
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
   } catch (error) {
+    if (error.message === "SESION_EXPIRADA") return;
     console.error(error);
     window.alert("No se pudo exportar el archivo Excel en este momento.");
   }
@@ -191,6 +274,7 @@ async function cargarMetricas() {
     renderTabla("metricsBarranquillaBody", barranquilla, "BARRANQUILLA");
     renderTabla("metricsPuertoBody", puerto, "PUERTO COLOMBIA");
   } catch (error) {
+    if (error.message === "SESION_EXPIRADA") return;
     console.error("Error cargando métricas:", error);
   }
 }
@@ -224,14 +308,19 @@ function renderTabla(tbodyId, data, sedeNombre) {
   } else {
     tbody.innerHTML = data
       .map(
-        (item) => `
-      <tr class="hover:bg-gray-50">
+        (item, index) => `
+      <tr class="hover:bg-gray-50" data-mes="${item.mes}" data-year="${item.year}" data-sede="${item.sede}" data-idx="${index}">
         <td class="px-4 py-3 font-medium text-gray-800">${item.mes}</td>
-        <td class="px-4 py-3 text-right">${formatearNumero(item.aprovechamiento)}</td>
-        <td class="px-4 py-3 text-right">${formatearNumero(item.rechazo)}</td>
-        <td class="px-4 py-3 text-center">
-          <!-- Aquí podrías añadir botones de edición/eliminación si se desea -->
-          <span class="text-gray-300 text-xs">-</span>
+        <td class="px-4 py-3 text-right aprovechamiento-cell">${formatearNumero(item.aprovechamiento)}</td>
+        <td class="px-4 py-3 text-right rechazo-cell">${formatearNumero(item.rechazo)}</td>
+        <td class="px-4 py-3 text-center actions-cell">
+          <button class="editRowBtn text-blue-600 hover:text-blue-800 transition mr-2" data-mes="${item.mes}">
+            <i class="fas fa-edit"></i>
+          </button>
+          <span class="text-gray-300 text-xs">|</span>
+          <button class="deleteRowBtn text-red-600 hover:text-red-800 transition ml-2" data-mes="${item.mes}">
+            <i class="fas fa-trash-alt"></i>
+          </button>
         </td>
       </tr>
     `
@@ -239,11 +328,20 @@ function renderTabla(tbodyId, data, sedeNombre) {
       .join("");
   }
 
-  // Determinar el siguiente mes
+  // Agregar eventos a los botones de editar y eliminar
+  document.querySelectorAll(`#${tbodyId} .editRowBtn`).forEach((btn) => {
+    btn.removeEventListener("click", handleEditClick);
+    btn.addEventListener("click", handleEditClick);
+  });
+  document.querySelectorAll(`#${tbodyId} .deleteRowBtn`).forEach((btn) => {
+    btn.removeEventListener("click", handleDeleteClick);
+    btn.addEventListener("click", handleDeleteClick);
+  });
+
+  // Determinar el siguiente mes para la fila de agregar
   const ultimoMes = data.length > 0 ? data[data.length - 1].mes : null;
   const siguienteMes = obtenerSiguienteMes(ultimoMes);
 
-  // Crear fila de ingreso en el footer
   const footer = document.getElementById(tbodyId.replace("Body", "Footer"));
   if (footer) {
     footer.innerHTML = `
@@ -265,12 +363,125 @@ function renderTabla(tbodyId, data, sedeNombre) {
         </td>
       </tr>
     `;
-
-    // Vincular eventos de los botones de agregar
-    const btn = footer.querySelector(".agregarMetricaBtn");
-    if (btn && !btn.disabled) {
-      btn.addEventListener("click", () => agregarMetrica(sedeNombre));
+    const agregarBtn = footer.querySelector(".agregarMetricaBtn");
+    if (agregarBtn && !agregarBtn.disabled) {
+      agregarBtn.removeEventListener("click", () => agregarMetrica(sedeNombre));
+      agregarBtn.addEventListener("click", () => agregarMetrica(sedeNombre));
     }
+  }
+}
+
+// Manejador para editar fila
+function handleEditClick(event) {
+  const btn = event.currentTarget;
+  const row = btn.closest("tr");
+  if (row.classList.contains("editing")) return;
+
+  const mes = row.querySelector("td:first-child").innerText;
+  const year = row.dataset.year;
+  const sede = row.dataset.sede;
+  const aprovechamientoCelda = row.querySelector(".aprovechamiento-cell");
+  const rechazoCelda = row.querySelector(".rechazo-cell");
+  const actionsCelda = row.querySelector(".actions-cell");
+
+  const valorAprovechamiento = parseFloat(
+    aprovechamientoCelda.innerText.replace(/\./g, "").replace(",", ".")
+  );
+  const valorRechazo = parseFloat(rechazoCelda.innerText.replace(/\./g, "").replace(",", "."));
+
+  // Reemplazar contenido con inputs
+  aprovechamientoCelda.innerHTML = `<input type="number" step="0.01" value="${valorAprovechamiento}" class="edit-aprovechamiento w-24 rounded border border-gray-300 px-2 py-1 text-right">`;
+  rechazoCelda.innerHTML = `<input type="number" step="0.01" value="${valorRechazo}" class="edit-rechazo w-24 rounded border border-gray-300 px-2 py-1 text-right">`;
+  actionsCelda.innerHTML = `
+    <button class="saveEditBtn text-green-600 hover:text-green-800 transition mr-2"><i class="fas fa-save"></i></button>
+    <button class="cancelEditBtn text-gray-500 hover:text-gray-700 transition"><i class="fas fa-times"></i></button>
+  `;
+
+  row.classList.add("editing");
+
+  const saveBtn = actionsCelda.querySelector(".saveEditBtn");
+  const cancelBtn = actionsCelda.querySelector(".cancelEditBtn");
+  saveBtn.addEventListener("click", () => guardarEdicion(row, mes, year, sede));
+  cancelBtn.addEventListener("click", () =>
+    cancelarEdicion(row, valorAprovechamiento, valorRechazo)
+  );
+}
+
+function cancelarEdicion(row, oldAprovechamiento, oldRechazo) {
+  const aprovechamientoCelda = row.querySelector(".aprovechamiento-cell");
+  const rechazoCelda = row.querySelector(".rechazo-cell");
+  const actionsCelda = row.querySelector(".actions-cell");
+
+  aprovechamientoCelda.innerHTML = formatearNumero(oldAprovechamiento);
+  rechazoCelda.innerHTML = formatearNumero(oldRechazo);
+  actionsCelda.innerHTML = `
+    <button class="editRowBtn text-blue-600 hover:text-blue-800 transition mr-2"><i class="fas fa-edit"></i></button>
+    <span class="text-gray-300 text-xs">|</span>
+    <button class="deleteRowBtn text-red-600 hover:text-red-800 transition ml-2"><i class="fas fa-trash-alt"></i></button>
+  `;
+
+  row.classList.remove("editing");
+
+  // Reasignar eventos
+  const newEditBtn = actionsCelda.querySelector(".editRowBtn");
+  const newDeleteBtn = actionsCelda.querySelector(".deleteRowBtn");
+  newEditBtn.addEventListener("click", handleEditClick);
+  newDeleteBtn.addEventListener("click", handleDeleteClick);
+}
+
+async function guardarEdicion(row, mes, year, sede) {
+  const aprovechamientoInput = row.querySelector(".edit-aprovechamiento");
+  const rechazoInput = row.querySelector(".edit-rechazo");
+  const nuevoAprovechamiento = parseFloat(aprovechamientoInput.value);
+  const nuevoRechazo = parseFloat(rechazoInput.value);
+
+  if (isNaN(nuevoAprovechamiento) || isNaN(nuevoRechazo)) {
+    window.alert("Ingrese valores numéricos válidos.");
+    return;
+  }
+
+  const payload = {
+    year: parseInt(year),
+    mes: mes,
+    sede: sede,
+    aprovechamiento: nuevoAprovechamiento,
+    rechazo: nuevoRechazo,
+  };
+
+  try {
+    await recovenApi.put("/metrics", payload, true);
+    window.alert(`Datos de ${mes} actualizados correctamente.`);
+    cargarMetricas(); // Recargar toda la tabla (refresca)
+  } catch (error) {
+    if (error.message === "SESION_EXPIRADA") return;
+    console.error(error);
+    window.alert("Error al actualizar los datos.");
+  }
+}
+
+async function handleDeleteClick(event) {
+  const btn = event.currentTarget;
+  const row = btn.closest("tr");
+  const mes = row.querySelector("td:first-child").innerText;
+  const year = parseInt(row.dataset.year);
+  const sede = row.dataset.sede;
+
+  if (
+    !window.confirm(
+      `¿Eliminar los datos de ${mes} (${sede === "BARRANQUILLA" ? "Barranquilla" : "Puerto Colombia"})?`
+    )
+  ) {
+    return;
+  }
+
+  try {
+    await recovenApi.delete("/metrics", { sede, mes, year }, true);
+    window.alert(`Datos de ${mes} eliminados correctamente.`);
+    cargarMetricas(); // refresca las tablas
+  } catch (error) {
+    if (error.message === "SESION_EXPIRADA") return;
+    console.error(error);
+    window.alert("Error al eliminar los datos. Puede que el registro no exista.");
   }
 }
 
@@ -296,7 +507,7 @@ function obtenerSiguienteMes(ultimoMes) {
 }
 
 function formatearNumero(valor) {
-  return valor.toLocaleString("es-ES", { minimumFractionDigits: 3, maximumFractionDigits: 3 });
+  return valor.toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 async function agregarMetrica(sedeNombre) {
@@ -342,32 +553,11 @@ async function agregarMetrica(sedeNombre) {
     window.alert(`Datos de ${mes} agregados correctamente.`);
     cargarMetricas(); // Recargar tablas
   } catch (error) {
+    if (error.message === "SESION_EXPIRADA") return;
     console.error(error);
     window.alert("Error al guardar los datos. Verifique que el mes no exista ya.");
   }
 }
-
-// IMPORTANTE: Agregar método put a recovenApi.js (si no existe)
-// Añadir en recovenApi.js:
-/*
-  async put(endpoint, data, requiresAuth = true) {
-    const headers = { "Content-Type": "application/json" };
-    if (requiresAuth) {
-      const token = localStorage.getItem("token");
-      if (token) headers.Authorization = `Bearer ${token}`;
-    }
-    const response = await fetch(`${BASE_URL}${endpoint}`, {
-      method: "PUT",
-      headers,
-      body: JSON.stringify(data),
-    });
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || `HTTP Error ${response.status}`);
-    }
-    return await response.json();
-  }
-*/
 
 // Control de navegación lateral
 function configurarNavegacionSidebar() {
