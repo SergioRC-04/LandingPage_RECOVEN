@@ -246,24 +246,55 @@ let metricasCache = []; // Guardar todas las métricas para filtrar por año
 
 async function cargarMetricas() {
   try {
-    const year = document.getElementById("yearSelector").value;
-    const response = await recovenApi.get("/metrics", true); // GET /metrics
-    metricasCache = response; // asumimos que es un array de objetos con { year, mes, sede, aprovechamiento, rechazo }
-
-    // Obtener años únicos disponibles y llenar selector
-    const years = [...new Set(metricasCache.map((m) => m.year))].sort((a, b) => b - a);
     const yearSelector = document.getElementById("yearSelector");
-    const currentSelected = yearSelector.value;
-    yearSelector.innerHTML = years
-      .map((y) => `<option value="${y}" ${y == currentSelected ? "selected" : ""}>${y}</option>`)
-      .join("");
-    if (years.length === 0) {
-      yearSelector.innerHTML = '<option value="">No hay datos</option>';
+    const currentSelected = yearSelector ? yearSelector.value : null;
+
+    // 🟢 Años fijos (orden descendente)
+    const years = [2027, 2026, 2025];
+
+    // Determinar el año actual
+    const currentYear = new Date().getFullYear();
+    let defaultYear;
+    if (years.includes(currentYear)) {
+      defaultYear = currentYear;
+    } else {
+      // Si el año actual no está en la lista (ej. 2028), elegir el más reciente (2027)
+      defaultYear = years[0]; // 2027
     }
 
-    // Filtrar por año seleccionado
-    const filtered = metricasCache.filter((m) => m.year == year);
-    // Separar por sede
+    let response = [];
+    let metricasExisten = false;
+
+    try {
+      response = await recovenApi.get("/metrics", true);
+      metricasCache = response;
+      metricasExisten = response && response.length > 0;
+    } catch (error) {
+      if (error.message === "SESION_EXPIRADA") throw error;
+      console.error("Error al obtener métricas, se usarán años fijos:", error);
+      metricasCache = [];
+      metricasExisten = false;
+    }
+
+    // Determinar año seleccionado: priorizar el que estaba seleccionado (si está en years), sino el año por defecto
+    let selectedYear;
+    if (currentSelected && years.includes(parseInt(currentSelected))) {
+      selectedYear = parseInt(currentSelected);
+    } else {
+      selectedYear = defaultYear;
+    }
+
+    // Llenar el selector con los años fijos
+    if (yearSelector) {
+      yearSelector.innerHTML = years
+        .map((y) => `<option value="${y}" ${y === selectedYear ? "selected" : ""}>${y}</option>`)
+        .join("");
+    }
+
+    // Filtrar datos según el año seleccionado (si existen)
+    const filtered = metricasExisten ? metricasCache.filter((m) => m.year === selectedYear) : [];
+
+    // Separar por sede y ordenar por mes
     const barranquilla = filtered
       .filter((m) => m.sede === "BARRANQUILLA")
       .sort((a, b) => ordenMeses(a.mes, b.mes));
@@ -275,7 +306,19 @@ async function cargarMetricas() {
     renderTabla("metricsPuertoBody", puerto, "PUERTO COLOMBIA");
   } catch (error) {
     if (error.message === "SESION_EXPIRADA") return;
-    console.error("Error cargando métricas:", error);
+    console.error("Error en cargarMetricas:", error);
+    // En caso de error grave, mostrar años fijos y tablas vacías
+    const yearSelector = document.getElementById("yearSelector");
+    if (yearSelector) {
+      const defaultYears = [2027, 2026, 2025];
+      const currentYear = new Date().getFullYear();
+      const fallbackYear = defaultYears.includes(currentYear) ? currentYear : defaultYears[0];
+      yearSelector.innerHTML = defaultYears
+        .map((y) => `<option value="${y}" ${y === fallbackYear ? "selected" : ""}>${y}</option>`)
+        .join("");
+    }
+    renderTabla("metricsBarranquillaBody", [], "BARRANQUILLA");
+    renderTabla("metricsPuertoBody", [], "PUERTO COLOMBIA");
   }
 }
 
