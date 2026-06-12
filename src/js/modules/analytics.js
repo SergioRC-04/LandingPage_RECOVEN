@@ -180,7 +180,7 @@ export async function initAnalyticsCharts() {
   if (downloadPdfBtn) {
     const pdfIcon = document.getElementById("pdfIcon");
     const pdfBtnText = document.getElementById("pdfBtnText");
-    const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+    const BASE_URL = import.meta.env.VITE_API_URL;
 
     downloadPdfBtn.addEventListener("click", async () => {
       // 1. Poner el botón en estado de carga

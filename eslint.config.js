@@ -25,6 +25,7 @@ export default [
         requestAnimationFrame: "readonly",
         cancelAnimationFrame: "readonly",
         Swiper: "readonly",
+        ...globals.node,
       },
     },
     rules: {

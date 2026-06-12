@@ -1,9 +1,11 @@
 hacer mapa
 Se puede colocar una animacion en el carusel de clientes que indique el componente se puede arrastrar.
 se pueden colocar logos reales en el carrusel de clientes
+arreglar grafias cuando hay mas de 6 meses
 
 revisar politica de tratamiento de datos
 
 Hacer testeo
 corregir los componentes repetitivos de tailwind (react)
 Mejorar ui
+Añadir licencia en github
