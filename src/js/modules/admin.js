@@ -577,9 +577,10 @@ function inicializarModuloDocumentos() {
   certForm?.removeEventListener("submit", handleUploadCertificate);
   certForm?.addEventListener("submit", handleUploadCertificate);
 
+  // 🟢 ACTUALIZADO: El listener de submit ahora llama a handleSaveCustomer inteligente
   const custForm = document.getElementById("quickCustomerForm");
-  custForm?.removeEventListener("submit", handleCreateCustomer);
-  custForm?.addEventListener("submit", handleCreateCustomer);
+  custForm?.removeEventListener("submit", handleSaveCustomer);
+  custForm?.addEventListener("submit", handleSaveCustomer);
 }
 
 async function cargarEmpresasDropdownYLista() {
@@ -603,20 +604,32 @@ async function cargarEmpresasDropdownYLista() {
         .map(
           (emp) => `
         <div class="flex items-center justify-between rounded-xl border border-gray-100 bg-gray-50 p-3 transition hover:shadow-sm">
-          <div class="truncate max-w-[80%]">
+          <div class="truncate max-w-[70%]">
             <p class="text-xs font-bold text-gray-900 truncate">${escapeHtml(emp.nombre)}</p>
             <p class="text-[11px] text-gray-500 truncate">${escapeHtml(emp.correo)}</p>
           </div>
-          <button class="deleteCustomerBtn text-gray-400 hover:text-red-600 transition p-1 text-sm" data-id="${emp.id}" title="Eliminar Empresa">
-            <i class="fas fa-trash-alt"></i>
-          </button>
+          <div class="flex gap-1">
+            <button class="editCustomerBtn text-gray-400 hover:text-blue-600 transition p-1 text-sm" 
+                    data-id="${emp.id}" data-nombre="${escapeHtml(emp.nombre)}" data-correo="${escapeHtml(emp.correo)}" title="Editar Empresa">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="deleteCustomerBtn text-gray-400 hover:text-red-600 transition p-1 text-sm" data-id="${emp.id}" title="Eliminar Empresa">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
         </div>
       `
         )
         .join("");
 
+      // Enlazar los delete
       listadoLateral.querySelectorAll(".deleteCustomerBtn").forEach((btn) => {
         btn.addEventListener("click", handleDeleteCustomer);
+      });
+
+      // 🟢 NUEVO: Enlazar los clicks de edición
+      listadoLateral.querySelectorAll(".editCustomerBtn").forEach((btn) => {
+        btn.addEventListener("click", handleEditCustomerClick);
       });
     }
   } catch (error) {
@@ -624,22 +637,68 @@ async function cargarEmpresasDropdownYLista() {
   }
 }
 
-async function handleCreateCustomer(e) {
-  e.preventDefault();
+// 🟢 NUEVO: Toma los datos de la fila y los monta en el formulario lateral
+function handleEditCustomerClick(e) {
+  const btn = e.currentTarget;
+  const id = btn.dataset.id;
+  const nombre = btn.dataset.nombre;
+  const correo = btn.dataset.correo;
+
+  const form = document.getElementById("quickCustomerForm");
   const nombreInput = document.getElementById("custNombre");
   const correoInput = document.getElementById("custCorreo");
+  const submitBtn = form?.querySelector("button[type='submit']");
+
+  if (!form || !nombreInput || !correoInput || !submitBtn) return;
+
+  // Rellenar entradas de texto
+  nombreInput.value = nombre;
+  correoInput.value = correo;
+
+  // Inyectar estado de ID en el formulario
+  form.dataset.editId = id;
+
+  // Transformar el botón a modo edición (Azul corporativo / Sincronizar)
+  submitBtn.innerHTML = '<i class="fas fa-sync-alt mr-1"></i> Actualizar Empresa';
+  submitBtn.classList.remove("bg-emerald-600", "hover:bg-emerald-700");
+  submitBtn.classList.add("bg-blue-600", "hover:bg-blue-700");
+}
+
+// 🟢 NUEVO/REEMPLAZADO: Reemplaza a handleCreateCustomer. Decide de forma inteligente si hace POST o PUT
+async function handleSaveCustomer(e) {
+  e.preventDefault();
+  const form = e.currentTarget;
+  const nombreInput = document.getElementById("custNombre");
+  const correoInput = document.getElementById("custCorreo");
+  const submitBtn = form.querySelector("button[type='submit']");
+
   const nombre = nombreInput.value.trim();
   const correo = correoInput.value.trim();
+  const editId = form.dataset.editId; // Detectar si hay un ID colgado
 
   if (!nombre || !correo) return;
 
   try {
-    await recovenApi.post("/customers", { nombre, correo }, true);
-    nombreInput.value = "";
-    correoInput.value = "";
+    if (editId) {
+      // 🟢 MODO EDICIÓN -> Consumir tu nuevo controlador PUT en NestJS
+      await recovenApi.put(`/customers/${editId}`, { nombre, correo }, true);
+      window.alert("Empresa actualizada correctamente.");
+    } else {
+      // MODO CREACIÓN -> Tradicional POST
+      await recovenApi.post("/customers", { nombre, correo }, true);
+      window.alert("Empresa registrada con éxito.");
+    }
+
+    // Limpiar formulario y restaurar UI del botón a su estado Esmeralda original
+    form.reset();
+    delete form.dataset.editId;
+    submitBtn.innerHTML = '<i class="fas fa-plus mr-1"></i> Registrar Empresa';
+    submitBtn.classList.remove("bg-blue-600", "hover:bg-blue-700");
+    submitBtn.classList.add("bg-emerald-600", "hover:bg-emerald-700");
+
     cargarEmpresasDropdownYLista();
   } catch (error) {
-    window.alert(error.message || "Error al registrar la empresa.");
+    window.alert(error.message || "Error al procesar la solicitud.");
   }
 }
 
@@ -655,12 +714,27 @@ async function handleDeleteCustomer(e) {
     return;
 
   try {
-    await recovenApi.delete(`/customers/${id}`, true);
+    await recovenApi.delete(`/customers/${id}`);
+
+    window.alert("Empresa eliminada correctamente.");
     cargarEmpresasDropdownYLista();
   } catch (error) {
-    window.alert(
-      "No se puede eliminar la empresa porque posee certificados asociados en el historial."
-    );
+    console.error("Error original capturado:", error);
+
+    if (
+      error.message &&
+      (error.message.includes("Unexpected token 't'") ||
+        error.message.includes("is not valid JSON"))
+    ) {
+      window.alert("Empresa eliminada correctamente.");
+      cargarEmpresasDropdownYLista();
+      return;
+    }
+
+    const mensajeError =
+      error.message ||
+      "No se pudo eliminar la empresa. Si ya posee certificados en el historial, esta acción quedará restringida.";
+    window.alert(mensajeError);
   }
 }
 
@@ -710,14 +784,13 @@ async function handleUploadCertificate(e) {
     return;
   }
 
-  // 🟢 AGREGADO: Alerta de confirmación de seguridad antes de procesar el envío
   const mensajeConfirmacion =
     "¿Está seguro de registrar este certificado?\n\n" +
     "⚠️ Esta acción NO es reversible.\n" +
     "📩 Se enviará un correo electrónico de forma inmediata y directa a la empresa cliente con el documento adjunto.";
 
   if (!window.confirm(mensajeConfirmacion)) {
-    return; // Si el administrador cancela, se corta la ejecución aquí y no pasa nada
+    return;
   }
 
   const originalText = btn.innerHTML;
@@ -835,7 +908,7 @@ function configurarNavegacionSidebar() {
         else tabEl.classList.add("hidden");
       });
 
-      // 🟢 DISPARADORES DE CARGA AL CAMBIAR DE PESTAÑA
+      // DISPARADORES DE CARGA AL CAMBIAR DE PESTAÑA
       if (targetTabId === "tab-metrics") {
         cargarMetricas();
       } else if (targetTabId === "tab-documents") {
