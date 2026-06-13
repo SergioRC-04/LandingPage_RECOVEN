@@ -14,6 +14,7 @@ window.addEventListener("session-expired", (event) => {
 
 // Variables de Estado Local
 let TEMP_USERNAME = "";
+let metricasCache = []; // Guardar todas las métricas para filtrar por año
 
 // Inicialización
 document.addEventListener("DOMContentLoaded", () => {
@@ -74,14 +75,14 @@ function configurarListenersFormularios() {
       await recovenApi.post("/auth/login", { username, password }, false);
       TEMP_USERNAME = username;
 
-      // Pequeño mensaje opcional (puedes usar un toast)
+      // Pequeño mensaje opcional
       window.alert("Código enviado a tu correo. Revisa tu bandeja (puede tardar unos segundos).");
 
       cambiarPantalla("view-2fa");
     } catch {
       window.alert("Credenciales incorrectas. Verifique e intente nuevamente.");
     } finally {
-      // Restaurar botón (solo si hubo error, porque si cambia de pantalla el botón ya no es visible)
+      // Restaurar botón (solo si hubo error)
       if (document.getElementById("view-login")?.classList.contains("hidden") === false) {
         loginBtn.disabled = false;
         loginBtn.innerHTML = originalText;
@@ -155,7 +156,6 @@ function configurarListenersFormularios() {
     resendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
 
     try {
-      // Asumiendo que existe el endpoint /auth/resend-2fa
       await recovenApi.post("/auth/resend-2fa", { username: TEMP_USERNAME }, false);
       window.alert("Se ha enviado un nuevo código a su correo electrónico.");
     } catch (error) {
@@ -216,7 +216,7 @@ async function cargarLeads() {
       )
       .join("");
   } catch (error) {
-    if (error.message === "SESION_EXPIRADA") return; // ya se manejó globalmente
+    if (error.message === "SESION_EXPIRADA") return;
     console.error("Error cargando leads:", error);
     tableBody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-red-500">Error al cargar las solicitudes de red.</td></tr>`;
   }
@@ -242,25 +242,14 @@ document.getElementById("exportExcelBtn")?.addEventListener("click", async () =>
 });
 
 // ======================== MÉTRICAS ========================
-let metricasCache = []; // Guardar todas las métricas para filtrar por año
-
 async function cargarMetricas() {
   try {
     const yearSelector = document.getElementById("yearSelector");
     const currentSelected = yearSelector ? yearSelector.value : null;
 
-    // 🟢 Años fijos (orden descendente)
     const years = [2027, 2026, 2025];
-
-    // Determinar el año actual
     const currentYear = new Date().getFullYear();
-    let defaultYear;
-    if (years.includes(currentYear)) {
-      defaultYear = currentYear;
-    } else {
-      // Si el año actual no está en la lista (ej. 2028), elegir el más reciente (2027)
-      defaultYear = years[0]; // 2027
-    }
+    let defaultYear = years.includes(currentYear) ? currentYear : years[0];
 
     let response = [];
     let metricasExisten = false;
@@ -276,25 +265,19 @@ async function cargarMetricas() {
       metricasExisten = false;
     }
 
-    // Determinar año seleccionado: priorizar el que estaba seleccionado (si está en years), sino el año por defecto
-    let selectedYear;
-    if (currentSelected && years.includes(parseInt(currentSelected))) {
-      selectedYear = parseInt(currentSelected);
-    } else {
-      selectedYear = defaultYear;
-    }
+    let selectedYear =
+      currentSelected && years.includes(parseInt(currentSelected))
+        ? parseInt(currentSelected)
+        : defaultYear;
 
-    // Llenar el selector con los años fijos
     if (yearSelector) {
       yearSelector.innerHTML = years
         .map((y) => `<option value="${y}" ${y === selectedYear ? "selected" : ""}>${y}</option>`)
         .join("");
     }
 
-    // Filtrar datos según el año seleccionado (si existen)
     const filtered = metricasExisten ? metricasCache.filter((m) => m.year === selectedYear) : [];
 
-    // Separar por sede y ordenar por mes
     const barranquilla = filtered
       .filter((m) => m.sede === "BARRANQUILLA")
       .sort((a, b) => ordenMeses(a.mes, b.mes));
@@ -307,12 +290,12 @@ async function cargarMetricas() {
   } catch (error) {
     if (error.message === "SESION_EXPIRADA") return;
     console.error("Error en cargarMetricas:", error);
-    // En caso de error grave, mostrar años fijos y tablas vacías
     const yearSelector = document.getElementById("yearSelector");
     if (yearSelector) {
       const defaultYears = [2027, 2026, 2025];
-      const currentYear = new Date().getFullYear();
-      const fallbackYear = defaultYears.includes(currentYear) ? currentYear : defaultYears[0];
+      const fallbackYear = defaultYears.includes(new Date().getFullYear())
+        ? new Date().getFullYear()
+        : defaultYears[0];
       yearSelector.innerHTML = defaultYears
         .map((y) => `<option value="${y}" ${y === fallbackYear ? "selected" : ""}>${y}</option>`)
         .join("");
@@ -322,7 +305,6 @@ async function cargarMetricas() {
   }
 }
 
-// Orden personalizado de meses
 function ordenMeses(mesA, mesB) {
   const orden = [
     "Enero",
@@ -341,7 +323,6 @@ function ordenMeses(mesA, mesB) {
   return orden.indexOf(mesA) - orden.indexOf(mesB);
 }
 
-// Renderizar una tabla y su footer con formulario de nuevo mes
 function renderTabla(tbodyId, data, sedeNombre) {
   const tbody = document.getElementById(tbodyId);
   if (!tbody) return;
@@ -371,7 +352,6 @@ function renderTabla(tbodyId, data, sedeNombre) {
       .join("");
   }
 
-  // Agregar eventos a los botones de editar y eliminar
   document.querySelectorAll(`#${tbodyId} .editRowBtn`).forEach((btn) => {
     btn.removeEventListener("click", handleEditClick);
     btn.addEventListener("click", handleEditClick);
@@ -381,7 +361,6 @@ function renderTabla(tbodyId, data, sedeNombre) {
     btn.addEventListener("click", handleDeleteClick);
   });
 
-  // Determinar el siguiente mes para la fila de agregar
   const ultimoMes = data.length > 0 ? data[data.length - 1].mes : null;
   const siguienteMes = obtenerSiguienteMes(ultimoMes);
 
@@ -408,13 +387,11 @@ function renderTabla(tbodyId, data, sedeNombre) {
     `;
     const agregarBtn = footer.querySelector(".agregarMetricaBtn");
     if (agregarBtn && !agregarBtn.disabled) {
-      agregarBtn.removeEventListener("click", () => agregarMetrica(sedeNombre));
       agregarBtn.addEventListener("click", () => agregarMetrica(sedeNombre));
     }
   }
 }
 
-// Manejador para editar fila
 function handleEditClick(event) {
   const btn = event.currentTarget;
   const row = btn.closest("tr");
@@ -432,7 +409,6 @@ function handleEditClick(event) {
   );
   const valorRechazo = parseFloat(rechazoCelda.innerText.replace(/\./g, "").replace(",", "."));
 
-  // Reemplazar contenido con inputs
   aprovechamientoCelda.innerHTML = `<input type="number" step="0.01" value="${valorAprovechamiento}" class="edit-aprovechamiento w-24 rounded border border-gray-300 px-2 py-1 text-right">`;
   rechazoCelda.innerHTML = `<input type="number" step="0.01" value="${valorRechazo}" class="edit-rechazo w-24 rounded border border-gray-300 px-2 py-1 text-right">`;
   actionsCelda.innerHTML = `
@@ -465,7 +441,6 @@ function cancelarEdicion(row, oldAprovechamiento, oldRechazo) {
 
   row.classList.remove("editing");
 
-  // Reasignar eventos
   const newEditBtn = actionsCelda.querySelector(".editRowBtn");
   const newDeleteBtn = actionsCelda.querySelector(".deleteRowBtn");
   newEditBtn.addEventListener("click", handleEditClick);
@@ -485,8 +460,8 @@ async function guardarEdicion(row, mes, year, sede) {
 
   const payload = {
     year: parseInt(year),
-    mes: mes,
-    sede: sede,
+    mes,
+    sede,
     aprovechamiento: nuevoAprovechamiento,
     rechazo: nuevoRechazo,
   };
@@ -494,7 +469,7 @@ async function guardarEdicion(row, mes, year, sede) {
   try {
     await recovenApi.put("/metrics", payload, true);
     window.alert(`Datos de ${mes} actualizados correctamente.`);
-    cargarMetricas(); // Recargar toda la tabla (refresca)
+    cargarMetricas();
   } catch (error) {
     if (error.message === "SESION_EXPIRADA") return;
     console.error(error);
@@ -513,18 +488,17 @@ async function handleDeleteClick(event) {
     !window.confirm(
       `¿Eliminar los datos de ${mes} (${sede === "BARRANQUILLA" ? "Barranquilla" : "Puerto Colombia"})?`
     )
-  ) {
+  )
     return;
-  }
 
   try {
     await recovenApi.delete("/metrics", { sede, mes, year }, true);
     window.alert(`Datos de ${mes} eliminados correctamente.`);
-    cargarMetricas(); // refresca las tablas
+    cargarMetricas();
   } catch (error) {
     if (error.message === "SESION_EXPIRADA") return;
     console.error(error);
-    window.alert("Error al eliminar los datos. Puede que el registro no exista.");
+    window.alert("Error al eliminar los datos.");
   }
 }
 
@@ -560,16 +534,10 @@ async function agregarMetrica(sedeNombre) {
     return;
   }
 
-  // Validar que la sede sea válida
-  if (sedeNombre !== "BARRANQUILLA" && sedeNombre !== "PUERTO COLOMBIA") {
-    window.alert("Sede no válida.");
-    return;
-  }
-
   const siguienteMesInput = document.getElementById(`siguienteMes_${sedeNombre}`);
   const mes = siguienteMesInput ? siguienteMesInput.value : "";
   if (!mes) {
-    window.alert("No se puede agregar más meses (ya está diciembre o no hay datos previos).");
+    window.alert("No se puede agregar más meses.");
     return;
   }
 
@@ -583,22 +551,267 @@ async function agregarMetrica(sedeNombre) {
     return;
   }
 
-  const payload = {
-    year: parseInt(year),
-    mes: mes,
-    sede: sedeNombre, // ← Usamos directamente el parámetro
-    aprovechamiento: aprovechamiento,
-    rechazo: rechazo,
-  };
+  const payload = { year: parseInt(year), mes, sede: sedeNombre, aprovechamiento, rechazo };
 
   try {
     await recovenApi.put("/metrics", payload, true);
     window.alert(`Datos de ${mes} agregados correctamente.`);
-    cargarMetricas(); // Recargar tablas
+    cargarMetricas();
   } catch (error) {
     if (error.message === "SESION_EXPIRADA") return;
     console.error(error);
-    window.alert("Error al guardar los datos. Verifique que el mes no exista ya.");
+    window.alert("Error al guardar los datos.");
+  }
+}
+
+// =========================================================================
+// ================= MÓDULO DE CERTIFICADOS Y EMPRESAS =====================
+// =========================================================================
+
+function inicializarModuloDocumentos() {
+  cargarEmpresasDropdownYLista();
+  cargarHistorialCertificados();
+  configurarDropzone();
+
+  const certForm = document.getElementById("uploadCertificateForm");
+  certForm?.removeEventListener("submit", handleUploadCertificate);
+  certForm?.addEventListener("submit", handleUploadCertificate);
+
+  const custForm = document.getElementById("quickCustomerForm");
+  custForm?.removeEventListener("submit", handleCreateCustomer);
+  custForm?.addEventListener("submit", handleCreateCustomer);
+}
+
+async function cargarEmpresasDropdownYLista() {
+  const dropdown = document.getElementById("certEmpresaSelect");
+  const listadoLateral = document.getElementById("quickCustomersList");
+
+  if (!dropdown || !listadoLateral) return;
+
+  try {
+    const empresas = await recovenApi.get("/customers", true);
+
+    dropdown.innerHTML = `
+      <option value="" disabled selected>Seleccione una empresa...</option>
+      ${empresas.map((emp) => `<option value="${emp.id}">${escapeHtml(emp.nombre)}</option>`).join("")}
+    `;
+
+    if (empresas.length === 0) {
+      listadoLateral.innerHTML = `<p class="text-xs text-center text-gray-400 py-4">No hay empresas registradas.</p>`;
+    } else {
+      listadoLateral.innerHTML = empresas
+        .map(
+          (emp) => `
+        <div class="flex items-center justify-between rounded-xl border border-gray-100 bg-gray-50 p-3 transition hover:shadow-sm">
+          <div class="truncate max-w-[80%]">
+            <p class="text-xs font-bold text-gray-900 truncate">${escapeHtml(emp.nombre)}</p>
+            <p class="text-[11px] text-gray-500 truncate">${escapeHtml(emp.correo)}</p>
+          </div>
+          <button class="deleteCustomerBtn text-gray-400 hover:text-red-600 transition p-1 text-sm" data-id="${emp.id}" title="Eliminar Empresa">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </div>
+      `
+        )
+        .join("");
+
+      listadoLateral.querySelectorAll(".deleteCustomerBtn").forEach((btn) => {
+        btn.addEventListener("click", handleDeleteCustomer);
+      });
+    }
+  } catch (error) {
+    console.error("Error cargando empresas:", error);
+  }
+}
+
+async function handleCreateCustomer(e) {
+  e.preventDefault();
+  const nombreInput = document.getElementById("custNombre");
+  const correoInput = document.getElementById("custCorreo");
+  const nombre = nombreInput.value.trim();
+  const correo = correoInput.value.trim();
+
+  if (!nombre || !correo) return;
+
+  try {
+    await recovenApi.post("/customers", { nombre, correo }, true);
+    nombreInput.value = "";
+    correoInput.value = "";
+    cargarEmpresasDropdownYLista();
+  } catch (error) {
+    window.alert(error.message || "Error al registrar la empresa.");
+  }
+}
+
+async function handleDeleteCustomer(e) {
+  const btn = e.currentTarget;
+  const id = btn.dataset.id;
+
+  if (
+    !window.confirm(
+      "¿Está seguro de eliminar esta empresa? Esto restringirá su uso en nuevos certificados."
+    )
+  )
+    return;
+
+  try {
+    await recovenApi.delete(`/customers/${id}`, true);
+    cargarEmpresasDropdownYLista();
+  } catch (error) {
+    window.alert(
+      "No se puede eliminar la empresa porque posee certificados asociados en el historial."
+    );
+  }
+}
+
+function configurarDropzone() {
+  const dropzone = document.getElementById("dropzoneContainer");
+  const fileInput = document.getElementById("certFileInput");
+  const dropzoneText = document.getElementById("dropzoneText");
+
+  if (!dropzone || !fileInput) return;
+
+  dropzone.onclick = () => fileInput.click();
+
+  fileInput.onchange = () => {
+    if (fileInput.files.length > 0) {
+      dropzoneText.innerHTML = `Archivo seleccionado: <span class="text-emerald-600 font-bold">${fileInput.files[0].name}</span>`;
+      dropzone.classList.add("border-emerald-500", "bg-emerald-50/30");
+    }
+  };
+
+  dropzone.ondragover = (e) => {
+    e.preventDefault();
+    dropzone.classList.add("border-emerald-500", "bg-gray-100");
+  };
+  dropzone.ondragleave = () => {
+    dropzone.classList.remove("border-emerald-500", "bg-gray-100");
+  };
+  dropzone.ondrop = (e) => {
+    e.preventDefault();
+    dropzone.classList.remove("border-emerald-500", "bg-gray-100");
+    if (e.dataTransfer.files.length > 0) {
+      fileInput.files = e.dataTransfer.files;
+      dropzoneText.innerHTML = `Archivo seleccionado: <span class="text-emerald-600 font-bold">${fileInput.files[0].name}</span>`;
+      dropzone.classList.add("border-emerald-500", "bg-emerald-50/30");
+    }
+  };
+}
+
+async function handleUploadCertificate(e) {
+  e.preventDefault();
+  const btn = document.getElementById("btnSendCertificate");
+  const empresaId = document.getElementById("certEmpresaSelect").value;
+  const tipo = document.getElementById("certTipoSelect").value;
+  const fileInput = document.getElementById("certFileInput");
+
+  if (!empresaId || !tipo || fileInput.files.length === 0) {
+    window.alert("Por favor complete todos los campos y seleccione un archivo.");
+    return;
+  }
+
+  // 🟢 AGREGADO: Alerta de confirmación de seguridad antes de procesar el envío
+  const mensajeConfirmacion =
+    "¿Está seguro de registrar este certificado?\n\n" +
+    "⚠️ Esta acción NO es reversible.\n" +
+    "📩 Se enviará un correo electrónico de forma inmediata y directa a la empresa cliente con el documento adjunto.";
+
+  if (!window.confirm(mensajeConfirmacion)) {
+    return; // Si el administrador cancela, se corta la ejecución aquí y no pasa nada
+  }
+
+  const originalText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subiendo y despachando correo...';
+
+  const formData = new FormData();
+  formData.append("empresaId", empresaId);
+  formData.append("tipo", tipo);
+  formData.append("file", fileInput.files[0]);
+
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(
+      `${recovenApi.baseUrl || "http://localhost:3000"}/certificates/upload`,
+      {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+      }
+    );
+
+    if (!response.ok) throw new Error("Error en el procesamiento del servidor.");
+
+    window.alert(
+      "¡Éxito! El certificado ha sido archivado y enviado de forma inmediata al correo del cliente."
+    );
+
+    document.getElementById("uploadCertificateForm").reset();
+    document.getElementById("dropzoneText").innerText =
+      "Arrastra el archivo aquí o haz clic para explorar";
+    document
+      .getElementById("dropzoneContainer")
+      .classList.remove("border-emerald-500", "bg-emerald-50/30");
+
+    cargarHistorialCertificados();
+  } catch (error) {
+    console.error(error);
+    window.alert("Ocurrió un error al despachar el documento. Valida la conexión SMTP.");
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = originalText;
+  }
+}
+
+async function cargarHistorialCertificados() {
+  const tbody = document.getElementById("certHistoryTableBody");
+  if (!tbody) return;
+
+  try {
+    const history = await recovenApi.get("/certificates/history", true);
+
+    if (history.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="4" class="text-center text-gray-400 py-6">No se registran certificados emitidos recientemente.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = history
+      .map((log) => {
+        const fecha = new Date(log.fechaEnvio).toLocaleDateString("es-CO", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+        const esPoda = log.tipo === "PODA";
+
+        return `
+        <tr class="hover:bg-gray-50/70 transition">
+          <td class="p-4">
+            <div class="font-bold text-gray-900">${escapeHtml(log.empresa.nombre)}</div>
+            <div class="text-xs text-gray-400">${escapeHtml(log.empresa.correo)}</div>
+          </td>
+          <td class="p-4">
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold rounded-full ${
+              esPoda
+                ? "bg-emerald-50 text-emerald-700 border border-emerald-100"
+                : "bg-blue-50 text-blue-700 border border-blue-100"
+            }">
+              ${esPoda ? "🍃 PODA" : "📦 RESIDUOS"}
+            </span>
+          </td>
+          <td class="p-4 text-xs font-mono text-gray-600">
+            <i class="far fa-file-alt text-gray-400 mr-1 text-sm"></i> ${escapeHtml(log.nombreArchivo)}
+          </td>
+          <td class="p-4 text-xs text-gray-500 font-medium">${fecha}</td>
+        </tr>
+      `;
+      })
+      .join("");
+  } catch (error) {
+    console.error("Error cargando historial:", error);
+    tbody.innerHTML = `<tr><td colspan="4" class="text-center text-red-500 py-4">Error al sincronizar el log de auditoría.</td></tr>`;
   }
 }
 
@@ -614,21 +827,25 @@ function configurarNavegacionSidebar() {
       });
       btn.classList.add("bg-emerald-600", "text-white");
       btn.classList.remove("text-gray-400", "hover:bg-gray-800");
+
       const tabs = ["tab-leads", "tab-metrics", "tab-documents"];
       tabs.forEach((id) => {
         const tabEl = document.getElementById(id);
         if (id === targetTabId) tabEl.classList.remove("hidden");
         else tabEl.classList.add("hidden");
       });
-      // Si se cambia a la pestaña de métricas, recargar datos
+
+      // 🟢 DISPARADORES DE CARGA AL CAMBIAR DE PESTAÑA
       if (targetTabId === "tab-metrics") {
         cargarMetricas();
+      } else if (targetTabId === "tab-documents") {
+        inicializarModuloDocumentos();
       }
     });
   });
 }
 
-// Función auxiliar escapeHtml
+// Función auxiliar escapeHtml global
 function escapeHtml(str) {
   if (!str) return "";
   return str

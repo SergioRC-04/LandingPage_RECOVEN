@@ -17,7 +17,7 @@
       <div class="w-full max-w-md rounded-2xl border border-gray-100 bg-white p-8 shadow-xl">
         <div class="mb-8 text-center">
           <h1 class="text-3xl font-extrabold tracking-tight text-gray-900">RECOVEN</h1>
-          <p class="mt-1 text-sm font-semibold text-emerald-600">Core Administrator</p>
+          <p class="mt-1 text-sm font-semibold text-emerald-600">Administrator</p>
         </div>
         <form id="loginForm" class="space-y-5" novalidate>
           <div>
@@ -61,7 +61,7 @@
       </div>
     </section>
 
-    <section id="view-2fa" class="flex min-h-screen items-center justify-center px-4">
+    <section id="view-2fa" class="flex hidden min-h-screen items-center justify-center px-4">
       <div
         class="w-full max-w-md rounded-2xl border border-gray-100 bg-white p-8 text-center shadow-xl"
       >
@@ -105,10 +105,10 @@
       </div>
     </section>
 
-    <section id="view-dashboard" class="flex min-h-screen flex-col md:flex-row">
+    <section id="view-dashboard" class="flex hidden min-h-screen flex-col md:flex-row">
       <aside class="flex w-full flex-col border-r border-gray-800 bg-gray-900 text-white md:w-64">
         <div class="border-b border-gray-800 p-6">
-          <h2 class="text-xl font-black tracking-wider text-emerald-500">RECOVEN CORE</h2>
+          <h2 class="text-xl font-black tracking-wider text-emerald-500">RECOVEN ADMIN</h2>
           <p class="mt-0.5 text-xs text-gray-400">Panel de Control v1.0</p>
         </div>
         <nav class="flex-1 space-y-2 p-4" id="dashboard-menu">
@@ -128,7 +128,7 @@
             data-tab="tab-documents"
             class="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-gray-400 transition hover:bg-gray-800 hover:text-white"
           >
-            <i class="fas fa-file-upload w-5 text-lg"></i> Documentos Clientes
+            <i class="fas fa-file-upload w-5 text-lg"></i> Envio de Certificados
           </button>
         </nav>
         <div class="border-t border-gray-800 p-4">
@@ -268,21 +268,156 @@
         <!-- Tab Documents (sin cambios) -->
         <div id="tab-documents" class="hidden space-y-6">
           <div class="border-b border-gray-200 pb-5">
-            <h1 class="text-2xl font-black text-gray-900">Envío de Documentos a Empresas</h1>
+            <h1 class="text-2xl font-black text-gray-900">Certificados y Documentación</h1>
             <p class="text-sm text-gray-500">
-              Módulo reservado para la emisión de reportes corporativos y correspondencia directa.
+              Emisión de certificados de disposición final y gestión en caliente de empresas
+              aliadas.
             </p>
           </div>
-          <div
-            class="flex max-w-2xl items-start gap-4 rounded-2xl border border-amber-200 bg-amber-50 p-6"
-          >
-            <i class="fas fa-tools mt-0.5 text-xl text-amber-600"></i>
-            <div>
-              <h3 class="font-bold text-amber-900">Sección en Construcción</h3>
-              <p class="mt-1 text-sm text-amber-700">
-                Este panel interactivo estará habilitado próximamente para la gestión del flujo
-                documental de las empresas aliadas.
-              </p>
+
+          <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            <div class="space-y-6 lg:col-span-2">
+              <div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+                <h2 class="mb-4 flex items-center gap-2 text-lg font-bold text-gray-900">
+                  <i class="fas fa-paper-plane text-emerald-600"></i> Emitir Nuevo Certificado
+                </h2>
+
+                <form id="uploadCertificateForm" class="space-y-4" novalidate>
+                  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div>
+                      <label class="block text-xs font-bold tracking-wider text-gray-700 uppercase"
+                        >Seleccionar Empresa</label
+                      >
+                      <select
+                        id="certEmpresaSelect"
+                        required
+                        class="mt-1.5 w-full rounded-xl border border-gray-300 bg-white p-3 text-sm transition focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                      >
+                        <option value="" disabled selected>Seleccione una empresa...</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="block text-xs font-bold tracking-wider text-gray-700 uppercase"
+                        >Tipo de Certificado</label
+                      >
+                      <select
+                        id="certTipoSelect"
+                        required
+                        class="mt-1.5 w-full rounded-xl border border-gray-300 bg-white p-3 text-sm transition focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                      >
+                        <option value="" disabled selected>Seleccione el tipo...</option>
+                        <option value="PODA">🍃 Residuos de Poda</option>
+                        <option value="RESIDUOS">📦 Residuos Diversos</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label
+                      class="mb-1.5 block text-xs font-bold tracking-wider text-gray-700 uppercase"
+                      >Documento del Certificado (.docx, .pdf)</label
+                    >
+                    <div
+                      id="dropzoneContainer"
+                      class="group relative flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-300 bg-gray-50 px-4 py-8 text-center transition hover:bg-gray-100"
+                    >
+                      <input
+                        type="file"
+                        id="certFileInput"
+                        accept=".docx,.pdf"
+                        class="hidden"
+                        required
+                      />
+                      <div
+                        class="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-50 text-xl text-emerald-600 transition-transform group-hover:scale-110"
+                      >
+                        <i class="fas fa-cloud-upload-alt"></i>
+                      </div>
+                      <p class="text-sm font-semibold text-gray-700" id="dropzoneText">
+                        Arrastra el archivo aquí o haz clic para explorar
+                      </p>
+                      <p class="mt-1 text-xs text-gray-400">
+                        Formatos permitidos: Word o PDF hasta 10MB
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="flex justify-end">
+                    <button
+                      type="submit"
+                      id="btnSendCertificate"
+                      class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-6 py-3 font-bold text-white shadow-md transition hover:bg-emerald-700 disabled:opacity-50"
+                    >
+                      Registrar y Enviar Correo <i class="fas fa-paper-plane"></i>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="space-y-6">
+              <div
+                class="flex h-full max-h-120 flex-col rounded-2xl border border-gray-200 bg-white p-6 shadow-sm"
+              >
+                <h2 class="mb-4 flex items-center gap-2 text-lg font-bold text-gray-900">
+                  <i class="fas fa-building text-emerald-600"></i> Registrar Empresa
+                </h2>
+
+                <form
+                  id="quickCustomerForm"
+                  class="space-y-3 border-b border-gray-100 pb-4"
+                  novalidate
+                >
+                  <input
+                    type="text"
+                    id="custNombre"
+                    required
+                    placeholder="Nombre de la empresa"
+                    class="w-full rounded-xl border border-gray-300 p-2.5 text-sm transition focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                  />
+                  <input
+                    type="email"
+                    id="custCorreo"
+                    required
+                    placeholder="Correo electrónico institucional"
+                    class="w-full rounded-xl border border-gray-300 p-2.5 text-sm transition focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                  />
+                  <button
+                    type="submit"
+                    class="w-full rounded-xl bg-gray-900 py-2 text-sm font-bold text-white shadow transition hover:bg-gray-800"
+                  >
+                    <i class="fas fa-plus mr-1"></i> Agregar Empresa
+                  </button>
+                </form>
+
+                <div
+                  class="mt-4 flex-1 space-y-2 overflow-y-auto pr-1"
+                  id="quickCustomersList"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <h2 class="flex items-center gap-2 text-xl font-black text-gray-900">
+              <i class="fas fa-history text-gray-700"></i> Historial de Certificados Despachados
+            </h2>
+            <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+              <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-left text-sm">
+                  <thead>
+                    <tr
+                      class="border-b border-gray-200 bg-gray-50 text-xs font-bold text-gray-500 uppercase"
+                    >
+                      <th class="p-4">Empresa / Destinatario</th>
+                      <th class="p-4">Tipo</th>
+                      <th class="p-4">Documento Original</th>
+                      <th class="p-4">Fecha de Envío</th>
+                    </tr>
+                  </thead>
+                  <tbody id="certHistoryTableBody" class="divide-y divide-gray-100"></tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
