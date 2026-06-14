@@ -34,6 +34,7 @@ async function handleResponse(response, returnBlob = false, requiresAuth = false
 }
 
 export const recovenApi = {
+  baseUrl: BASE_URL,
   async post(endpoint, data, requiresAuth = false) {
     const headers = { "Content-Type": "application/json", Accept: "application/json" };
     if (requiresAuth) {
