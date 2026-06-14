@@ -804,14 +804,11 @@ async function handleUploadCertificate(e) {
 
   try {
     const token = localStorage.getItem("token");
-    const response = await fetch(
-      `${recovenApi.baseUrl || "http://localhost:3000"}/certificates/upload`,
-      {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-        body: formData,
-      }
-    );
+    const response = await fetch(`${recovenApi.baseUrl}/certificates/upload`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+      body: formData,
+    });
 
     if (!response.ok) throw new Error("Error en el procesamiento del servidor.");
 
